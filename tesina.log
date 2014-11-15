@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.10.2)  15 NOV 2014 16:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.10.2)  15 NOV 2014 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -858,34 +858,34 @@ LaTeX Warning: Reference `cap:nlg_intro' on page 1 undefined on input line 3.
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Reference `sec:apendice1' on page 2 undefined on input line 43.
+LaTeX Warning: Reference `sec:apendice1' on page 2 undefined on input line 37.
 
-LaTeX Font Info:    Try loading font information for U+stmry on input line 43.
-LaTeX Font Info:    No file Ustmry.fd. on input line 43.
+LaTeX Font Info:    Try loading font information for U+stmry on input line 37.
+LaTeX Font Info:    No file Ustmry.fd. on input line 37.
 
 LaTeX Font Warning: Font shape `U/stmry/m/n' undefined
-(Font)              using `U/cmr/m/n' instead on input line 43.
+(Font)              using `U/cmr/m/n' instead on input line 37.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+LaTeX Font Info:    Try loading font information for U+msa on input line 37.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+LaTeX Font Info:    Try loading font information for U+msb on input line 37.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
 LaTeX Warning: Reference `fig:ej_desc_lookup_sp_1' on page 2 undefined on input
- line 43.
+ line 37.
 
-LaTeX Info: Redefining \. on input line 59.
-LaTeX Info: Redefining \% on input line 59.
+LaTeX Info: Redefining \. on input line 51.
+LaTeX Info: Redefining \% on input line 51.
 
 Class memoir Warning: The material used in the headers is too large
 (14.4521pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 59.
+(in both cases you will find help in the memoir manual). on input line 51.
 
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
@@ -894,29 +894,23 @@ Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 [2] <img/mensajes.png, id=18, 439.6425pt x 169.63374pt>
 File: img/mensajes.png Graphic file (type png)
  <use img/mensajes.png>
-Package pdftex.def Info: img/mensajes.png used on input line 68.
+Package pdftex.def Info: img/mensajes.png used on input line 62.
 (pdftex.def)             Requested size: 175.85388pt x 67.85228pt.
 
 
 LaTeX Warning: Reference `fig:ej_desc_lookup_sp_1' on page 3 undefined on input
- line 69.
+ line 63.
 
 
 LaTeX Warning: Reference `fig:ej_desc_lookup_sp_1' on page 3 undefined on input
- line 69.
+ line 63.
 
 
 LaTeX Warning: Reference `fig:ej_tcl_lookup' on page 3 undefined on input line 
-83.
+77.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 83.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
-LaTeX Info: Redefining \. on input line 86.
-LaTeX Info: Redefining \% on input line 86.
+LaTeX Info: Redefining \. on input line 79.
+LaTeX Info: Redefining \% on input line 79.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
@@ -924,17 +918,17 @@ Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 [3 <./img/mensajes.png>]
 
 LaTeX Warning: Reference `fig:spec_symbol_table' on page 4 undefined on input l
-ine 98.
+ine 92.
 
 
 LaTeX Warning: Reference `fig:spec_symbol_table' on page 4 undefined on input l
-ine 98.
+ine 92.
 
 
-LaTeX Warning: Reference `TODO' on page 4 undefined on input line 128.
+LaTeX Warning: Reference `TODO' on page 4 undefined on input line 121.
 
-LaTeX Info: Redefining \. on input line 140.
-LaTeX Info: Redefining \% on input line 140.
+LaTeX Info: Redefining \. on input line 126.
+LaTeX Info: Redefining \% on input line 126.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
@@ -943,40 +937,42 @@ Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 File: img/document_plan.png Graphic file (type png)
 
 <use img/document_plan.png>
-Package pdftex.def Info: img/document_plan.png used on input line 169.
+Package pdftex.def Info: img/document_plan.png used on input line 162.
 (pdftex.def)             Requested size: 372.18391pt x 121.65233pt.
 
-Overfull \hbox (3.18391pt too wide) in paragraph at lines 169--170
+Overfull \hbox (3.18391pt too wide) in paragraph at lines 162--163
  [][] 
  []
 
-
-Underfull \vbox (badness 4479) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 173.
-LaTeX Info: Redefining \% on input line 173.
+LaTeX Info: Redefining \. on input line 165.
+LaTeX Info: Redefining \% on input line 165.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
-[5] <img/document_plan_ej.png, id=33, 930.47626pt x 391.4625pt>
+[5]
+
+LaTeX Warning: Reference `fig:ej_lookup_sp_1' on page 6 undefined on input line
+ 167.
+
+<img/document_plan_ej.png, id=33, 930.47626pt x 391.4625pt>
 File: img/document_plan_ej.png Graphic file (type png)
 
 <use img/document_plan_ej.png>
-Package pdftex.def Info: img/document_plan_ej.png used on input line 178.
+Package pdftex.def Info: img/document_plan_ej.png used on input line 171.
 (pdftex.def)             Requested size: 372.18391pt x 156.58221pt.
 
-Overfull \hbox (3.18391pt too wide) in paragraph at lines 178--179
+Overfull \hbox (3.18391pt too wide) in paragraph at lines 171--172
  [][] 
  []
 
 
 LaTeX Warning: Reference `fig:ej_lookup_sp_1' on page 6 undefined on input line
- 179.
+ 172.
 
 
 LaTeX Warning: Reference `fig:ej_lookup_sp_1' on page 6 undefined on input line
- 179.
+ 172.
 
 )
 LaTeX Info: Redefining \. on input line 28.
@@ -1009,13 +1005,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7362 strings out of 494925
- 96930 string characters out of 6178544
+ 7342 strings out of 494925
+ 96583 string characters out of 6178544
  197490 words of memory out of 5000000
- 10481 multiletter control sequences out of 15000+600000
+ 10464 multiletter control sequences out of 15000+600000
  15005 words of font info for 55 fonts, out of 8000000 for 9000
  62 hyphenation exceptions out of 8191
- 41i,12n,30p,991b,539s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,12n,30p,991b,529s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
@@ -1027,7 +1023,7 @@ c/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
 9.pfb>
-Output written on tesina.pdf (7 pages, 201363 bytes).
+Output written on tesina.pdf (7 pages, 198109 bytes).
 PDF statistics:
  79 PDF objects out of 1000 (max. 8388607)
  52 compressed objects within 1 object stream
