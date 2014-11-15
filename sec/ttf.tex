@@ -1,0 +1,158 @@
+\chapter{Test Template Framework}
+
+El Test Template Framework (TTF) descrito por Stocks y Carrington~\cite{stocks} es un método de testing basado en modelos (MBT). Esta técnica permite efectuar un testing muy completo de un sistema del cual se posee una especificación Z~\cite{spivey}, utilizando la misma como entrada y estableciendo como generar casos de prueba para testear las distintas operaciones incluidas en el modelo.
+
+La hipótesis fundamental detrás del testing basado en modelos es que, un programa es correcto si verifica su especificación, entonces la especificación resulta una excelente fuente para obtener casos de prueba. Una vez que los casos de prueba son derivados del modelo, estos son refinados al nivel del lenguaje de implementación y ejecutados. Luego la salida del programa es abstraída al nivel de la especificación y el modelo es usado nuevamente para verificar si el caso de prueba ha detectado un error. 
+
+
+A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z.
+
+\section{Ejemplo: Symbol Table.}
+
+Una tabla de símbolos es una estructura de datos utilizada por un compilador o interprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, scope de variables, etc. 
+En general en una tabla de símbolos se realizan dos operaciones: inserción y búsqueda. La primera para agregar un símbolo a la tabla y la segunda operación nos permitirá recuperar la información para un símbolo ya cargado en la tabla.
+La especificación Z de la Figura~\ref{fig:spec_symbol_table} modela la tabla y las dos operaciones que actúan sobre ella.
+
+\begin{figure}[H]
+  \centering
+    \begin{zed}
+  [SYM, VAL] \also
+  REPORT ::= ok | symbolNotPresent
+  \end{zed}
+
+  \begin{schema}{ST}
+  st: SYM \pfun VAL
+  \end{schema}
+
+  \begin{schema}{Update}
+  \Delta ST \\
+  s?: SYM \\
+  v?: VAL \\
+  rep!: REPORT
+  \where
+  st' = st \oplus \{s? \mapsto v?\} \\
+  rep! = ok
+  \end{schema}
+
+  \begin{schema}{LookUpOk}
+  \Xi ST \\
+  s?: SYM \\
+  v!: VAL \\
+  rep!: REPORT
+  \where
+  s? \in \dom st \\
+  v! = st~s? \\
+  rep! = ok
+  \end{schema}
+
+  \begin{schema}{LookUpE}
+  \Xi ST \\
+  s?: SYM \\
+  rep!: REPORT
+  \where
+  s? \notin \dom st \\
+  rep! = symbolNotPresent
+  \end{schema}
+
+  \begin{zed}
+  LookUp == LookUpOk \lor LookUpE
+  \end{zed}
+
+  \label{fig:spec_symbol_table}
+  \caption{Modelo Z para una tabla de símbolos.}
+\end{figure}
+
+Tanto los símbolos aceptados por el compilador/interprete, cómo la información de cada uno de estos serán representados mediante los siguientes tipos básicos, sin mayores detalles de los mismos:
+
+\begin{zed}
+[SYM, VAL]
+\end{zed}
+
+Al abstraer toda la información asociada a un símbolo haciendo uso de los tipos básicos de Z podemos modelar la tabla de símbolos como una relación funcional entre símbolos y la información asociada a cada uno de ellos.
+ 
+\begin{schema}{ST}
+st: SYM \pfun VAL
+\end{schema}
+
+El esquema \emph{Update} modela la operación de agregar información de un símbolo a la tabla, modificando los valores anteriores en caso de estar previamente cargados en la tabla.
+Por último, \emph{LookUpOk} especifica la búsqueda de un elemento que se encuentra previamente cargado en la tabla (caso exitoso), mientras que \emph{LookUpE} contempla el caso en el que el símbolo a buscar no se encuentre cargado (esquema de error de la operación).
+
+
+\section{Tácticas de testing y generación de clases de prueba.}
+
+La propuesta de Stocks y Carrington~\cite{stocks} es utilizar la especificación Z de una operación como fuente desde la cual obtener casos de prueba (abstractos) para testear el programa que supuestamente la implementa. La idea se basa en que la especificación del programa contiene todas las alternativas funcionales que el ingeniero consideró imprescindible describir para que el programador implemente el programa correcto. Por lo tanto, para saber si el programa funciona correctamente es necesario probarlo para cada una de esas alternativas funcionales. Entonces, más concretamente, la técnica se basa en expresar cada una de esas alternativas funcionales como un esquema de Z llamado \emph{clase de prueba}.
+
+
+El TTF comienza por definir, para cada operación Z, su espacio de entrada (\emph{IS}, por \emph{Input Space}) y a partir de este, su espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). El \emph{IS} es el conjunto definido por todos los posibles valores de entrada y estado de la operación. Por ejemplo, el \emph{IS} de \emph{LookUp} es:
+
+\begin{zed}
+  IS == [st: SYM \pfun VAL; s?: SYM]
+\end{zed}
+
+El \emph{VIS} es el subconjunto del \emph{IS} para el cual la operación está definida, formalmente:
+
+\begin{zed}
+  VIS_{Op} == [IS | pre~Op]
+\end{zed}
+
+En el caso de \emph{LookUp} es igual a su \emph{IS} ya que la operación es total. 
+
+Luego de determinar el \emph{VIS}, el TTF propone dividir el mismo de modo tal que cada una de las particiones obtenidas represente una alternativa funcional distinta de la operación a testear. Llamaremos \emph{clases de prueba} a estas particiones y serán el resultado de aplicar distintas tácticas de testing sobre el \emph{VIS}. Podemos luego volver a aplicar tácticas sobre estas clases generadas y particionar nuevamente las mismas; este proceso se podrá repetir hasta que el ingeniero de testing considere que todas las alternativas funcionales importantes de la operación están representadas (cada una de estas alternativas corresponderá a una única clase de prueba). El último paso del proceso es la selección de al menos un \emph{caso de prueba} para cada clase de prueba generada, esto cociste en buscar valores para las variables de la misma que reduzcan un predicado a verdadero. En general no haremos más referencia a este último paso ya que en este trabajaremos principalmente con la información contenida en las clases de prueba para obtener descripciones de los casos de prueba correspondientes.
+
+
+Siguiendo con el ejemplo de \emph{symbol table}, aplicaremos dos tácticas a \emph{LookUp}. En primer lugar aplicaremos forma normal disyuntiva (DNF) que expresará la operación como una disyunción de esquemas en los cuales únicamente habrá conjunciones de negaciones de literales y luego dividirá el \emph{VIS} con las precondiciones de cada esquema. Luego aplicaremos la táctica de Partición Estándar (SP) a la expresión: \emph{s? $\in$ $\dom$ st} que dividirá el dominio del operador ($\in$ en este caso) según la partición propuesta por Stocks~\cite{asdasd}.
+
+
+En la Figura ~\ref{fig:ej_tcl_lookup} podemos ver el resultado de aplicar DNF y SP a la operación \emph{LookUp}\footnote{Algunas clases de prueba generadas usando el TTF fueron obviadas ya que sus predicados contenían contradicciones. En estos casos no es posible obtener un caso de prueba a partir de ellas.}. Cada una de las clases de prueba generadas representa una alternativa funcional en la cual deberemos testear el sistema, por ejemplo con un caso de prueba tomado de \emph{LookUp\_SP\_1} estaremos probando el sistema en una situación en que el símbolo a buscar sea el único cargado en la tabla, así como con un caso de prueba de \emph{LookUp\_SP\_4} estaremos testeando el sistema para el caso en el que el símbolo a buscar no se encuentra cargado en la tabla.
+
+\begin{figure}[H]
+  \centering
+  \begin{schema}{LookUp\_ DNF\_ 1}\\
+  LookUp\_ VIS 
+  \where
+  s? \in \dom st
+  \end{schema}
+
+
+  \begin{schema}{LookUp\_ SP\_ 1}\\
+  LookUp\_ DNF\_ 1 
+  \where
+  \dom st = \{ s? \}
+  \end{schema}
+
+
+  \begin{schema}{LookUp\_ SP\_ 2}\\
+  LookUp\_ DNF\_ 1 
+  \where
+  \dom st \neq \{ s? \} \\
+  s? \in \dom st
+  \end{schema}
+
+
+  \begin{schema}{LookUp\_ DNF\_ 2}\\
+  LookUp\_ VIS 
+  \where
+  s? \notin \dom st
+  \end{schema}
+
+
+  \begin{schema}{LookUp\_ SP\_ 4}\\
+  LookUp\_ DNF\_ 2 
+  \where
+  \dom st \neq \{ s? \} \\
+  s? \in \dom st
+  \end{schema}
+  \label{fig:ej_tcl_lookup}
+  \caption{Clases de prueba generadas para operación LookUp.}
+\end{figure}
+
+\section{Fastest.}
+
+Fastest\footnote{http://www.flowgate.net/tools/Fastest.tar.gz} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo mas posible, el proceso de testing funcional basado en especificaciones Z. Fastest se encuentra implementado mayormente en lenguaje Java haciendo uso de las librerías del framework CZT\footnote{http://czt.sourceforge.net/} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
+
+Fastest fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en templates para traducir los casos de prueba obtenidos \cite{cristia_pluss}. Sin embargo, las técnicas utilizadas para esto eran dependientes del dominio de aplicación en cuestión.
+
+Uno de los objetivos de este trabajo fue extender la implementación de Fastest para permitir al usuario generar traducciones o descripciones de las clases de prueba previamente generadas con la herramienta, y que las mismas resulten independientes del dominio de aplicación.
+El sistema de NLG desarrollado en este trabajo fue íntegramente implementado como una extensión de Fastest. Para esto hemos trabajado con la versión 1.6 de Fastest.
+
+En el Apéndice X desarrollaremos algunos de los detalles mas importantes de esta implementación.

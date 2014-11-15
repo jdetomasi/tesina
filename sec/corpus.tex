@@ -1,0 +1,46 @@
+\chapter{Descripciones}
+\label{cap:corpus}
+
+El primer paso en la construcción de cualquier sistema de software, incluyendo los sistemas de generación de lenguaje natural, será el de realizar un análisis de requerimientos y a partir de ahí generar una especificación inicial del sistema. 
+
+Para el análisis de requerimientos, seguiremos el enfoque propuesto por Reiter y Dale~\cite{reiter_dale} en el cual se propone realizar un \emph{corpus} de textos de ejemplo y a partir de ellos obtener una especificación para nuestro sistema.  
+
+\section{Corpus de descripciones}                 
+
+Este \emph{corpus de textos} constará de una colección de ejemplos, formados por la entrada y la salida esperada de nuestro sistema. En nuestro caso, la entrada de nuestro sistema será: la especificación formal en lenguaje Z, las designaciones y un grupo de clases de prueba generadas de antemano, mientras que la salida estará formada por las descripciones en lenguaje natural de las clases de prueba indicadas. En lo posible, el corpus de textos debe cubrir todo el rango de textos esperados a ser producidos por el sistema de generación de lenguaje natural; debería cubrir los casos más frecuentes, así como los casos mas inusuales que se puedan dar.
+
+Para nuestro trabajo debemos recolectar un conjunto lo suficientemente amplio de ejemplos de clases de prueba que caractericen la variedad de textos que deseamos generar, luego una persona capacitada de leer lenguaje Z deberá describir en lenguaje natural las mismos. Finalmente se deberá revisar este \emph{corpus} inicial y modificarlo si existe algún caso en el que haya alguna descripción que resulte técnicamente imposible de generar o prohibitivamente cara a nivel computacional. Una vez finalizado este proceso tendremos en nuestro poder un \emph{corpus objetivo} que nos servirá para sustentar muchas de las decisiones que tomemos a lo largo del trabajo. Este también nos servirá para realizar una evaluación del sistema una vez implementado, comparando los textos generados por el nuestro sistema con las descripciones del \emph{corpus} realizadas por una persona.
+
+En el Apéndice~\ref{sec:apendice1} se encuentra el corpus utilizado para este trabajo. Para elaborar el mismo recolectamos una serie de clases y casos de prueba generados con Fastest a partir de distintas especificaciones y luego se escribimos manualmente cada una de las descripciones estas clases de prueba. Con las especificaciones y clases de prueba incluidas en el \emph{corpus}, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto tuvimos en cuenta incluir clases de pruebas que cubran todas las expresiones de Z contempladas dentro del alcance de este trabajo y sus posibles combinaciones. También trabajamos con especificaciones sobre distintos dominios de aplicación con el fin de lograr \emph{corpus} que nos sea de utilidad para dar con una solución que sea independiente del dominio de aplicación.
+
+La Figura~\ref{fig:ej_desc_lookup_sp_1} muestra a modo de ejemplo una descripción para la clase de prueba \emph{LookUp\_SP\_1} generada a partir de la especificación para una tabla de símbolos introducida anteriormente (pág.~\pageref{fig:spec_symbol_table}). 
+El \emph{corpus de descripciones} utilizado para este trabajo, constará entonces de una colección de ejemplos como el anterior.
+
+
+\begin{figure}[H]
+  \centering
+   \begin{schema}{LookUp\_ SP\_ 1}\\
+  		LookUp\_ VIS 
+  		\where
+  	 	s? \in \dom st \\
+ 		\dom st = \{ s? \}
+  	\end{schema}
+  \caption{Clase de prueba para operación LookUp.}
+  \label{fig:ej_lookup_sp_1}
+\end{figure}
+
+\begin{figure}[H]
+Descripciones SymbolTable 
+
+\bigskip
+\textbf{LookUp\_SP\_1:} Se busca un símbolo en la tabla.  
+  \begin{itemize}
+   \item{Cuando:}
+   \begin{itemize}
+  	  \item{El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.}
+  	  \item{El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.}   
+   \end{itemize}
+  \end{itemize}
+  \caption{Descripción en lenguaje natural para \emph{LookUp\_SP\_1}.}
+  \label{fig:ej_desc_lookup_sp_1}
+\end{figure}

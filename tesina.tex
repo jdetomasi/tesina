@@ -1,0 +1,39 @@
+\documentclass[spanish,11pt,a4paper]{memoir} % Change font size here (allowable values are 9pt-12pt), change the paper size, specify one or two sided printing and specify whether to show trimming lines
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{czt}
+\usepackage{float}
+\usepackage{graphicx}
+%saca los espacios adicionales de las listas tipo itemize
+\usepackage{enumitem}
+\setlist{nolistsep}
+%no identar en la primer linea de cada parrafo!
+%\setlength{\parindent}{0cm}
+%formateo itemizes
+\renewcommand{\labelitemi}{$\bullet$}
+\newtheorem{example}{Ejemplo}[section] % Defines the example environment
+
+\setsecnumdepth{subsection} % activa la numeracion de subsecciones
+\setcounter{tocdepth}{2} %mostrar sub secciones en indice
+
+\begin{document}
+
+%\include{sec/introduccion}
+%\include{sec/ttf}
+%\include{sec/designaciones}
+%\include{sec/nlg_intro}
+%\include{sec/alcance}
+%\include{sec/corpus}
+\include{sec/estructura_documento}
+%\include{sec/realizacion_ling}
+%\include{sec/realizacion_sup}
+%\include{sec/implementacion}
+%\include{sec/evaluacion}
+%\include{sec/conclusion}
+
+\bibliographystyle{alpha}
+\nocite{*}
+\bibliography{biblio}
+
+\end{document} 

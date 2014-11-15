@@ -1,0 +1,62 @@
+\chapter{Designaciones}
+
+Un modelo formal, como una especificación Z en este caso, es una abstracción de la realidad. Sin embargo, se realiza una especificación para escribir un programa que finalmente es usado en el mundo real. En consecuencia, existe una relación entre el modelo y la realidad.
+Normalmente en estos casos, cuando especificamos un sistema formalmente, es una practica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de la aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
+Sin esta documentación el modelo sería nada más que una teoría axiomática más sin conexión con la realidad. 
+
+Para documentar las designaciones usaremos una sintaxis similar\footnote{A diferencia de Jackson escribiremos el término formal del lado izquierdo y el texto informal en lenguaje natural del otro lado.} a la propuesta por Jackson~\cite{jackson}.
+
+\begin{figure}[H]
+  \centering
+  \textbf{termino\_formal} $\approx$ \emph{texto en lenguaje natural}
+\end{figure}
+
+El símbolo $\approx$ demarca la frontera entre el mundo formal o lógico (a la izquierda) y el mundo real (a la derecha). Del lado izquierdo estará el término formal a designar, este será un elemento de la especificación mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
+
+Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{fig:spec_symbol_table}), podríamos tener las siguientes designaciones para la operación \emph{LookUp}:
+
+\begin{figure}[H]
+  \begin{align*} 
+    &LookUp && \approx \text{Se intenta buscar un símbolo en la tabla.} \\
+    &s? && \approx \text{El símbolo a buscar.} \\
+    &st~x && \approx \text{Información asociada al símbolo x.}
+  \end{align*}
+  \label{fig:ej_designacion}
+\end{figure}
+
+Estas designaciones resultan de mucha utilidad. En primer instancia para cuando se empieza a escribir la especificación, la designación servirá para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Por último, específicamente relacionado con los objetivos de este trabajo, estas designaciones nos resultarán un recurso primordial para la generación de descripciones independientes del dominio de aplicación.
+
+Los sistemas de generación de lenguaje natural generalmente utilizan un repositorio de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro trabajo.
+
+\section{Que designar en una especificación Z}
+
+TODO! esta bien ubicado esto acá ?
+
+Si bien Jackson~\cite{jackson} propone designar la menor cantidad de fenómenos posibles y definir el resto en términos de estos, para el objetivo de nuestro trabajo puede ser beneficioso ser más flexibles en este aspecto. Por ejemplo, consideremos las siguientes designaciones para la especificación de un sistema para una base de datos de películas.
+
+\begin{figure}[H]
+  \begin{align*} 
+    &Actor~(x) && \approx \text{\emph{x} es un actor de cine.} \\
+    &ActuoEn~(x, y) && \approx \text{El actor \emph{x} actuaron en la película \emph{y}.} \\
+  \end{align*}
+  \label{fig:ej_peliculas}
+\end{figure}
+
+%TODO cambiar este ejemplo amigo! (marlon brando? posta? algun actor vivo?)
+Siguiendo lo propuesto por Jackson, si en la especificación apareciera el término: ActuaronJuntosPelicula(x, y) -verdadero para dos actores que hayan actuado juntos en alguna película-, éste podría definirse en términos las designaciones anteriores y no debería designarse. Pero en este caso para generar, por ejemplo, el texto ``Al Pacino y Marlon Brando actuaron juntos en la película El Padrino'' a partir de \emph{ActuoEn(``Al Pacino'', ``El Padrino'')} y \emph{ActuoEn(``Marlon Brando'', ``El Padrino'')} necesitaríamos procesar las designaciones teniendo en cuenta cuestiones referentes al dominio de aplicación. Y esto atentaría contra nuestros intereses de lograr un sistema de generación de lenguaje natural independiente del dominio de aplicación.
+
+Por otro lado creemos que también resultará de utilidad y otorgará al sistema una mayor flexibilidad permitir al usuario escribir designaciones que puedan resultar ``redundantes'' para la comprensión de la especificación pero de gran ayuda a la hora de generar una descripción en particular. En estos casos cuando nuestro sistema deba describir uno de estos términos designados hará uso del texto incluido en la designación en lugar de intentar describir el mismo como se verá mas adelante.
+
+Finalmente, a partir de un análisis de textos generados para distintas especificaciones, creemos que para tener descripciones fluidas es recomendable designar:
+
+(TODO: sacados del trabajo de federico moya, falta completar a partir de análisis de textos generados)
+
+\begin{enumerate}[itemsep=0pt]
+  \item Tipos básicos.
+  \item Nombres de constructores de tipos libres.
+  \item Definiciones axiomáticas.
+  \item Nombres de esquemas de estado.
+  \item Variables de estado.
+  \item Nombres de esquemas de operación totales.
+  \item Variables de entrada/salida
+\end{enumerate}

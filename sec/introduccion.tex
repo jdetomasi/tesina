@@ -1,0 +1,20 @@
+\chapter{Introducción}
+\label{introduccion}
+
+% TODO introducir inportancia de designaciones. comentar temas a tratar en cada capitulo ?
+El testing basado en modelos es una de las técnicas de testing más prometedoras para la verificación de software crítico. Estas metodologías comienzan con un modelo formal o especificación del software, de la cual son generados los casos de prueba.
+%La hipótesis fundamental detras del testing basado en modelos es que, un programa es correcto si verifica su especificación, entonces la especificación resulta una excelente fuente para obtener casos de prueba. %Una vez que los casos de prueba son derivados del modelo, estos son refinados al nivel del lenguaje de implementacion y ejecutados. Luego la salida del programa es abstraida al nivel de la especificacion y el modelo es usado nuevamente para verificar si el caso de prueba ha detectado un error.
+
+Un caso particular del testing basado en modelos es el \emph{Test Template Framework} (TTF), descrito por Stocks y Carrington~\cite{stocks}, el cual utiliza, como modelo de entrada, especificaciones formales escritas en notación \emph{Z} y establece como generar casos de prueba para cada operación incluida en el modelo. Esta técnica genera descripciones lógicas, también en lenguaje Z, de los casos de prueba.
+
+Por otro lado, el desarrollo de software crítico usualmente requiere de procesos independientes de validación y verificación. Estos procesos son llevados a cabo por expertos en el dominio de aplicación, quienes usualmente no poseen conocimientos técnicos, en particular, si no son capaces de leer notación Z, no podrán entender que está siendo testeado. En estos casos, una descripción en lenguaje natural de cada caso de prueba debería acompañar a los mismos a fin de hacerlos accesibles para los expertos en el dominio.
+
+El objetivo de este trabajo, será entonces, generar descripciones en lenguaje natural para los casos de prueba generados por el TTF. Anteriormente Cristiá y Plüss~\cite{cristia_plus} desarrollaron una solución ad-hoc basada en templates (dependiente del dominio de aplicación y cantidad de operaciones) para generar descripciones los casos de prueba de un software para un satélite. 
+%Moya\cite{} extendió el trabajo anterior utilizando la información contenida en las designaciones\cite{asociaciones} (jackson entre los elementos de la especificación y los del domino de aplicación), trabajando exclusivamente con los casos de prueba.
+
+Basado en el trabajo antes mencionado desarrollaremos una solución independiente del dominio de aplicación y del número de operaciones del sistema, principalmente utilizando información contenida en las designaciones~\cite{jackson} y trabajando fundamentalmente con las clases de prueba, las que nos permiten generar mejores descripciones.
+
+En particular trabajaremos con Fastest\footnote{http://www.flowgate.net/tools/}, una implementación del TTF desarrollada por Crstiá y Monetti~\cite{fastest1} capaz de generar casos de prueba a partir de una especificación Z. Además, el sistema de NLG desarrollado en este trabajo fue implementado Java e integrado a la implementación de Fastest permitiendo generar descripciones de los casos de prueba interactivamente desde la herramienta.
+
+
+TODO acá podría ir una breve descripción de cada uno de los capítulos siguientes.
