@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014/Debian) (preloaded format=pdflatex 2014.11.30)  15 DEC 2014 20:58
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.3)  24 JAN 2015 20:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **tesina.tex
 (./tesina.tex
-LaTeX2e <2014/05/01>
-Babel <3.9k> and hyphenation patterns for 7 languages loaded.
+LaTeX2e <2011/06/27>
+Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/memoir/memoir.cls
 Document Class: memoir 2013/05/30 v3.7b configurable book, report, article docu
 ment class
@@ -341,25 +341,26 @@ Package verse [2008/07/23] emulated by memoir.
 Package: mempatch 2009/07/24 v6.0f Patches for memoir class v1.6180339
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2014/03/24 3.9k The Babel package
+Package: babel 2013/12/03 3.9h The Babel package
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel-spanish/spanish.ldf
-Language: spanish.ldf 2014/04/24 v5.0n Spanish support from the babel system
+Language: spanish.ldf 2014/01/29 v5.0m Spanish support from the babel system
 
 (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.def
-File: babel.def 2014/03/24 3.9k Babel common definitions
+File: babel.def 2013/12/03 3.9h Babel common definitions
 \babel@savecnt=\count138
 \U@D=\dimen147
 )
+\es@datefmt=\count139
 \es@quottoks=\toks22
-\es@quotdepth=\count139
-Package babel Info: Making " an active character on input line 516.
-Package babel Info: Making . an active character on input line 617.
-Package babel Info: Making < an active character on input line 662.
-Package babel Info: Making > an active character on input line 662.
+\es@quotdepth=\count140
+Package babel Info: Making " an active character on input line 496.
+Package babel Info: Making . an active character on input line 599.
+Package babel Info: Making < an active character on input line 644.
+Package babel Info: Making > an active character on input line 644.
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2014/04/30 v1.2b Input encoding file
+Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks23
 \inpenc@posthook=\toks24
 
@@ -595,13 +596,13 @@ Package: amsbsy 1999/11/29 v1.2d
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count140
+\inf@bad=\count141
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count141
-\leftroot@=\count142
+\uproot@=\count142
+\leftroot@=\count143
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count143
-\DOTSCASE@=\count144
+\classnum@=\count144
+\DOTSCASE@=\count145
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
@@ -610,15 +611,15 @@ LaTeX Info: Redefining \cdots on input line 466.
 \big@size=\dimen150
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count145
-\c@MaxMatrixCols=\count146
+\macc@depth=\count146
+\c@MaxMatrixCols=\count147
 \dotsspace@=\muskip10
-\c@parentequation=\count147
-\dspbrk@lvl=\count148
+\c@parentequation=\count148
+\dspbrk@lvl=\count149
 \tag@help=\toks26
-\row@=\count149
-\column@=\count150
-\maxfields@=\count151
+\row@=\count150
+\column@=\count151
+\maxfields@=\count152
 \andhelp@=\toks27
 \eqnshift@=\dimen151
 \alignsep@=\dimen152
@@ -640,7 +641,7 @@ Package czt Info: 'mathit' option chosen on input line 72.
 Package czt Info: 'cntglobally' option chosen on input line 72.
 Package czt Info: AMS fonts selected with default options on input line 86.
 Package czt Info: Rendering Z math mode in monochrome. on input line 121.
-\c@mv@czt=\count152
+\c@mv@czt=\count153
 Package czt Info: Creating `czt' math version on input line 152.
 \symstmry=\mathgroup4
 LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 159.
@@ -657,31 +658,31 @@ Package czt Info: Loading AMS font symbols for Z on input line 603.
 Package czt Info: Current math version set to `czt' on input line 606.
 Package czt Info: Setting math code for letters as Italics on input line 660.
 Package czt Info: Counting Z declarations? YES  on input line 683.
-\@zcountingwhat=\count153
-\c@cntZunboxed=\count154
-\c@cntZaxdef=\count155
-\c@cntZgendef=\count156
-\c@cntZschema=\count157
-\c@cntZgenschema=\count158
-\c@cntZtheorem=\count159
-\c@cntZproof=\count160
-\c@cntZdecl=\count161
-\c@cntZtotunboxed=\count162
-\c@cntZtotaxdef=\count163
-\c@cntZtotgendef=\count164
-\c@cntZtotschema=\count165
-\c@cntZtotgenschema=\count166
-\c@cntZtottheorem=\count167
-\c@cntZtotproof=\count168
-\c@cntZtotdecl=\count169
+\@zcountingwhat=\count154
+\c@cntZunboxed=\count155
+\c@cntZaxdef=\count156
+\c@cntZgendef=\count157
+\c@cntZschema=\count158
+\c@cntZgenschema=\count159
+\c@cntZtheorem=\count160
+\c@cntZproof=\count161
+\c@cntZdecl=\count162
+\c@cntZtotunboxed=\count163
+\c@cntZtotaxdef=\count164
+\c@cntZtotgendef=\count165
+\c@cntZtotschema=\count166
+\c@cntZtotgenschema=\count167
+\c@cntZtottheorem=\count168
+\c@cntZtotproof=\count169
+\c@cntZtotdecl=\count170
 \big@size=\dimen157
 \zedtab=\dimen158
 \zedindent=\dimen159
 \zedleftsep=\dimen160
 \zedbar=\dimen161
-\interzedlinepenalty=\count170
-\preboxpenalty=\count171
-\forcepagepenalty=\count172
+\interzedlinepenalty=\count171
+\preboxpenalty=\count172
+\forcepagepenalty=\count173
 \zedskip=\skip188
 Package czt Info: Initialising Z registers with default values.
 (czt)                \zedtab=21.90005pt
@@ -723,17 +724,17 @@ ut line 1787.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count173
+\c@float@type=\count174
 \float@exts=\toks30
 \float@box=\box31
 \@float@everytoks=\toks31
 \@floatcapt=\box32
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks32
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
@@ -756,7 +757,7 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count174
+\Gread@gobject=\count175
 ))
 \Gin@req@height=\dimen162
 \Gin@req@width=\dimen163
@@ -767,16 +768,14 @@ Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enit@outerparindent=\dimen164
 \enit@toks=\toks33
 \enit@inbox=\box33
-\enitdp@description=\count175
+\enitdp@description=\count176
 )
-\c@example=\count176
+\c@example=\count177
  (./tesina.aux
-(./sec/introduccion.aux)
+(./sec/microplanning.aux)
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
- (./sec/ttf.aux) (./sec/designaciones.aux)
-(./sec/nlg_intro.aux) (./sec/corpus.aux) (./sec/estructura_documento.aux)
-(./sec/microplanning.aux))
+)
 \openout1 = `tesina.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
@@ -796,16 +795,16 @@ LaTeX Info: Redefining \% on input line 20.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count177
+\scratchcounter=\count178
 \scratchdimen=\dimen165
 \scratchbox=\box34
-\nofMPsegments=\count178
-\nofMParguments=\count179
+\nofMPsegments=\count179
+\nofMParguments=\count180
 \everyMPshowfont=\toks34
-\MPscratchCnt=\count180
+\MPscratchCnt=\count181
 \MPscratchDim=\dimen166
-\MPnumerator=\count181
-\makeMPintoPDFobject=\count182
+\MPnumerator=\count182
+\makeMPintoPDFobject=\count183
 \everyMPtoPDFconversion=\toks35
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -846,393 +845,157 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\openout2 = `sec/introduccion.aux'.
+\openout2 = `sec/microplanning.aux'.
 
 
-(./sec/introduccion.tex
+(./sec/microplanning.tex
 
-LaTeX Warning: Citation `stocks' on page 1 undefined on input line 8.
+LaTeX Warning: Reference `cap:nlg_intro' on page 1 undefined on input line 10.
 
+LaTeX Font Info:    Try loading font information for U+stmry on input line 23.
+(/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+LaTeX Font Info:    Try loading font information for U+msa on input line 23.
 
-LaTeX Warning: Citation `cristia_plus' on page 1 undefined on input line 12.
-
-
-LaTeX Warning: Citation `jackson' on page 1 undefined on input line 15.
-
-LaTeX Font Info:    Try loading font information for U+stmry on input line 17.
-LaTeX Font Info:    No file Ustmry.fd. on input line 17.
-
-LaTeX Font Warning: Font shape `U/stmry/m/n' undefined
-(Font)              using `U/cmr/m/n' instead on input line 17.
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 17.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 17.
+LaTeX Font Info:    Try loading font information for U+msb on input line 23.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-
-LaTeX Warning: Citation `fastest1' on page 1 undefined on input line 17.
-
-[1
+) [1
 
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
-LaTeX Info: Redefining \. on input line 22.
-LaTeX Info: Redefining \% on input line 22.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (23.19252pt too wide) in paragraph at lines 52--53
+[]\OT1/cmr/m/n/10.95 Esta es-pe-ci-fi-ca-ci^^Son del tex-to, cons-trui-da a par
+-tir del do-cu-ment plan, tendr^^Sa tam-
+ []
 
+LaTeX Info: Redefining \. on input line 53.
+LaTeX Info: Redefining \% on input line 53.
 
 Class memoir Warning: The material used in the headers is too large
 (14.4521pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 22.
+(in both cases you will find help in the memoir manual). on input line 53.
 
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
-[2]
-\openout2 = `sec/ttf.aux'.
+[2] <img/text_spec.png, id=15, 402.50375pt x 157.58875pt>
+File: img/text_spec.png Graphic file (type png)
 
- (./sec/ttf.tex
+<use img/text_spec.png>
+Package pdftex.def Info: img/text_spec.png used on input line 58.
+(pdftex.def)             Requested size: 281.7507pt x 110.31136pt.
+LaTeX Info: Redefining \. on input line 70.
+LaTeX Info: Redefining \% on input line 70.
+ [3 <./img/text_spec.png>]
 
-LaTeX Warning: Citation `stocks' on page 3 undefined on input line 3.
+LaTeX Warning: Reference `TODO' on page 4 undefined on input line 71.
+
+<img/phrase_spec.png, id=21, 365.365pt x 507.8975pt>
+File: img/phrase_spec.png Graphic file (type png)
+ <use img/phrase_spec.png>
+Package pdftex.def Info: img/phrase_spec.png used on input line 75.
+(pdftex.def)             Requested size: 255.75375pt x 355.52583pt.
 
 
-LaTeX Warning: Citation `spivey' on page 3 undefined on input line 3.
+LaTeX Warning: Reference `' on page 4 undefined on input line 80.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3
-
-
-
-]
-Overfull \vbox (47.04883pt too high) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 64.
-LaTeX Info: Redefining \% on input line 64.
+LaTeX Info: Redefining \. on input line 90.
+LaTeX Info: Redefining \% on input line 90.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
-[4]
+[4 <./img/phrase_spec.png>]
 
-LaTeX Warning: Citation `stocks' on page 5 undefined on input line 83.
+LaTeX Warning: Reference `TODO' on page 5 undefined on input line 93.
 
-LaTeX Info: Redefining \. on input line 96.
-LaTeX Info: Redefining \% on input line 96.
+LaTeX Info: Redefining \. on input line 118.
+LaTeX Info: Redefining \% on input line 118.
 
-Class memoir Warning: The material used in the headers is too large
-(28.05211pt) for the given head height (13.6pt), it is recommended to
-either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 96.
-
-
-Overfull \vbox (14.4521pt too high) has occurred while \output is active []
+Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
 [5]
 
-LaTeX Warning: Citation `asdasd' on page 6 undefined on input line 103.
+LaTeX Warning: Reference `fig:png_document_plan_ej' on page 6 undefined on inpu
+t line 127.
+
+<img/phrase_spec_ej.png, id=33, 841.1425pt x 490.83376pt>
+File: img/phrase_spec_ej.png Graphic file (type png)
+
+<use img/phrase_spec_ej.png>
+Package pdftex.def Info: img/phrase_spec_ej.png used on input line 155.
+(pdftex.def)             Requested size: 420.57022pt x 245.41628pt.
+
+Overfull \hbox (51.57022pt too wide) in paragraph at lines 155--156
+ [][] 
+ []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Info: Redefining \. on input line 148.
-LaTeX Info: Redefining \% on input line 148.
+LaTeX Info: Redefining \. on input line 159.
+LaTeX Info: Redefining \% on input line 159.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
 [6]
 
-LaTeX Warning: Citation `fastest1' on page 7 undefined on input line 151.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 152.
-LaTeX Info: Redefining \% on input line 152.
-
-Overfull \vbox (14.4521pt too high) has occurred while \output is active []
-
-
-[7]
-
-LaTeX Warning: Citation `satelite' on page 8 undefined on input line 153.
-
-
-LaTeX Warning: Citation `cristia_pluss' on page 8 undefined on input line 153.
+LaTeX Warning: Reference `??' on page 7 undefined on input line 160.
 
 )
-LaTeX Info: Redefining \. on input line 23.
-LaTeX Info: Redefining \% on input line 23.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[8]
-\openout2 = `sec/designaciones.aux'.
-
- (./sec/designaciones.tex
-
-LaTeX Warning: Citation `jackson' on page 9 undefined on input line 4.
-
-
-LaTeX Warning: Citation `jackson' on page 9 undefined on input line 7.
-
-
-Overfull \hbox (2.44707pt too wide) in paragraph at lines 16--17
-[]\U/stmry/m/n/10.95 Continuando con el ejem-plo de la ta-bla de s^^S^^Pmbo-los
- (Fi-gu-ra  2.1[]), podr^^S^^Pamos
- []
-
-[9
-
-
-
-]
-
-LaTeX Warning: Citation `jackson' on page 10 undefined on input line 35.
-
-LaTeX Info: Redefining \. on input line 49.
-LaTeX Info: Redefining \% on input line 49.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[10])
-LaTeX Info: Redefining \. on input line 24.
-LaTeX Info: Redefining \% on input line 24.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[11]
-\openout2 = `sec/nlg_intro.aux'.
-
- (./sec/nlg_intro.tex [12
-
-
-
-]
-
-LaTeX Warning: Citation `reiterdale' on page 13 undefined on input line 6.
-
-[13]
-LaTeX Info: Redefining \. on input line 48.
-LaTeX Info: Redefining \% on input line 48.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[14] <img/arquitectura.png, id=59, 560.0925pt x 465.74pt>
-File: img/arquitectura.png Graphic file (type png)
-
-<use img/arquitectura.png>
-Package pdftex.def Info: img/arquitectura.png used on input line 58.
-(pdftex.def)             Requested size: 560.09113pt x 465.73886pt.
-
-Overfull \hbox (191.09113pt too wide) in paragraph at lines 58--59
- [][] 
- []
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-)
-LaTeX Info: Redefining \. on input line 25.
-LaTeX Info: Redefining \% on input line 25.
- [15]
-LaTeX Info: Redefining \. on input line 25.
-LaTeX Info: Redefining \% on input line 25.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[16 <./img/arquitectura.png>]
-\openout2 = `sec/corpus.aux'.
-
- (./sec/corpus.tex
-
-LaTeX Warning: Citation `reiter_dale' on page 17 undefined on input line 6.
-
-
-Underfull \vbox (badness 1005) has occurred while \output is active []
-
- [17
-
-
-
-]
-
-LaTeX Warning: Reference `sec:apendice1' on page 18 undefined on input line 14.
-
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 40.
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 40.
-)
-LaTeX Info: Redefining \. on input line 27.
-LaTeX Info: Redefining \% on input line 27.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[18]
-\openout2 = `sec/estructura_documento.aux'.
-
- (./sec/estructura_documento.tex
-
-LaTeX Warning: Citation `reiter_dale' on page 19 undefined on input line 10.
-
-[19
-
-
-
-]
-
-LaTeX Warning: Reference `sec:apendice1' on page 20 undefined on input line 38.
-
-
-LaTeX Info: Redefining \. on input line 52.
-LaTeX Info: Redefining \% on input line 52.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[20] <img/mensajes.png, id=82, 439.6425pt x 169.63374pt>
-File: img/mensajes.png Graphic file (type png)
-
-<use img/mensajes.png>
-Package pdftex.def Info: img/mensajes.png used on input line 63.
-(pdftex.def)             Requested size: 175.85388pt x 67.85228pt.
-LaTeX Info: Redefining \. on input line 80.
-LaTeX Info: Redefining \% on input line 80.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[21 <./img/mensajes.png>]
-
-LaTeX Warning: Reference `TODO' on page 22 undefined on input line 122.
-
-LaTeX Info: Redefining \. on input line 127.
-LaTeX Info: Redefining \% on input line 127.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[22] <img/document_plan.png, id=91, 930.47626pt x 304.13625pt>
-File: img/document_plan.png Graphic file (type png)
-
-<use img/document_plan.png>
-Package pdftex.def Info: img/document_plan.png used on input line 163.
-(pdftex.def)             Requested size: 372.18391pt x 121.65233pt.
-
-Overfull \hbox (3.18391pt too wide) in paragraph at lines 163--164
- [][] 
- []
-
-LaTeX Info: Redefining \. on input line 166.
-LaTeX Info: Redefining \% on input line 166.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[23] <img/document_plan_ej.png, id=95, 930.47626pt x 391.4625pt>
-File: img/document_plan_ej.png Graphic file (type png)
-
-<use img/document_plan_ej.png>
-Package pdftex.def Info: img/document_plan_ej.png used on input line 172.
-(pdftex.def)             Requested size: 372.18391pt x 156.58221pt.
-
-Overfull \hbox (3.18391pt too wide) in paragraph at lines 172--173
- [][] 
- []
-
-)
-LaTeX Info: Redefining \. on input line 28.
-LaTeX Info: Redefining \% on input line 28.
-
-Overfull \vbox (0.8521pt too high) has occurred while \output is active []
-
-
-[24 <./img/document_plan.png> <./img/document_plan_ej.png>]
-\openout2 = `sec/microplanning.aux'.
-
-
-(./sec/microplanning.tex
-
-LaTeX Warning: Reference `cap:trabajo_futuro' on page 25 undefined on input lin
-e 24.
-
-) [25
-
-
-
-]
 LaTeX Info: Redefining \. on input line 29.
 LaTeX Info: Redefining \% on input line 29.
 
 Overfull \vbox (0.8521pt too high) has occurred while \output is active []
 
 
-[26]
+[7 <./img/phrase_spec_ej.png>]
 No file tesina.bbl.
 
 Class memoir Warning: The material used in the headers is too large
-(28.05211pt) for the given head height (13.6pt), it is recommended to
+(14.4521pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
 (in both cases you will find help in the memoir manual). on input line 40.
 
-(./tesina.aux (./sec/introduccion.aux)
+(./tesina.aux (./sec/microplanning.aux)
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
- (./sec/ttf.aux) (./sec/designaciones.aux) (./sec/nlg_intro.aux) (./sec/corpus.
-aux) (./sec/estructura_documento.aux)
-(./sec/microplanning.aux))
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
+)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7523 strings out of 494918
- 99620 string characters out of 6178390
- 211054 words of memory out of 5000000
- 10605 multiletter control sequences out of 15000+600000
- 15005 words of font info for 55 fonts, out of 8000000 for 9000
- 62 hyphenation exceptions out of 8191
- 41i,12n,30p,1175b,528s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 7343 strings out of 493304
+ 96628 string characters out of 6139872
+ 203288 words of memory out of 5000000
+ 10693 multiletter control sequences out of 15000+600000
+ 15885 words of font info for 60 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 41i,12n,35p,900b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on tesina.pdf (26 pages, 283876 bytes).
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmtt10.pfb>
+Output written on tesina.pdf (7 pages, 197607 bytes).
 PDF statistics:
- 154 PDF objects out of 1000 (max. 8388607)
- 102 compressed objects within 2 object streams
+ 75 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
