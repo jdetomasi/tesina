@@ -1,0 +1,47 @@
+\chapter{Microplanning.}
+\label{cap:microplanning}
+La tarea del microplanner será tomar el document plan generado en la etapa anterior y refinarlo a modo de producir una especificación mas detallada del texto. 
+
+Como mencionamos en el capítulo~\ref{cap:nlg_intro}, las tareas que debería realizar el microplanner son:
+
+\medskip
+\noindent
+\textbf{Lexicalización.} Elegir que palabras particulares, constructores sintácticos y anotaciones de ``mark-up'' usar para comunicar la información contenida en el document plan.
+
+\medskip
+\noindent
+\textbf{Agregación.} Decidir cuanta información debe ser comunicada en cada oración del texto final.
+
+\medskip
+\noindent
+\textbf{Generación de expresiones de referencia.} Determinar que frases deben ser usadas para identificar las entidades particulares del dominio de aplicación.
+
+\medskip
+Cabe aclarar que el resultado de esta etapa no será todavía un texto, sino que quedarán por tomar decisiones acerca de la sintaxis, morfología y cuestiones de presentación, de las cuales se encargará la siguiente etapa.
+
+Tanto la tarea de lexicalización como la de generación de expresiones de referencia se encargan de ``mapear'' elementos del dominio de aplicación a elementos lingüísticos, y pueden parecer bastante similares. Sin embargo, la diferencia radica en que la lexicalización se encargará de expresar lingüísticamente las relaciones y conceptos de nuestro dominio de aplicación, mientras que la tarea de generación de expresiones de referencia se encargará de identificar las entidades de nuestro dominio. Se dividen de esta manera porque los algoritmos requeridos para cada tarea son diferentes en su naturaleza.
+
+A continuación, estudiaremos la entrada y salida del microplanner, luego veremos la arquitectura utilizada y describiremos mas en profundidad las tareas de lexicalización y generación de expresiones de referencia realizadas en este trabajo. Creemos que si bien es posible realizar tareas de agregación, no se encuentra dentro del alcance de este trabajo, sin embargo veremos algunas ideas respecto a este último punto en el capítulo~\ref{cap:trabajo_futuro}.
+
+\section{Entrada y salida del microplanner}
+
+Como dijimos en el capítulo anterior, la salida del document planner será una estructura donde se encuentran agrupados los elementos informativos que deseamos comunicar. Estos elementos informativos (o \emph{mensajes}) definidos en el capítulo anterior especifican de una manera abstracta qué debemos comunicar en el texto final, pero no especifica, por ejemplo, que palabras debemos usar para hacerlo. Será el microplanner quien deberá tomar esta estructura, el document plan, y producir una especificación mas refinada del texto que deseamos generar.
+
+Esta especificación del texto, construida a partir del document plan, tendrá también una estructura de árbol donde los hojas especificaran las frases u oraciones a generar y los nodos internos establecerán como estas frases tendrán que ser agrupadas en elementos del documento como párrafos, secciones, etc; estos nodos internos podrían incluir también información adicional como, por ejemplo, el título de tratarse de una sección. Luego, será tarea de la etapa de realización convertir los nodos internos en anotaciones especificas para el sistema de presentación (realización de estructura) y transformar las \emph{phrase specification} en oraciones o frases sintáctica, morfológica y ortográficamente correctas (realización lingüística).
+
+En la literatura sobre NLG Podemos encontrar muchas alternativas en lo que respecta a la especificación de frases. Todas estas varían en el nivel de abstracción que tienen. Las representaciones mas abstractas le darán mas flexibilidad a las etapas de document planning y microplanning, pero al mismo tiempo nos obligarán a tener un realizador de superficie mas sofisticado. Por otro lado, las especificaciones menos abstractas, requieren que el document planner y el microplanner realicen un mayor trabajo, pero también tendrán mas control sobre el texto a producir. 
+
+Uno de los objetivos que tuvimos a la hora de idear una estructura para especificación de frases fue que ésta sea independiente de nuestro problema, que hable en términos del lenguaje que queremos generar (castellano en este caso) y no en término de específicos de este problema (podría referirse a elementos de Z en un caso muy abstracto). De esta forma podremos implementar un realizador que sea independiente de este problema puntual o bien hacer uso de algún realizador de superficie existente sin mayores complicaciones.
+
+
+En la figura~\ref{sec:corpus_analisis} podemos observar la estructura elegida para modelar las oraciones de nuestro trabajo. Esta fue elaborada teniendo en cuenta las reglas introducidas en el capítulo~\ref{sec:microplannin_lexicalization}. Veremos más adelante, en la sección~\ref{TODO}, como construiremos estas especificaciones teniendo en cuenta las reglas antes mencionadas.
+
+%TODO faltaria incluir imagen y descibir un poco esta estructura
+
+
+%\section{Arquitectura}
+
+\section{Lexicalización}
+\label{sec:microplannin_lexicalization}
+
+\section{Generación de expresiones de referencia}
