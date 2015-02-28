@@ -2,6 +2,8 @@
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage[]{algorithm}
+\usepackage{algpseudocode}
 \usepackage{czt}
 \usepackage{float}
 \usepackage{graphicx}
@@ -14,24 +16,37 @@
 \renewcommand{\labelitemi}{$\bullet$}
 \newtheorem{example}{Ejemplo}[section] % Defines the example environment
 
+%TODO \usepackage{program}
+% ver de emprolijar algoritmo y recuadro
+
 \setsecnumdepth{subsection} % activa la numeracion de subsecciones
 \setcounter{tocdepth}{2} %mostrar sub secciones en indice
 
-\begin{document}
+\newcommand{\nlgtext}[1] {``\emph{#1}''}
+\newcommand{\nlgfun}[1] {\texttt{#1}}
+\newcommand{\reglaverb}[2]{\item #1 \\ \hspace*{0.56cm} $\rightarrow$ #2}
 
-%\include{sec/introduccion}
-%\include{sec/ttf}
-%\include{sec/designaciones}
-%\include{sec/nlg_intro}
-%\include{sec/alcance}
-%\include{sec/corpus}
-%\include{sec/estructura_documento}
+\title{Generación de lenguaje natural a partir de clases de prueba del test template framework.}
+
+\begin{document} 
+
+\maketitle
+
+\tableofcontents
+
+\include{sec/introduccion}
+\include{sec/ttf}
+\include{sec/designaciones}
+\include{sec/nlg_intro}
+\include{sec/alcance}
+\include{sec/corpus}
+\include{sec/estructura_documento}
 \include{sec/microplanning}
-%\include{sec/realizacion_ling}
-%\include{sec/realizacion_sup}
-%\include{sec/implementacion}
-%\include{sec/evaluacion}
-%\include{sec/conclusion}
+\include{sec/realizacion}
+\include{sec/realizacion_sup}
+\include{sec/implementacion}
+\include{sec/evaluacion}
+\include{sec/conclusion}
 
 \bibliographystyle{alpha}
 \nocite{*}

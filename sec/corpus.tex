@@ -1,4 +1,4 @@
-\chapter{Descripciones}
+\chapter{Análisis de requerimientos}
 \label{cap:corpus}
 
 El primer paso en la construcción de cualquier sistema de software, incluyendo los sistemas de generación de lenguaje natural, será el de realizar un análisis de requerimientos y a partir de ahí generar una especificación inicial del sistema. 
@@ -11,7 +11,7 @@ Este \emph{corpus de textos} constará de una colección de ejemplos, formados p
 
 Para nuestro trabajo debemos recolectar un conjunto lo suficientemente amplio de ejemplos de clases de prueba que caractericen la variedad de textos que deseamos generar, luego una persona capacitada de leer lenguaje Z deberá describir en lenguaje natural las mismos. Finalmente se deberá revisar este \emph{corpus} inicial y modificarlo si existe algún caso en el que haya alguna descripción que resulte técnicamente imposible de generar o prohibitivamente cara a nivel computacional. Una vez finalizado este proceso tendremos en nuestro poder un \emph{corpus objetivo} que nos servirá para sustentar muchas de las decisiones que tomemos a lo largo del trabajo. Este también nos servirá para realizar una evaluación del sistema una vez implementado, comparando los textos generados por el nuestro sistema con las descripciones del \emph{corpus} realizadas por una persona.
 
-En el Apéndice~\ref{sec:apendice1} se encuentra el corpus utilizado para este trabajo. Para elaborar el mismo recolectamos una serie de clases y casos de prueba generados con Fastest a partir de distintas especificaciones y luego se escribimos manualmente cada una de las descripciones estas clases de prueba. Con las especificaciones y clases de prueba incluidas en el \emph{corpus}, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto tuvimos en cuenta incluir clases de pruebas que cubran todas las expresiones de Z contempladas dentro del alcance de este trabajo y sus posibles combinaciones. También trabajamos con especificaciones sobre distintos dominios de aplicación con el fin de lograr \emph{corpus} que nos sea de utilidad para dar con una solución que sea independiente del dominio de aplicación.
+Se pueden consultar los textos incluidos en el corpus utilizado para este trabajo en \emph{http://dcc.fceia.unr.edu.ar/$\sim$jdetomasi/nlg/corpus/}. Para elaborar el mismo recolectamos una serie de clases y casos de prueba generados con Fastest a partir de distintas especificaciones y luego se escribimos manualmente cada una de las descripciones de  estas clases de prueba. Con las especificaciones y clases de prueba incluidas en el \emph{corpus}, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto tuvimos en cuenta incluir clases de pruebas que cubran todas las expresiones de Z contempladas dentro del alcance de este trabajo y sus posibles combinaciones. También trabajamos con especificaciones sobre distintos dominios de aplicación con el fin de lograr \emph{corpus} que nos sea de utilidad para dar con una solución que sea independiente del dominio de aplicación. En total trabajamos con clases de prueba generadas con \emph{fastest} para 10 especificaciones distintas; del total de clases de prueba correspondientes a estas especificaciones se escogieron las más significativas para describir y se ignoraron aquellas que contenían algún operador no considerado dentro del alcance de este trabajo.
 
 La Figura~\ref{fig:ej_desc_lookup_sp_1} muestra a modo de ejemplo una descripción para la clase de prueba \emph{LookUp\_SP\_1} generada a partir de la especificación para una tabla de símbolos introducida anteriormente (pág.~\pageref{fig:spec_symbol_table}). 
 El \emph{corpus de descripciones} utilizado para este trabajo, constará entonces de una colección de ejemplos como el anterior.
@@ -45,5 +45,149 @@ Descripciones SymbolTable
   \label{fig:ej_desc_lookup_sp_1}
 \end{figure}
 
-\section{Analisis}
+\section{Análisis del corpus}
 \label{sec:corpus_analisis}
+
+Como mencionamos anteriormente muchas decisiones de diseño de nuestro sistema estarán fundamentados en observaciones obtenidas a partir del \emph{corpus}, a partir de éste podremos obtener una especie de especificación para nuestro trabajo.
+
+Lo primero que podemos observar de los textos de ejemplo es la estructura del texto que se mantiene en la descripción de cada clase de prueba. En todas, se comenzará por el nombre de la clase de prueba, seguido por una pequeña descripción y luego una lista de oraciones, una por cada restricción de la clase de prueba que se está describiendo. Esto nos ayudará en el capítulo~\ref{cap:document_planning} para definir la estructura de nuestro documento. 
+
+
+
+También observamos que las designaciones documentadas por el usuario pueden no contener un artículo que acompañe al sustantivo. En estos casos nuestro sistema deberá identificar el mismo en la designación y agregar el artículo apropiado de forma que concuerde en genero y numero con el sustantivo. 
+
+Finalmente, como era de esperarse, pudimos ver que las descripciones en lenguaje natural para los distintos operadores (y las combinaciones de los mismos) a describir son independientes del dominio de aplicación. Por lo que tendremos frases que se repiten independientemente del dominio de aplicación la especificación testeada combinadas con otra resultado del procesamiento de las designaciones. En base a esto encontramos ciertos patrones que se repiten según las distintas combinaciones entre operadores.  Siendo distinto, por ejemplo, describir una relación de \textbf{igualdad} entre dos conjuntos en alguno de los siguientes casos: 
+
+\begin{enumerate}
+	\item sabiendo que uno de ellos posee un único elemento determinado (como es el caso del ejemplo de la figura~\ref{fig:ej_lookup_sp_1})
+	\item sabiendo que uno de ellos es el conjunto vacío.
+\end{enumerate}
+
+\medskip
+Suponiendo que contaramos con una función \emph{verb} capaz de tomar como entrada una expresion Z y generar una frase en lenguaje natural que describa la misma, para el caso anterior, esta debería contemplar las siguientes reglas para producir una frase para los dos casos anteriores:
+
+\medskip
+\begin{enumerate}	 
+\reglaverb{$\{exp1\} = exp2$}{\nlgfun{verb(exp1)} + \nlgtext{es el único elemento de} + \nlgfun{verb(exp2)}}
+\reglaverb{$exp1$ $=$ $\{\}$}{\nlgtext{no hay ningún elemento en}  + \nlgfun{verb(exp1)}}
+\end{enumerate}
+
+Como podemos ver, se deberán resolver recursivamente mediante la misma función las descripciones de los términos correspondientes y luego se combinarás con un texto preestablecido para obtener la frase final.
+Supondremos que nuestra funcion \emph{verb} en los casos en la que la expresión a verbalizar se encuentra designada retorna el texto asociado a esta designación.
+
+Luego de un análisis completo del corpus logramos abstraer un conjunto de reglas para la descripción de cada uno de los operadores de Z incluídos dentro del alcance del trabajo. Estas reglas resultarán indispensables para la tarea de \emph{lexicalización} que deberemos llevar a cabo. 
+
+A continuación detallaremos el conjunto total de estas reglas, agrupadas por operador.
+
+\bigskip
+\begin{itemize} [label={$\triangleright$}, leftmargin=*]
+\item{$=$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$\{exp1\} = exp2$}{\nlgfun{verb(exp1)} + \nlgtext{es el único elemento de} + \nlgfun{verb(exp2)}}
+		\reglaverb{$exp1$ $=$ $\{\}$}{\nlgtext{no hay ningún elemento en}  + \nlgfun{verb(exp1)}}
+		\reglaverb{$exp1 \cap exp2 = \{\}$}{\nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)} + \nlgtext{no tienen ningún elemento en común}}
+		\reglaverb{$exp1 \cap \{exp2\} = \{\}$}{\nlgfun{verb(exp2)} + \nlgtext{no pertenece a} + \nlgfun{verb(exp1)}}
+		\reglaverb{$exp1 = exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es(son) igual(iguales) a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\neq$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \neq \{\}$}{\nlgtext{existe al menos un elemento en} + \nlgfun{verb(exp1)}}
+		\reglaverb{$exp1 \cap exp2 \neq \{\}$}{\nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)} + \nlgtext{tienen al menos un elemento en común}}
+		\reglaverb{$exp1 \neq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no es(son) igual(iguales) a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$<$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 < exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es menor a} + \nlgfun{verb(exp2)}}
+		\reglaverb{$exp1 < 0$}{\nlgfun{verb(exp1)} + \nlgtext{es negativo}}
+	\end{enumerate}
+\item{$\leq$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \leq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es menor o igual a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$>$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 > exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es mayor a} + \nlgfun{verb(exp2)}}
+		\reglaverb{$exp1 > 0$}{\nlgfun{verb(exp1)} + \nlgtext{es positivo}}
+	\end{enumerate}
+\item{$\geq$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \geq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es mayor o igual a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\in$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \in exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\notin$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \notin exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no pertenece(n) a} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\subset$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \subset exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}}
+		\reglaverb{$\{exp1, exp2, \ldots , expn\} \subset expm$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(expm)}}
+		\end{enumerate}
+\item{$\not\subset$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \not\subset exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\subseteq$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \subseteq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{está incluido o es igual a} + \nlgfun{verb(exp2)}}
+		\reglaverb{$\{exp1, exp2, \ldots , expn\} \subseteq exp2$}{ídem inclusión}
+	\end{enumerate}
+\item{$\not\subseteq$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \not\subseteq exp2$ (caso default)}{\nlgtext{existe al menos un elemento en} + \nlgfun{verb(exp1)} + \nlgtext{que no se está en} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\mapsto$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \mapsto exp2$ (caso default)}{\nlgtext{el par ordenado formado por:} + \nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\{a, b, \ldots\}$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$\{\}$}{\nlgtext{el conjunto vacío}}
+		\reglaverb{$\{exp1\}$}{\nlgtext{el conjunto formado por } + \nlgfun{verb(exp1)}}
+		\reglaverb{$\{exp1, exp2, \ldots ,expn\}$ (caso default)}{\nlgtext{el conjunto formado por} + \nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)}}
+	\end{enumerate}
+\item{$\cup$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \cup exp2$ (caso default)}{\nlgtext{elementos en} + \nlgfun{verb(exp1)} + \nlgtext{y en} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$\cap$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$exp1 \cap exp2$ (caso default)}{\nlgtext{elementos en} + \nlgfun{verb(exp1)} + \nlgtext{que también se encuentren en} + \nlgfun{verb(exp2)}}
+	\end{enumerate}
+\item{$f~x$ (aplicación)}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$f~exp1$ (caso default)}{\nlgfun{verb(f)} + \nlgtext{aplicada a} + \nlgfun{verb(exp1)}}
+	\end{enumerate}
+\item{$dom$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$dom(exp1)$ (caso default)}{\nlgtext{dominio de} + \nlgfun{verb(exp1)}}
+	\end{enumerate}
+\item{$ran$}
+	\begin{enumerate}	 
+	\setlength{\itemsep}{7pt}
+		\reglaverb{$ran(exp1)$ (caso default)}{\nlgtext{rango de} + \nlgfun{verb(exp1)}}
+	\end{enumerate}
+\end{itemize}  
+
+Finalmente, en base a las reglas introducidas anteriormente, podemos podemos observar que en su mayoría de las frases a generar se tratan de oraciones bimembres ordenadas como \emph{sujeto + verbo + objeto}. Todas expresadas en tiempo presente. Además, en algunos casos será necesario conjugar el verbo de una oración de forma tal que concuerde con el número del sujeto de la misma. Algo parecido pasa con el atributo en los casos que utilizamos un verbo copulativo en el que deberemos hacer concordar el mismo con numero y género del sujeto. Estas últimas observaciones deberemos tenerla en cuenta en el desarrollo de nuestro realizador lingüístico.

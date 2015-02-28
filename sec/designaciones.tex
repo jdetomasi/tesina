@@ -47,16 +47,19 @@ Siguiendo lo propuesto por Jackson, si en la especificación apareciera el térm
 
 Por otro lado creemos que también resultará de utilidad y otorgará al sistema una mayor flexibilidad permitir al usuario escribir designaciones que puedan resultar ``redundantes'' para la comprensión de la especificación pero de gran ayuda a la hora de generar una descripción en particular. En estos casos cuando nuestro sistema deba describir uno de estos términos designados hará uso del texto incluido en la designación en lugar de intentar describir el mismo como se verá mas adelante.
 
-Finalmente, a partir de un análisis de textos generados para distintas especificaciones, creemos que para tener descripciones fluidas es recomendable designar:
+A partir de un análisis de textos generados para distintas especificaciones, creemos que para tener descripciones fluidas es recomendable designar:
 
-(TODO: sacados del trabajo de federico moya, falta completar a partir de análisis de textos generados)
+\begin{enumerate}
+	\item Nombres de esquemas de operación totales.
+	\item Variables de entrada/salida.
+	\item Variables de estado.
+	\item Tipos básicos.
+	\item Nombres de constructores de tipos libres.
+\end{enumerate}
 
-\begin{enumerate}[itemsep=0pt]
-  \item Tipos básicos.
-  \item Nombres de constructores de tipos libres.
-  \item Definiciones axiomáticas.
-  \item Nombres de esquemas de estado.
-  \item Variables de estado.
-  \item Nombres de esquemas de operación totales.
-  \item Variables de entrada/salida
+Además, para los elementos modelados mediante una función es recomendable designar:
+\begin{enumerate}
+	\item La función (f).
+	\item El dominio (dom f).
+	\item La aplicación (f x).
 \end{enumerate}

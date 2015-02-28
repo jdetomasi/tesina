@@ -1,0 +1,238 @@
+\chapter{Realización de superficie}
+\label{cap:realization}
+En los capítulos anteriores vimos los procesos que necesitan ser llevados a cabo para lograr una especificación del texto a generar. Finalmente, en esta última etapa de nuestro sistema nos concentraremos en estudiar las tareas que deben ser realizadas a fin de transformar esta especificación del texto en texto de superficie, formado por frases, símbolos de puntuación y algunas etiquetas de mark-up necesarias.
+
+Como mencionamos en el capítulo~\ref{cap:microplanning}, nuestra especificación del texto es un árbol en el que las horas representan las frases individuales y los nodos internos establecen como éstas están agrupadas (según estructuras como párrafos, secciones, listas de ítems, etc). En base a esta diferenciación entre los elementos de nuestra especificación del texto podemos distinguir dos grandes aspectos dentro de esta tarea: la \emph{realización estructural} responsable de transformar los nodos internos de nuestra especificación de texto en anotaciones particulares del sistema de presentación y por otro lado, la tarea de \emph{realización lingüística} que se concentrará en generar frases sintáctica, morfológica, ortográficamente correctas.
+%Además, como señalamos en el capítulo~\ref{sec:corpus_analisis}, deberemos agregar un artículo como determinante en el caso de ser necesario. 
+
+\section{Realización estructural}
+\label{cap:structure_realization}
+
+%La tarea de realización estructural puede resultar relativamente sencilla, pero es importante que se realice por separado a fin de poder generar textos para distintos sitemas de presentacion utilizando la misma realizacion linguistica. Es decir, separar las cuestiones del sistema de presentacion utilizado de las frases u oraciones generadas por nuestro sistema.
+
+Como mencionamos anteriormente, en la etapa de realización estructural se deberán transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. Hoy en día no debemos ocuparnos de cuestiones de formateo de bajo nivel, sino que la mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización.
+
+Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} el código \LaTeX para una lista de items de una descripción y en la figura~\ref{fig:ej_html} la realización para la misma especificación de texto pero en lenguaje HTML, donde el texto contenido en ambos ejemplos es exactamente el mismo, sólo diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
+
+\begin{figure}[H]
+  \begin{verbatim}
+  LookUp\_SP\_1: Se busca un símbolo en la tabla.  
+  \begin{itemize}
+    \item{Cuando:}
+    \begin{itemize}
+      \item{El símbolo a buscar pertenece ...}
+      \item{El símbolo a buscar es el único ...}   
+    \end{itemize}
+  \end{itemize}
+  \end{verbatim}
+  \caption{Texto final en \LaTeX.}
+  \label{fig:ej_latex}
+\end{figure}
+
+\begin{figure}[H]
+  \begin{verbatim}
+  LookUp_SP_1: Se busca un símbolo en la tabla.  
+  <ul>
+    <li>Cuando:</li>
+    <ul>
+      <li>El símbolo a buscar pertenece ...</li>
+      <li>El símbolo a buscar es el único ...</li>
+    </ul>
+  </ul>
+  \end{verbatim}
+  \caption{Texto final en HTML.}
+  \label{fig:ej_html}
+\end{figure}
+
+Podemos pensar el problema de realización estructural como el proceso de mapear los constructores lógicos de nuestra especificación del texto en constructores lógicos del lenguaje de presentación a utilizar. En nuestro caso sólo tenemos que considerar dos elementos: \emph{TSDocumento} y \emph{TSListaItems}.
+
+Para realizar \emph{TSDocumento} se deberán agregar algunas etiquetas de encabezado necesarias según el tipo del documento, deberemos especificar el título y generalmente deberemos delimitar el principio y final del texto a incluir en el documento. Luego deberemos realizar recursivamente los elementos contenidos en el documento (\emph{TSListaItems}) y ubicarlos adecuadamente en el cuerpo del mismo. En la figura~\ref{fig:ej_latex2} podemos ver un ejemplo del código que deberíamos generar para la realización estructural del documento, la realización de \emph{TSListaItems} se puede apreciar en el ejemplo anterior de la figura~\ref{fig:ej_latex}.
+
+\begin{figure}[H]
+  \begin{verbatim}
+  \documentclass{article}
+  \title{titulo}
+  
+  \begin{document}
+  \maketitle
+      ...
+  \end{document}
+  \end{verbatim}
+  \caption{Código \LaTeX para estructura del documento.}
+  \label{fig:ej_latex2}
+\end{figure}
+
+
+\section{Realización lingüística}
+\label{cap:linguistic_realization}
+
+% introducir reglas del leguaje (concordancia)
+% explicar lexicalizacion para cada elemento de nuestra especificacion de frase
+
+La realización lingüística desempeñará su tarea al nivel de la oración. Como mencionamos anteriormente, la misión de esta tarea será transformar las especificaciones de frases de nuestro sistema en oraciones bien formadas. Entendiendo por oración bien formada aquellas que cumplan con las reglas gramaticales del lenguaje (español en nuestro caso); estas reglas se ocuparán tanto de la morfología como de la sintaxis de las mismas. Entonces, la realización lingüística consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y morfológicamente correcto.
+
+Es importante también, que el texto producido sea ortográficamente correcto. Para esto, asumiremos que las designaciones provistas por el usuario son ortogáficamente correctas, no tendremos que comprometer a que las palabras generadas por nuestro sistema también lo sean y finalmente nos deberemos encargar de que la primer palabra de una oración comience con mayúscula y de colocar un signo de puntuación al final de la misma.
+
+En base a las reglas introducidas en el capítulo~\ref{sec:corpus_analisis} podemos extraer algunos de los aspectos sintácticos y morfológicos que debemos tener en cuenta durante esta etapa para ser capaces de producir los textos esperados. En particular nos focalizaremos en tres reglas de \emph{concordancia gramatical} que nuestro realizador lingüístico deberá contemplar, extraídas del ``Diccionario panhispánico de dudas'' de la Real Academia Española~\cite{???}.
+
+\medskip
+\noindent
+\textbf{\emph{Concordancia entre artículo y sustantivo.}} Establece que el artículo debe concordar en género y número con el sustantivo al que acompaña.
+\noindent
+Como mencionamos anteriormente, el usuario podría no incluir el artículo en una designación. Por ejemplo, continuando con el ejemplo de la figura~\ref{fig:ej_designacion}, se podría haber omitido el artículo de ``el símbolo a buscar'' y solo haber designado:
+\begin{figure}[H]
+	\center
+    $s? \approx \text{símbolo a buscar}$
+\end{figure}
+\noindent
+Será entonces nuestro sistema el encargado de agregar el artículo de ser necesario\footnote{Podría no ser necesario, por ejemplo si el núcleo de la frase designada fuese un nombre propio.}, asegurándose de que el mismo concuerde con el sustantivo. Para esto deberemos ser capaces de identificar el género y número del sustantivo mediante el uso de un analizador morfológico.
+
+\medskip
+\noindent
+\textbf{\emph{Concordancia entre sujeto y atributo de verbo copulativo.}} Establece que el atributo de un verbo copulativo (ser, estar, parecer) debe concordar en género y número con el sujeto.
+\noindent
+Veamos por ejemplo la regla para describir el operador $\subset$ definida en el capítulo~\ref{sec:corpus_analisis}
+
+\begin{figure}[H]
+	$exp1 \subset exp2$ \\
+	\hspace*{0.56cm} $\rightarrow$ \nlgfun{verb(exp1)} + \nlgtext{está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}
+\end{figure}
+\noindent
+Como podemos ver, tenemos el verbo copulativo \emph{``está''} acompañado del atributo \emph{``incluido''}. En este caso deberemos escojer el genero y numero del atributo de forma tal que concuerde con el sujeto.
+
+\medskip
+\noindent
+\textbf{\emph{Concordancia entre sujeto y verbo.}} El verbo debe concordar con el sujeto en número y persona. En el caso de haber varios sujetos, la concordancia debe hacerse con el verbo en plural.
+\noindent
+Observemos por ejemplo la regla por defecto para el operador $\subset$:
+
+\begin{figure}[H]
+	$\{exp1, exp2, \ldots , expn\} \subset expm$ \\
+	\hspace*{0.56cm} $\rightarrow$\nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(expm)}
+\end{figure}
+
+\noindent
+Si la expresión a la izquierda del $\subset$ es un conjunto unitario deberemos usar el verbo \emph{``pertenece''} (en singular), pero de tratarse de un conjunto con más de un elemento, deberemos usar el verbo en plural.
+
+\medskip
+Otra cuestión a observar, además de las reglas de concordancia ya vistas, es que nuestro sistema deberá generar casi exclusivamente oraciones bimembres ordenadas como \emph{sujeto + verbo + objeto}. Siempre expresadas en tiempo presente. Por lo tanto nuestro realizador siempre deberá respetar el orden de palabras y tiempo verbal mencionado para realizar los elementos de tipo \emph{Oracion} de nuestra especificación de frase. 
+
+Debemos aclarar que en las reglas mencionadas anteriormente podemos observar oraciones en las cuales el orden de palabras difiere del mencionado anteriormente, por ejemplo: la frase ``no hay elementos en ...'' cuyo orden es \emph{verbo + sujeto + objeto}. Para poder generar estas frases no modelaremos estos casos como una \emph{Oracion} sino como \emph{ElementosYuxtapuestos} entre una \emph{FraseEnlatada} con el texto ``no hay elementos en'' y el objeto al que se haga referencia. Podemos hacerlo de esta forma ya que no tenemos necesidad procesar la especificación de la frase ``no hay elementos en'' ya que sabemos de antemano que es sintáctica y morfológicamente correcta. Esto no podríamos asegurarlo si el sujeto de la oración pudiese ser una designación por ejemplo, pero en este caso, ya lo conocemos.
+
+%hablar un poco sobre tiempo verbal
+%Introducir acá con ejemplos las reglas sobre concordancia necesarias
+%TODO agregar ejemplos para cada frase
+%TODO hablar algo de negacion?
+
+\bigskip
+En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y mofológicamente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
+
+\medskip
+\noindent
+\textbf{\emph{FraseEnlatada.}} La realización de una frase enlatada será trivial, simplemente habrá que extraer el texto contenido en la misma sin necesidad de realizar ningún tipo de procesamiento.
+
+\begin{algorithm}[H]
+\caption{Realización lingüística frase enlatada.}
+\begin{algorithmic}[1]
+\Function {verbalizar}{FraseEnlatada $frase$}
+\State \textbf{return} $frase.texto$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\medskip
+\noindent
+\textbf{\emph{ElementosYuxtapuestos.}} Representa una concatenación de frases. El resultado de la verbalización deberá ser un texto que resulte de la unión de las verbalizaciones individuales de cada uno de los elementos contenidos, agregando los espacios correspondientes entre estos\footnote{Suponemos que la función \emph{concat} además de concatenar los elementos agrega un espacio entre cada uno de éstos.} y respetando el orden en que se encuentren. 
+
+\begin{algorithm}[H]
+\caption{Realización lingüística elementos yuxtapuestos.} 
+\begin{algorithmic}[1]
+\Function {verbalizar}{ElementosYuxtapuestos $elem$}
+\For{\textbf{each} $e$ \textbf{in} $elem.elementos$}
+\State $resultado\gets \text{concat}(resultado, \text{verbalizar}(e))$
+\EndFor
+\State \textbf{return} $resultado$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\medskip
+\noindent
+\textbf{\emph{ElementosCoordinados.}} Se trata de una serie de elementos que deberán ser verbalizados individualmente y unidos, de una forma similar a la anterior, a fin de obtener una conjunción de frases.
+
+\begin{algorithm}[H]
+\caption{Realización lingüística elementos yuxtapuestos.}
+\begin{algorithmic}[1]
+\Function {verbalizar}{ElementosCoordinados $elem$}
+\For{\textbf{each} $e$ \textbf{in} $elem.elementos$}
+\If{esPrimerElemento($e$, $elem$)}
+\State $resultado\gets \text{verbalizar}(e)$
+\ElsIf{esUltimoElemento($e$, $elem$)}
+\State $resultado\gets \text{concat}(resultado, \text{\emph{``y''}}, \text{verbalizar}(e))$
+\Else
+\State $resultado\gets \text{concat}(resultado, \text{\emph{``,''}}, \text{verbalizar}(e))$
+\EndIf
+\EndFor
+\State \textbf{return} $resultado$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\medskip
+\noindent
+\textbf{\emph{FraseNominal.}} Para verbalizar una frase nominal, deberemos unir en orden: \emph{determinante} (de ser requerido), \emph{nucleo} y la verbalización del \emph{complemento}, agregando los espacios correspondientes entre medio.
+
+\begin{algorithm}[H]
+\caption{Realización lingüística FraseNominal.}
+\begin{algorithmic}[1]
+\Function {verbalizar}{FraseNominal $frase$}
+\State $nucleo\gets frase.nucleo$
+\State $complemento\gets \text{verbalizar}(frase.complemento)$
+\If{esNombre($nucleo$)}
+\State $determinante\gets \text{determinarArticulo}(frase)$
+\State $resultado\gets \text{concat}(determinante, nucleo, complemento)$
+\Else
+\State $resultado\gets \text{concat}(nucleo, complemento)$
+\EndIf
+\Statex
+\State \textbf{return} $resultado$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\noindent
+La función \emph{determinarArticulo} deberá recuperar el determinate apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
+
+\medskip
+\noindent
+\textbf{\emph{FraseVerbal.}} No realizaremos un análisis individual de este caso ya que la realización del mismo dependerá de otros elementos dentro de la oración. Al verbalizar un elemento de tipo \emph{Oracion} analizaremos la \emph{FraseVerbal} que corresponde al predicado del mismo.
+
+
+\medskip
+\noindent
+\textbf{\emph{Oracion.}} Este es el caso mas interesante para nuestro verbalizador, deberemos generar una oración correcta en base a las reglas antes vistas. 
+
+\begin{algorithm}[H]
+\caption{Realización lingüística Oracion.}
+\begin{algorithmic}[1]
+\Function {verbalizar}{Oracion $oracion$}
+\State $sujeto\gets \text{verbalizar}(oracion.sujeto)$
+\State $verbo\gets \text{determinarVerbo}(oracion)$
+\State $atributo\gets \text{determinarAtributo}(oracion)$
+\State $complemento\gets \text{verbalizar}(oracion.predicado.complemento)$
+\State $estaNegada\gets oracion.predicado.negada$
+\Statex
+\If{$estaNegada$}
+\State $resultado\gets \text{concat}(sujeto, \text{negacion}(verbo), atributo, complemento)$
+\Else
+\State $resultado\gets \text{concat}(sujeto, verbo, atributo, complemento)$
+\EndIf
+\Statex
+\State \textbf{return} $resultado$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\noindent
+A fin de contemplar las reglas de concordancia introducidas anteriormente, le prestaremos especial atención al verbo y al atributo de la frase verbal corresponde predicado de la oración, verbalizando individualmente tanto el sujeto (que probablemente sea una frase nominal) como el complemento de la frase verbal. La función \emph{determinarVerbo} será la encargada de conjugar el verbo de manera que concuerde en número y persona con el sujeto, mientras que la función \emph{determinarAtributo} será la encargada de determinar el atributo de forma que concuerde en número y género también con el sujeto. Si se trata de una negación (por ejemplo \emph{``... no pertenece a ...''}) deberemos negar el verbo en cuestión en la oración final. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
