@@ -99,7 +99,7 @@ A continuación describiremos brevemente cada uno de estos elementos, profundiza
 \section{Lexicalización}
 \label{sec:microplanning_lexicalization}
 
-Como mencionamos anteriormente, el proceso de lexicalización será el encargado de elegir que palabras particulares, constructores sintácticos usar para comunicar la información contenida en el document plan. En esta etapa deberemos producir una especificación de frase para cada mensaje contenido en el document plan. En nuestro caso debemos hacerlo utilizando como especificación el conjunto de reglas definidas anteriormente en base al \emph{corpus} en el capítulo~\ref{sec:corpus_analisis}.
+Como mencionamos anteriormente, el proceso de lexicalización será el encargado de elegir que palabras particulares y constructores sintácticos usar para comunicar la información contenida en el document plan. En esta etapa deberemos producir una especificación de frase para cada mensaje contenido en el document plan. En nuestro caso debemos hacerlo utilizando como especificación el conjunto de reglas definidas anteriormente en base al \emph{corpus} en el capítulo~\ref{sec:corpus_analisis}.
 
 
 El módulo encargado de esta tarea en nuestro sistema deberá ser capaz de generar una especificación de frase a partir de la expresión Z contenida en un mensaje del document plan. Primero deberá verificar si la expresión en cuestión se encuentra designada, en este caso, deberá construir una especificación de frase en base a su designación. De lo contrario deberá intentar construirla recursivamente de acuerdo a las reglas antes mencionadas. En la figura~\ref{fig:algoritmo_lexicalizacion} podemos ver un bosquejo del algoritmo del comportamiento que deseamos que tenga nuestro sistema. Este ejemplo es sólo para ilustrar el comportamiento deseado durante esta etapa. El algoritmo real resulta un poco más complejo y deberá construir una \emph{EspecificacionFrase} construyendo y componiendo sintagmas y otros de los elementos definidos en lugar del texto que vemos en el ejemplo. 
@@ -109,7 +109,7 @@ El módulo encargado de esta tarea en nuestro sistema deberá ser capaz de gener
 \caption{Bosquejo Lexicalización.}
 \begin{algorithmic}
 \Function {lexicalizacion}{$exp$}
-\If{$estaDesignada(exp)$}
+\If{$esta\_designada(exp)$}
 \State $ret\gets \text{designacion}(exp)$
 \Else
 \State $ret\gets \text{lexicalizacion'}(exp)$

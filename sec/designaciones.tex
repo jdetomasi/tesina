@@ -30,9 +30,7 @@ Los sistemas de generación de lenguaje natural generalmente utilizan un reposit
 
 \section{Que designar en una especificación Z}
 
-TODO! esta bien ubicado esto acá ?
-
-Si bien Jackson~\cite{jackson} propone designar la menor cantidad de fenómenos posibles y definir el resto en términos de estos, para el objetivo de nuestro trabajo puede ser beneficioso ser más flexibles en este aspecto. Por ejemplo, consideremos las siguientes designaciones para la especificación de un sistema para una base de datos de películas.
+Si bien Jackson~\cite{jackson} propone designar la menor cantidad de fenómenos posibles y definir el resto en términos de estos, para el objetivo de éste trabajo puede ser beneficioso ser más flexibles en este aspecto. Por ejemplo, consideremos las siguientes designaciones para la especificación de un sistema para una base de datos de películas.
 
 \begin{figure}[H]
   \begin{align*} 
@@ -43,12 +41,39 @@ Si bien Jackson~\cite{jackson} propone designar la menor cantidad de fenómenos 
 \end{figure}
 
 %TODO cambiar este ejemplo amigo! (marlon brando? posta? algun actor vivo?)
-Siguiendo lo propuesto por Jackson, si en la especificación apareciera el término: ActuaronJuntosPelicula(x, y) -verdadero para dos actores que hayan actuado juntos en alguna película-, éste podría definirse en términos las designaciones anteriores y no debería designarse. Pero en este caso para generar, por ejemplo, el texto ``Al Pacino y Marlon Brando actuaron juntos en la película El Padrino'' a partir de \emph{ActuoEn(``Al Pacino'', ``El Padrino'')} y \emph{ActuoEn(``Marlon Brando'', ``El Padrino'')} necesitaríamos procesar las designaciones teniendo en cuenta cuestiones referentes al dominio de aplicación. Y esto atentaría contra nuestros intereses de lograr un sistema de generación de lenguaje natural independiente del dominio de aplicación.
+Siguiendo lo propuesto por Jackson, si en la especificación apareciera el predicado: 
 
-Por otro lado creemos que también resultará de utilidad y otorgará al sistema una mayor flexibilidad permitir al usuario escribir designaciones que puedan resultar ``redundantes'' para la comprensión de la especificación pero de gran ayuda a la hora de generar una descripción en particular. En estos casos cuando nuestro sistema deba describir uno de estos términos designados hará uso del texto incluido en la designación en lugar de intentar describir el mismo como se verá mas adelante.
+\begin{figure}[H]
+\center
+ActuaronJuntosPelicula(x, y)
+\end{figure}
 
-A partir de un análisis de textos generados para distintas especificaciones, creemos que para tener descripciones fluidas es recomendable designar:
+Que resulta verdadero para dos actores que hayan actuado juntos en alguna película. Éste podría definirse en términos las designaciones anteriores y, según Jackson, no debería designarse. Para nuestro caso en particular, para generar, por ejemplo, el texto:
 
+\begin{figure}[H]
+\center
+``Samuel L. Jackson	 y Uma Thurman actuaron juntos en la película Pulp Fiction''
+\end{figure}
+
+\bigskip
+\noindent
+A partir de:
+
+\begin{enumerate}
+\item \emph{ActuoEn(``Samuel L. Jackson'', ``Pulp Fiction'')}
+\item \emph{ActuoEn(``Uma Thurman'', ``Pulp Fiction'')}
+\end{enumerate}
+
+\bigskip
+\noindent
+Necesitaríamos procesar las designaciones teniendo en cuenta cuestiones referentes al dominio de aplicación. Y esto atentaría contra nuestros intereses de lograr un sistema de NLG independiente del dominio de aplicación.
+
+Por otro lado creemos que también resultará de utilidad y otorgará al sistema una mayor flexibilidad permitir al usuario escribir designaciones que puedan resultar ``redundantes'' para la comprensión de la especificación pero de gran ayuda a la hora de generar una descripción en particular, como el ejemplo antes mencionado. En estos casos cuando nuestro sistema deba describir un término designado hará uso del texto incluido en la designación en lugar de intentar describir el mismo como veremos más adelante.
+
+\bigskip
+Finalmente, a partir de un análisis de textos generados para distintas especificaciones, creemos que, a fin de poder generar textos fluídos y naturales para el lector, es recomendable designar:
+
+\bigskip
 \begin{enumerate}
 	\item Nombres de esquemas de operación totales.
 	\item Variables de entrada/salida.

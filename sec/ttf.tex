@@ -8,6 +8,7 @@ La hipótesis fundamental detrás del testing basado en modelos es que, un progr
 A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z.
 
 \section{Ejemplo: Symbol Table}
+\label{sec:ej-symbolTable}
 
 Una tabla de símbolos es una estructura de datos utilizada por un compilador o interprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, scope de variables, etc. 
 En general en una tabla de símbolos se realizan dos operaciones: inserción y búsqueda. La primera para agregar un símbolo a la tabla y la segunda operación nos permitirá recuperar la información para un símbolo ya cargado en la tabla.
@@ -146,13 +147,13 @@ En la Figura ~\ref{fig:ej_tcl_lookup} podemos ver el resultado de aplicar DNF y 
   \caption{Clases de prueba generadas para operación LookUp.}
 \end{figure}
 
-\section{Fastest.}
+\section{Fastest}
 
-Fastest\footnote{http://www.flowgate.net/tools/Fastest.tar.gz} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo mas posible, el proceso de testing funcional basado en especificaciones Z. Fastest se encuentra implementado mayormente en lenguaje Java haciendo uso de las librerías del framework CZT\footnote{http://czt.sourceforge.net/} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
+\emph{Fastest}\footnote{http://www.flowgate.net/tools/Fastest.tar.gz} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo mas posible, el proceso de testing funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java haciendo uso de las librerías del framework CZT\footnote{http://czt.sourceforge.net/} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-Fastest fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en templates para traducir los casos de prueba obtenidos \cite{cristia_pluss}. Sin embargo, las técnicas utilizadas para esto eran dependientes del dominio de aplicación en cuestión.
+\emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en templates para traducir los casos de prueba obtenidos \cite{cristia_pluss}. Sin embargo, las técnicas utilizadas para esto eran dependientes del dominio de aplicación en cuestión.
 
-Uno de los objetivos de este trabajo fue extender la implementación de Fastest para permitir al usuario generar traducciones o descripciones de las clases de prueba previamente generadas con la herramienta, y que las mismas resulten independientes del dominio de aplicación.
-El sistema de NLG desarrollado en este trabajo fue íntegramente implementado como una extensión de Fastest. Para esto hemos trabajado con la versión 1.6 de Fastest.
+Uno de los objetivos de este trabajo fue extender la implementación de \emph{Fastest} para permitir al usuario generar traducciones o descripciones de las clases de prueba previamente generadas con la herramienta, y que las mismas resulten independientes del dominio de aplicación.
+El sistema de NLG desarrollado en este trabajo fue íntegramente implementado como una extensión de \emph{Fastest}. Para esto hemos trabajado con la versión 1.6 de \emph{Fastest}.
 
 En el Apéndice X desarrollaremos algunos de los detalles mas importantes de esta implementación.

@@ -190,7 +190,7 @@ En base a los aspectos mencionados anteriormente analizaremos la tarea de realiz
 \State $nucleo\gets frase.nucleo$
 \State $complemento\gets \text{verbalizar}(frase.complemento)$
 \If{esNombre($nucleo$)}
-\State $determinante\gets \text{determinarArticulo}(frase)$
+\State $determinante\gets \text{determinar\_articulo}(frase)$
 \State $resultado\gets \text{concat}(determinante, nucleo, complemento)$
 \Else
 \State $resultado\gets \text{concat}(nucleo, complemento)$
@@ -202,7 +202,7 @@ En base a los aspectos mencionados anteriormente analizaremos la tarea de realiz
 \end{algorithm}
 
 \noindent
-La función \emph{determinarArticulo} deberá recuperar el determinate apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
+La función \emph{determinar\_articulo} deberá recuperar el determinate apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
 
 \medskip
 \noindent
@@ -218,8 +218,8 @@ La función \emph{determinarArticulo} deberá recuperar el determinate apropiado
 \begin{algorithmic}[1]
 \Function {verbalizar}{Oracion $oracion$}
 \State $sujeto\gets \text{verbalizar}(oracion.sujeto)$
-\State $verbo\gets \text{determinarVerbo}(oracion)$
-\State $atributo\gets \text{determinarAtributo}(oracion)$
+\State $verbo\gets \text{determinar\_verbo}(oracion)$
+\State $atributo\gets \text{determinar\_atributo}(oracion)$
 \State $complemento\gets \text{verbalizar}(oracion.predicado.complemento)$
 \State $estaNegada\gets oracion.predicado.negada$
 \Statex
@@ -235,4 +235,4 @@ La función \emph{determinarArticulo} deberá recuperar el determinate apropiado
 \end{algorithm}
 
 \noindent
-A fin de contemplar las reglas de concordancia introducidas anteriormente, le prestaremos especial atención al verbo y al atributo de la frase verbal corresponde predicado de la oración, verbalizando individualmente tanto el sujeto (que probablemente sea una frase nominal) como el complemento de la frase verbal. La función \emph{determinarVerbo} será la encargada de conjugar el verbo de manera que concuerde en número y persona con el sujeto, mientras que la función \emph{determinarAtributo} será la encargada de determinar el atributo de forma que concuerde en número y género también con el sujeto. Si se trata de una negación (por ejemplo \emph{``... no pertenece a ...''}) deberemos negar el verbo en cuestión en la oración final. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
+A fin de contemplar las reglas de concordancia introducidas anteriormente, le prestaremos especial atención al verbo y al atributo de la frase verbal corresponde predicado de la oración, verbalizando individualmente tanto el sujeto (que probablemente sea una frase nominal) como el complemento de la frase verbal. La función \emph{determinar\_verbo} será la encargada de conjugar el verbo de manera que concuerde en número y persona con el sujeto, mientras que la función \emph{determinar\_atributo} será la encargada de determinar el atributo de forma que concuerde en número y género también con el sujeto. Si se trata de una negación (por ejemplo \emph{``... no pertenece a ...''}) deberemos negar el verbo en cuestión en la oración final. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
