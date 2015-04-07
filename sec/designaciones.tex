@@ -1,30 +1,82 @@
 \chapter{Designaciones}
 
 Un modelo formal, como una especificación Z en este caso, es una abstracción de la realidad. Sin embargo, se realiza una especificación para escribir un programa que finalmente es usado en el mundo real. En consecuencia, existe una relación entre el modelo y la realidad.
-Normalmente en estos casos, cuando especificamos un sistema formalmente, es una practica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de la aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
+Normalmente en estos casos, cuando especificamos un sistema formalmente, es una practica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
 Sin esta documentación el modelo sería nada más que una teoría axiomática más sin conexión con la realidad. 
 
-Para documentar las designaciones usaremos una sintaxis similar\footnote{A diferencia de Jackson escribiremos el término formal del lado izquierdo y el texto informal en lenguaje natural del otro lado.} a la propuesta por Jackson~\cite{jackson}.
+Para documentar las designaciones usaremos la sintaxis propuesta por Jackson~\cite{jackson}:
 
 \begin{figure}[H]
   \centering
-  \textbf{termino\_formal} $\approx$ \emph{texto en lenguaje natural}
+  \emph{texto informal} $\approx$ \textbf{termino\_formal}
 \end{figure}
 
-El símbolo $\approx$ demarca la frontera entre el mundo formal o lógico (a la izquierda) y el mundo real (a la derecha). Del lado izquierdo estará el término formal a designar, este será un elemento de la especificación mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
+El símbolo $\approx$ demarca la frontera entre el mundo real (a la izquierda) y el mundo formal o lógico (a la derecha). Del lado derecho estará el término formal a designar, este será un elemento de la especificación, mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
 
-Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{fig:spec_symbol_table}), podríamos tener las siguientes designaciones para la operación \emph{LookUp}:
+Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{sec:ej-symbolTable}), podríamos contar (entre otras) con las siguientes designaciones:
 
 \begin{figure}[H]
   \begin{align*} 
-    &LookUp && \approx \text{Se intenta buscar un símbolo en la tabla.} \\
-    &s? && \approx \text{El símbolo a buscar.} \\
-    &st~x && \approx \text{Información asociada al símbolo x.}
+    &\text{Símbolo a buscar} && \approx &&&s? \\
+    &\text{Información asociada al símbolo $x$} && \approx &&&st~x
   \end{align*}
+  \caption{Algunas designaciones para \emph{SymbolTable}.}
   \label{fig:ej_designacion}
 \end{figure}
 
-Estas designaciones resultan de mucha utilidad. En primer instancia para cuando se empieza a escribir la especificación, la designación servirá para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Por último, específicamente relacionado con los objetivos de este trabajo, estas designaciones nos resultarán un recurso primordial para la generación de descripciones independientes del dominio de aplicación.
+
+Para Jackson, las designaciones sirven en primer instancia para cuando se empieza a escribir la especificación, para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Jackson propone construir un \emph{``puente angosto''} entre la especificación y los elementos del dominio, escribiendo la menor cantidad de designaciones posibles y designando otros términos en base a las anteriores.
+
+
+La función que cumplirán las designaciones en éste trabajo difiere un poco de la propuesta por Jackson. Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
+
+Veamos, por ejemplo, las siguientes expresiones pertenecientes a dos clases de prueba de dos especificaciones distintas:
+
+\begin{figure}[H]
+\begin{enumerate}
+\item $\dom st = \{ s? \}$
+\item $\dom cajas = \{ num? \}$
+\end{enumerate}
+\end{figure}
+
+La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación que forma parte de la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarle un significado distinto (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para estas, las descripciones podrían ser las siguientes:
+
+\begin{figure}[H]
+\begin{enumerate}
+\item \emph{``El símbolo a buscar es el único cargado en la tabla de símbolos.''}
+\item \emph{``El número de caja de ahorro ingresado es el único cargado en el banco.''}
+\end{enumerate}
+\end{figure}
+
+Los sistemas de generación de lenguaje natural generalmente utilizan un repositorio de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro sistema de NLG.
+
+Por otro lado, en algunas situaciones, contar con una mayor cantidad de designaciones nos permitirá generar mejores descripciones. Designaciones que podrían resultar redundantes para una persona que lea la especificación podrían, por ejemplo, permitirle a nuestro sistema de NLG generar textos mas naturales. En el capítulo~\ref{TODO} nos explayaremos más sobre este tema e introduciremos una pequeña guía sobre qué designar a fin de proveerle la información necesaria a nuestro sistema de NLG para que pueda producir textos más fluidos y naturales.
+
+Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la Figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y marcaremos esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En el capítulo~\ref{TODO} desarrollaremos mas en detalle esta particularidad. 
+
+\begin{comment}
+
+Estas asociaciones resultarán de vital importancia para nuestro trabajo. Serán fundamentales para nuestra misión de dar con una solución independiente del dominio de aplicación. Contemplemos, por ejemplo, 
+
+
+
+
+
+
+En los próximos capítulos veremos que hay ciertas frases del texto de las descripciones que dependerá de las expresiones que se intentan describir (en este caso podemos TODO \emph{``es el único''}), pero también veremos que hay muchas otras frases que resultan de las designaciones que acompañan al modelo. Estas juntos con las clases de prueba resultarán una fuente de información para nuestro sistema de NLG. 
+
+
+Si bien estas expresiones resultan equivalentes, es gracias a las designaciones de ambas especificaciones que asumirán un significado totalmente diferente. 
+
+
+
+
+
+Serán gracias a las designaciones que le daremos un significado distinto a cada una de las expresiones anteriores. Según el caso, estaremos haciendo referencia a:
+
+
+
+Por último, específicamente relacionado con los objetivos de este trabajo, estas designaciones nos resultarán un recurso primordial para la generación de descripciones independientes del dominio de aplicación.
 
 Los sistemas de generación de lenguaje natural generalmente utilizan un repositorio de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro trabajo.
 
@@ -88,3 +140,5 @@ Además, para los elementos modelados mediante una función es recomendable desi
 	\item El dominio (dom f).
 	\item La aplicación (f x).
 \end{enumerate}
+
+\end{comment}
