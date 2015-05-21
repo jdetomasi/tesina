@@ -16,33 +16,37 @@ En el apéndice~\ref{ape:corpus} se pueden consultar los textos incluidos en el 
 La Figura~\ref{fig:ej_desc_lookup_sp_1} muestra a modo de ejemplo una descripción para la clase de prueba \emph{LookUp\_SP\_1} generada a partir de la especificación para una tabla de símbolos introducida anteriormente (pág.~\pageref{fig:spec_symbol_table}). 
 El \emph{corpus de descripciones} utilizado para este trabajo, constará entonces de una colección de ejemplos similares a éste.
 
-%TODO agregar designaciones
 \begin{figure}[H]
-  \centering
-   \begin{schema}{LookUp\_ SP\_ 1}\\
-  		LookUp\_ VIS 
-  		\where
-  	 	s? \in \dom st \\
- 		\dom st = \{ s? \}
-  	\end{schema}
-  \caption{Clase de prueba para operación LookUp.}
-  \label{fig:ej_lookup_sp_1}
-\end{figure}
+\indent \emph{Clase de prueba para operación LookUp}\\
+\begin{schema}{LookUp\_ SP\_ 1}\\
+  LookUp\_ VIS 
+  \where
+    s? \in \dom st \\
+    \dom st = \{ s? \}
+\end{schema}
 
-\begin{figure}[H]
-Descripciones SymbolTable 
+\indent \emph{Designaciones SymbolTable}\\
+
+\begin{itemize}[label={--}]
+  \item símbolo a buscar $\approx s?$
+  \item símbolos cargados en la tabla $\approx \dom st$
+\end{itemize}
 
 \bigskip
-\textbf{LookUp\_SP\_1:} Se busca un símbolo en la tabla.  
-  \begin{itemize}
-   \item{Cuando:}
-   \begin{itemize}
-  	  \item{El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.}
-  	  \item{El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.}   
-   \end{itemize}
-  \end{itemize}
-  \caption{Descripción en lenguaje natural para \emph{LookUp\_SP\_1}.}
-  \label{fig:ej_desc_lookup_sp_1}
+\indent \emph{Descripción en lenuguaje natural para LookUp\_SP\_1}\\
+
+\fbox{\begin{minipage}{13 cm}
+  \textbf{LookUp\_SP\_1:} Se busca un símbolo en la tabla.  
+    \begin{itemize}
+     \item{Cuando:}
+     \begin{itemize}
+  	    \item{El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.}
+  	    \item{El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.}   
+     \end{itemize}
+    \end{itemize}
+\end{minipage}}
+
+\caption{Corpus de textos.}
 \end{figure}
 
 \section{Análisis del corpus}
@@ -110,116 +114,107 @@ En el bosquejo anterior, abstraemos mediante la función \emph{designacion} la t
 
 Finalmente, presentaremos un conjunto de reglas para la verbalización de expresiones, construido a partir de un análisis de los textos de ejemplo presentes en el \emph{corpus}.
 
-\bigskip
-\begin{itemize} [label={$\triangleright$}, leftmargin=*]
-\item{$=$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$\{exp1\} = exp2$}{\nlgfun{verb(exp1)} + \nlgtext{es el único elemento de} + \nlgfun{verb(exp2)}}
-		\reglaverb{$exp1$ $=$ $\{\}$}{\nlgtext{no hay ningún elemento en}  + \nlgfun{verb(exp1)}}
-		\reglaverb{$exp1 \cap exp2 = \{\}$}{\nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)} + \nlgtext{no tienen ningún elemento en común}}
-		\reglaverb{$exp1 \cap \{exp2\} = \{\}$}{\nlgfun{verb(exp2)} + \nlgtext{no pertenece a} + \nlgfun{verb(exp1)}}
-		\reglaverb{$exp1 = exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es(son) igual(iguales) a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\neq$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \neq \{\}$}{\nlgtext{existe al menos un elemento en} + \nlgfun{verb(exp1)}}
-		\reglaverb{$exp1 \cap exp2 \neq \{\}$}{\nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)} + \nlgtext{tienen al menos un elemento en común}}
-		\reglaverb{$exp1 \neq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no es(son) igual(iguales) a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$<$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 < exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es menor a} + \nlgfun{verb(exp2)}}
-		\reglaverb{$exp1 < 0$}{\nlgfun{verb(exp1)} + \nlgtext{es negativo}}
-	\end{enumerate}
-\item{$\leq$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \leq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es menor o igual a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$>$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 > exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es mayor a} + \nlgfun{verb(exp2)}}
-		\reglaverb{$exp1 > 0$}{\nlgfun{verb(exp1)} + \nlgtext{es positivo}}
-	\end{enumerate}
-\item{$\geq$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \geq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{es mayor o igual a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\in$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \in exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\notin$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \notin exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no pertenece(n) a} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\subset$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \subset exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}}
-		\reglaverb{$\{exp1, exp2, \ldots , expn\} \subset expm$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(expm)}}
-		\end{enumerate}
-\item{$\not\subset$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \not\subset exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{no está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\subseteq$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \subseteq exp2$ (caso default)}{\nlgfun{verb(exp1)} + \nlgtext{está incluido o es igual a} + \nlgfun{verb(exp2)}}
-		\reglaverb{$\{exp1, exp2, \ldots , expn\} \subseteq exp2$}{ídem inclusión}
-	\end{enumerate}
-\item{$\not\subseteq$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \not\subseteq exp2$ (caso default)}{\nlgtext{existe al menos un elemento en} + \nlgfun{verb(exp1)} + \nlgtext{que no se está en} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\mapsto$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \mapsto exp2$ (caso default)}{\nlgtext{el par ordenado formado por:} + \nlgfun{verb(exp1)} + \nlgtext{y} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\{a, b, \ldots\}$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$\{\}$}{\nlgtext{el conjunto vacío}}
-		\reglaverb{$\{exp1\}$}{\nlgtext{el conjunto formado por } + \nlgfun{verb(exp1)}}
-		\reglaverb{$\{exp1, exp2, \ldots ,expn\}$ (caso default)}{\nlgtext{el conjunto formado por} + \nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)}}
-	\end{enumerate}
-\item{$\cup$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \cup exp2$ (caso default)}{\nlgtext{elementos en} + \nlgfun{verb(exp1)} + \nlgtext{y en} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$\cap$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$exp1 \cap exp2$ (caso default)}{\nlgtext{elementos en} + \nlgfun{verb(exp1)} + \nlgtext{que también se encuentren en} + \nlgfun{verb(exp2)}}
-	\end{enumerate}
-\item{$f~x$ (aplicación)}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$f~exp1$ (caso default)}{\nlgfun{verb(f)} + \nlgtext{aplicada a} + \nlgfun{verb(exp1)}}
-	\end{enumerate}
-\item{$dom$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$dom(exp1)$ (caso default)}{\nlgtext{dominio de} + \nlgfun{verb(exp1)}}
-	\end{enumerate}
-\item{$ran$}
-	\begin{enumerate}	 
-	\setlength{\itemsep}{7pt}
-		\reglaverb{$ran(exp1)$ (caso default)}{\nlgtext{rango de} + \nlgfun{verb(exp1)}}
-	\end{enumerate}
-\end{itemize}  
+\begin{align*} 
+&\nlgfun{verb'($\{exp1\} = exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es el único elemento de} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 = \{\}$)} & \rightarrow \quad & \nlgtext{no hay ningún elemento en}  \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($exp1 \cap exp2 = \{\}$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{y} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{no tienen ningún elemento en común} \\
+&\nlgfun{verb'($exp1 \cap \{exp2\} = \{\}$)} & \rightarrow \quad & \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{no pertenece a} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($exp1 = exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es(son) igual(iguales) a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \neq \{\}$)} & \rightarrow \quad & \nlgtext{existe al menos un elemento en} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($exp1 \cap exp2 \neq \{\}$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{y} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{tienen al menos un elemento en común} \\
+&\nlgfun{verb'($exp1 \neq exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{no es(son) igual(iguales) a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 < exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es menor a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 < 0$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es negativo} \\
+&\nlgfun{verb'($exp1 \leq exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es menor o igual a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 > exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es mayor a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 > 0$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es positivo} \\
+&\nlgfun{verb'($exp1 \geq exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{es mayor o igual a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \in exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{pertenece(n) a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \notin exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{no pertenece(n) a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \subset exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{está(n) incluido/a(s) en} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($\{exp1, exp2, \ldots , expn\} \subset expm$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{,} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{, \ldots , y} \quad +  \\
+& &											 		& \nlgfun{verb($expn$)} \quad +  \\
+& &											 		& \nlgtext{pertenece(n) a}  \\
+&\nlgfun{verb'($exp1 \not\subset exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{no está(n) incluido/a(s) en} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \subseteq exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{está incluido o es igual a} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($\{exp1, exp2, \ldots , expn\} \subseteq exp2$)} & \rightarrow \quad & \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{,} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{, \ldots , y} \quad +  \\
+& &											 		& \nlgfun{verb($expn$)} \quad +  \\
+& &											 		& \nlgtext{pertenece(n) a}  \\
+&\nlgfun{verb'($exp1 \not\subseteq exp2$)} & \rightarrow \quad & \nlgtext{existe al menos un elemento en} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{que no se está en} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \mapsto exp2$)} & \rightarrow \quad & \nlgtext{el par ordenado formado por:} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{y} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($\{\}$)} & \rightarrow \quad & \nlgtext{el conjunto vacío} \\
+&\nlgfun{verb'($\{exp1\}$)} & \rightarrow \quad & \nlgtext{el conjunto formado por } \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($\{exp1, exp2, \ldots ,expn\}$)} & \rightarrow \quad & \nlgtext{el conjunto formado por} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{,} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \quad +  \\
+& &											 		& \nlgtext{, \ldots , y} \quad +  \\
+& &											 		& \nlgfun{verb($expn$)} \\
+&\nlgfun{verb'($exp1 \cup exp2$)} & \rightarrow \quad & \nlgtext{elementos en} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{y en} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($exp1 \cap exp2$)} & \rightarrow \quad & \nlgtext{elementos en} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \quad +  \\
+& &											 		& \nlgtext{que también se encuentren en} \quad +  \\
+& &											 		& \nlgfun{verb($exp2$)} \\
+&\nlgfun{verb'($f~exp1$)} & \rightarrow \quad & \nlgfun{verb(f)} \quad +  \\
+& &											 		& \nlgtext{aplicada a} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($dom(exp1)$)} & \rightarrow \quad & \nlgtext{dominio de} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+&\nlgfun{verb'($ran(exp1)$)} & \rightarrow \quad & \nlgtext{rango de} \quad +  \\
+& &											 		& \nlgfun{verb($exp1$)} \\
+\end{align*} 
 
 \bigskip
 Como era de esperarse, podemos observar que, a fin de lograr descripciones mas naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se se encuentre vacío.

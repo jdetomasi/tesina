@@ -97,25 +97,30 @@ La propuesta de Stocks y Carrington~\cite{stocks} es utilizar la especificación
 
 \subsection{Clases y casos de prueba}
 
-Las alternativas funcionales antes mencionadas pueden expresarse como restricciones sobre las variables de entrada y de estado definidas para la especificación. Estas alternativas pueden ser especificadas mediante esquemas Z a los que llamaremos \emph{clases de prueba}. Por ejemplo, 
+Las alternativas funcionales antes mencionadas pueden expresarse como restricciones sobre las variables de entrada y de estado definidas para la especificación. Estas alternativas pueden ser especificadas mediante esquemas Z a los que llamaremos \emph{clases de prueba}. Por ejemplo:
 
 \begin{zed}
    LookUp_{1}^{FND} == [st: SYM \pfun VAL; s?: SYM  | s? \in \dom st] \\
 \end{zed}
 
 \noindent
-define una clase de prueba para el esquema \emph{LookUp}, introducido anteriormente, donde ``$st$'' y ``$s?$'' son variables de estado y de entrada respectivamente, y ``$s? \in \dom s$'' es la restricción sobre las mismas. 
+define una clase de prueba para el esquema \emph{LookUp}, introducido anteriormente, donde $st$ y $s?$ son variables de estado y de entrada respectivamente, y $s? \in \dom st$ es la restricción sobre las mismas. 
 
-Por otro lado, necesitaremos buscar valores específicos para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implementa la especificación. En este caso, para $LookUp_{1}^{FND}$, existe un conjunto infinito de valores para ``$s?$'' y ``$st$'' que cumplen con la restricción ``$s? \in \dom st$''. Por ejemplo: 
+Por otro lado, necesitaremos buscar valores específicos, o constantes, para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implemente la especificación. Llamaremos \emph{caso de prueba} a una tupla de valores para las variablas involucradas en la clase de prueba que cumplan con la restricción de la misma. Nos bastará con escoger un único \emph{caso de prueba} para cada clase de prueba generada (observemos que en algunos casos, como por ejemplo para la clase de prueba antes presentada, podríamos encontrar infinitos valores posibles para las variables de la clase de prueba que cumplan con la restricción).
+
+Por otro lado, en muchos casos, necesitaremos definir las constantes necesarias para los tipos involucrados en la \emph{clase de prueba}, por ejemplo, para los tipos $SYM$ y $VAL$ involucrados en la clase de prueba presentada anteriormente, podríamos definir:
+
+\begin{axdef}
+sym_{1}: SYM \\
+val_{1}: VAL
+\end{axdef}
+
+Finalmente, estamos en condiciones de definir un \emph{caso de prueba} correspondiente a la clase de prueba $LookUp_{1}^{FND}$ de la siguiente manera:
 
 \begin{figure}[H]
-\begin{itemize}
-\item $[LookUp_{1}^{FND}  | st = \{s? \mapsto y\}]$, siendo $x: VAL$ 
-\item $[LookUp_{1}^{FND}  | st = \{s? \mapsto y, t \mapsto z\}]$, siendo $t: SYM$ y $y, z: VAL$
-\end{itemize}
+\center
+$LookUp_{TC}^{1} == [LookUp_{1}^{FND}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
 \end{figure}
-
-Llamaremos \emph{caso de prueba} a cada una de estas posibilidades y, como mencionamos anteriormente, son los que tendremos que refinar a fin de poder ejecutarlos en la implementación.
 
 \subsection{Tácticas de testing y generación de clases de prueba}
 \label{sec:tacticas-testing}
