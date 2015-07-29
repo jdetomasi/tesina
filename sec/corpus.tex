@@ -7,14 +7,14 @@ Para el análisis de requerimientos, seguiremos el enfoque sugerido por Reiter y
 
 \section{Corpus de descripciones}                 
 
-El \emph{corpus de textos} que deberemos construir, constará de una colección de ejemplos, cada uno de estos formado con los datos de entrada y salida correspondiente esperada del sistema. En nuestro caso, la entrada será Una especificación formal en lenguaje Z, un conjunto de designaciones y un grupo de clases de prueba generadas de antemano, mientras que la salida estará formada por descripciones en lenguaje natural de las clases de prueba antes mencionadas. En lo posible, el \emph{corpus} de textos deberá cubrir todo el rango de textos que esperan ser producidos por el sistema de NLG; éste debería cubrir los casos más frecuentes, así como los casos mas inusuales que se puedan dar.
+Según la definición de la RAE~\cite{dicrae}, un \emph{corpus} es un \emph{``conjunto lo más extenso y ordenado posible de datos o textos científicos, literarios, etc., que pueden servir de base a una investigación''}. En particular, el \emph{corpus} utilizado para la construcción de un sistema de NLG estará formado por un conjunto de ejemplos de datos de entrada junto a la correspondiente salida (texto en lenguaje natural) para cada uno de estos. En nuestro caso, la entrada será un grupo de clases de prueba (en lenguaje Z) junto a las designaciones correspondientes a la especificación testeada, mientras que la salida estará formada por descripciones en lenguaje natural de las clases de prueba antes mencionadas. En lo posible, el \emph{corpus} de textos deberá cubrir todo el rango de textos que esperan ser producidos por el sistema de NLG; éste debería cubrir los casos más frecuentes, así como los casos mas inusuales que se pudieran ocurrir.
 
-Siguiendo la metodología propuesta por Reiter y Dale, para construir un \emph{corpus objetivo} deberemos recolectar un conjunto lo suficientemente amplio de ejemplos que nos permita caracterizar la variedad de textos que deseamos generar. Luego una persona capacitada (en nuestro caso, alguien capaz de leer Z) deberá que describir en lenguaje natural los ejemplos antes mencionados. Finalmente tendremos que revisar este \emph{corpus inicial} y modificarlo en caso de existir algún algún texto que resulte técnicamente imposible de generar o prohibitivamente costoso a nivel computacional. Una vez finalizado este proceso tendremos en nuestro poder un \emph{corpus objetivo} que nos servirá para sustentar muchas de las decisiones que deberemos tomar luego en este trabajo. Ésta colección de ejemplos también nos servirá para realizar una evaluación de nuestro sistema, comparando los textos generados por nuestra implementación con las descripciones del \emph{corpus} realizadas manualmente por una persona.
+Siguiendo la metodología de por Reiter y Dale, para construir un \emph{corpus objetivo} deberemos recolectar un conjunto lo suficientemente amplio de ejemplos que nos permita caracterizar la variedad de textos que deseamos generar. Luego una persona capacitada (en nuestro caso, alguien capaz de leer Z) deberá describir en lenguaje natural los ejemplos antes mencionados. Finalmente tendremos que revisar este \emph{corpus inicial} y modificarlo en caso de existir algún algún texto que resulte técnicamente imposible de generar o prohibitivamente costoso a nivel computacional. Una vez finalizado este proceso tendremos en nuestro poder un \emph{corpus objetivo} que nos servirá para sustentar la mayoría de las decisiones que deberemos tomar luego en este trabajo. Ésta colección de ejemplos también nos servirá para realizar una evaluación de nuestro sistema una vez desarrollado, comparando los textos generados por nuestra implementación con las descripciones del \emph{corpus} realizadas por la persona especializada.
 
-En el Apéndice~\ref{ape:corpus} se pueden consultar los textos incluidos en el \emph{corpus} utilizado para este trabajo. Para elaborar el mismo recolectamos una serie de clases de prueba generados con \emph{Fastest} a partir de distintas especificaciones y luego escribimos manualmente cada una de las descripciones de estas clases de prueba. Intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto tuvimos en cuenta incluir distintas clases de pruebas de modo que cubran todas las expresiones de Z contempladas dentro del alcance de este trabajo, considerando también sus posibles combinaciones. También trabajamos con especificaciones sobre distintos dominios de aplicación con el fin de lograr \emph{corpus} que nos sea de utilidad para dar con una solución independiente del dominio de aplicación. En total trabajamos con clases de prueba generadas con \emph{Fastest} para 10 especificaciones distintas; del total de clases de prueba correspondientes a estas especificaciones se escogieron las más significativas para describir y se ignoraron aquellas que contenían algún operador no considerado dentro del alcance de este trabajo.
+En el apéndice~\ref{ape:corpus} se encuentran los textos incluidos en el \emph{corpus} utilizado para este trabajo. Para elaborar el mismo recolectamos una colección de clases de prueba generados con \emph{Fastest} a partir de distintas especificaciones y luego escribimos manualmente cada una de las descripciones para las mismas. En este proceso, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto, tuvimos en cuenta incluir una gran variedad de clases de pruebas de modo que cubran todas las expresiones de Z contempladas dentro del alcance de este trabajo, considerando también las posibles combinaciones de estas expresiones. Además trabajamos también con especificaciones sobre distintos dominios de aplicación a fin de lograr un \emph{corpus} que nos sea de utilidad para dar con una solución independiente del dominio de aplicación. En total incluímos clases de prueba generadas con \emph{Fastest} para 10 especificaciones distintas; del total de clases de prueba correspondientes a estas especificaciones se escogieron las más significativas para describir y se ignoraron aquellas que contenían algún operador no considerado dentro del alcance de este trabajo.
 
 
-En la Figura~\ref{fig:ej_corpus} podemos observar, a modo de ejemplo, algunos elementos incluidos en el \emph{corpus} relacionados con la descripción de la clase de prueba \emph{LookUp\_SP\_1} (generada a partir de la especificación introducida previamente). Este ejemplo resulta un subconjunto del \emph{corpus} utilizado para este trabajo (Apéndice~\ref{ape:corpus}), el mismo está constituido por una colección de ejemplos similares a éste.
+En la Figura~\ref{fig:ej_corpus} podemos observar uno de los ejemplos incluídos en el \emph{corpus} de descripciones utilizado para este trabajo (apéndice~\ref{ape:corpus}). En este caso, la clase de prueba \emph{LookUp\_SP\_1} (generada a partir de la especificación introducida previamente) y las designaciones correspondientes a la especificación en cuestión serán la entrada del sistema de NLG~\footnote{Estrictamente hablando, todas las designaciones de la especificación deberían formar parte de la entrada del sistema de NLG. En este caso, incluimos sólo las designaciones relevantes a fin de simplificar el ejemplo.}, teniendo como salida la descripción en lenguaje natural presente en el ejemplo.
 
 \begin{figure}[H]
 \begin{itemize}
@@ -34,7 +34,7 @@ En la Figura~\ref{fig:ej_corpus} podemos observar, a modo de ejemplo, algunos el
 \end{itemize}
 
 \bigskip
-\item \emph{Descripción en lenuguaje natural para LookUp\_SP\_1}\\
+\item \emph{Descripción en lenguaje natural para LookUp\_SP\_1}\\
 
 \fbox{\begin{minipage}{13 cm}
   \textbf{LookUp\_SP\_1:} Se busca un símbolo en la tabla.  
@@ -54,15 +54,15 @@ En la Figura~\ref{fig:ej_corpus} podemos observar, a modo de ejemplo, algunos el
 \section{Análisis del corpus}
 \label{sec:corpus_analisis}
 
-Como mencionamos previamente, muchas decisiones de diseño de nuestro sistema estarán fundamentados en observaciones obtenidas a partir del \emph{corpus} y mediante un análisis del mismo podremos obtener una especificación para nuestro sistema de NLG.
+En lo que queda de este capítulo nos encargaremos de analizar los ejemplos presentes en el \emph{corpus} a fin de extraer los requerimientos para nuestro sistema.
 
-En primer lugar, podemos observar que las clases de pruebas generadas por \emph{Fastest} están formadas siempre por conjunciones de predicados atómicos. Esto tendrá consecuencias en la estructura de nuestras descripciones ya que utilizaremos una oración en nuestra descripción para \emph{verbalizar} independientemente cada uno de estos predicados. Uno de los desafíos fundamentales para este trabajo, será entonces, la generación de descripciones en lenguaje natural a partir de estos predicados. 
+Comencemos observando las clases de prueba generadas por \emph{Fastest}. Podemos notar que estas se encuentran formadas siempre por conjunciones de predicados atómicos y que a cada uno de estos le corresponderá exactamente una oración en lenguaje natural dentro del texto final. Además, estas oraciones o frases dependen exclusivamente del predicado que describen, es decir, estas oraciones no contienen información sobre otros predicados ni hacen referencia a otras frases generadas. Por lo tanto, la tarea de describir el cuerpo de del esquema Z de la clase de prueba, se puede reducir básicamente a \emph{verbalizar} individualmente cada uno de estos predicados. Esta tarea, la \emph{verbalización} de predicados Z, será el desafío principal de nuestro trabajo. Definir con precisión los detalles de ésta será de vital importancia para el desarrollo de las etapas de \emph{microplanning} y \emph{realization} de nuestro sistema de NLG (capítulo~\ref{cap:microplanning} y \ref{cap:realization}).
 
-Comencemos por analizar la estructura de los textos de ejemplo, que nos ayudará luego en el capítulo~\ref{cap:document_planning} a elaborar el \emph{document plan}. En estos textos podemos ver que todas las descripciones de las clases de prueba poseen la misma estructura. En todas se comienza por el nombre de la clase de prueba, seguido por un pequeño detalle de la operación a testear y luego una lista de oraciones encargadas de describir cada uno de los predicados mencionados anteriormente. 
+Por otro lado, veamos la estructura de las descripciones de ejemplo. En estos textos podemos ver que todas los textos de las descripciones de las clases de prueba poseen la misma estructura. En todas se comienza por el nombre de la clase de prueba, seguido por un pequeño detalle de la operación a testear y luego una lista de oraciones encargadas de describir cada uno de los predicados mencionados anteriormente. Conocer la estructura del texto a generar nos será de utilidad luego en el capítulo~\ref{cap:document_planning} para poder elaborar nuestro \emph{document plan}.
 
-Como ya mencionamos, el desafío principal de nuestro sistema será el de poder describir en lenguaje natural los distintos predicados atómicos presentes en una clase de prueba. En lo que resta de esta sección nos concentraremos en analizar y especificar esta tarea, la de \emph{verbalizar} una expresión Z. Definir con precisión los detalles de ésta será de vital importancia para el desarrollo de las etapas de \emph{microplanning} y \emph{lexicalización} de nuestro sistema de NLG (capítulo~\ref{cap:microplanning} y \ref{cap:realization}).
+Como ya mencionamos, la verbalización de expresiones Z resulta una de las tareas mas importantes para nuestro sistema de NLG. En lo que resta de esta sección nos concentraremos especialmente en analizar y especificar esta tarea. 
 
-Continuando con el análisis del \emph{corpus}, podemos notar otros dos aspectos fundamentales en relación a la \emph{verbalización} de expresiones Z. En primer lugar, podemos ver que hay textos que se repiten (con pequeñas variantes, que analizaremos posteriormente) independientemente del dominio de aplicación y estos surgen a raiz de los operadores de Z presentes en los predicados que se describen. Por otro lado, podemos notar el rol fundamental de las designaciones que posibilitan introducir texto dependiente del dominio de aplicación en las descripciones, combinando los mismos con las frases antes mencionadas, correspondientes a la descripción de operadores de Z. Consideremos, por ejemplo, las siguientes dos expresiones y sus respectivas descripciones en lenguaje natural, una pertenece al ejemplo de la figura~\ref{fig:ej_corpus} y la otra forma parte de una clase de prueba para la especificación de un sistema bancario:
+Podemos notar dos aspectos fundamentales en relación a la \emph{verbalización} de expresiones Z. En primer lugar, podemos ver que hay textos que se repiten (con pequeñas variantes, que analizaremos posteriormente) independientemente del dominio de aplicación y estos surgen a raíz de los operadores de Z presentes en los predicados que se describen. Por otro lado, podemos observar el rol fundamental de las designaciones que posibilitan introducir texto dependiente del dominio de aplicación en las descripciones y a su vez estos se encuentran combinandos con las frases antes mencionadas correspondientes a la descripción de operadores de Z. Consideremos, por ejemplo, las siguientes dos expresiones y sus respectivas descripciones en lenguaje natural, una pertenece al ejemplo de la figura~\ref{fig:ej_corpus} y la otra describe un predicado que forma parte de una clase de prueba para la especificación de un sistema bancario:
 
 \bigskip
 \begin{enumerate}
@@ -71,16 +71,19 @@ Continuando con el análisis del \emph{corpus}, podemos notar otros dos aspectos
 \end{enumerate}
 
 \bigskip
-Como vemos, el texto \emph{``\textbf{pertenece a}''} aparece en ambas descripciones como resultado de verbalizar el operador $\in$ de Z, diferenciándose ambas descripciones en el texto que antecede y precede al anterior (estando estos últimos fuertemente relacionados a las designaciones de las expresiones que se encuentran a la derecha e izquierda del operador $\in$). Podemos encontrar estos tipos de patrones en todas las descripciones presentes en el \emph{corpus}. Podemos, entonces, intentar definir la tarea de \emph{verbalización} mediante una función que tome como entrada una expresión Z y devuelva una descripción en lenguaje natural para la misma. La definición de esta función dependerá del argumento, y para el caso anterior podría ser la siguiente:
+Como vemos, el texto \emph{``\textbf{pertenece a}''} aparece en ambas descripciones como resultado de verbalizar el operador $\in$, diferenciándose ambas descripciones en el texto que antecede y precede al anterior (estando estos últimos fuertemente relacionados a las designaciones de las expresiones que se encuentran a la derecha e izquierda del operador $\in$). Es posible encontrar estos tipos de patrones en todas las descripciones presentes en el \emph{corpus}, es por esto que, podemos intentar definir la tarea de \emph{verbalización} de una expresión en base a los operadores que lo componen. Para esto, intentaremos especificar esta tarea mediante una función que tome como entrada una expresión Z y devuelva una descripción en lenguaje natural para la misma. La definición de esta función dependerá de los operadores de Z que componen la expresión a verbalizar, y en base al ejemplo anterior, podríamos proponer la siguiente definición para verbalizar el operador $\in$:
 
+\afterpage{
 \begin{figure}[H]
 \center
-$verb'(x \in y) = verb'(x) + \text{\emph{``pertenece a''}} + verb'(y)$
+$verb'(x \in y) = verb'(x) + \text{\emph{``pertenece a''}} + verb'(y)$ \footnotemark
 \end{figure}
+\footnotetext{El nombre de la función se encuentra primado intencionalmente. Más adelante presentaremos la definicion final para la función de verbalización que hará uso de verb' como función auxiliar.}
+}
 
-A partir de esto podemos ver que para verbalizar términos compuestos de Z, necesitaremos verbalizar recursivamente las partes que los componen. En la definición anterior necesitaríamos conocer las verbalizaciones de las expresiones $x$ e $y$ para poder obtener una verbalización para $x \in y$.
+De la definición anterior podemos ver que para verbalizar términos compuestos de Z, necesitaremos verbalizar recursivamente las partes que los componen. En el caso anterior necesitaríamos conocer las verbalizaciones de las expresiones $x$ e $y$ para poder obtener una verbalización para $x \in y$.
 
-Retomemos el ejemplo de la figura~\ref{fig:ej_corpus}, nos concentraremos en verbalizar la primera expresión de la clase de prueba:
+Retomando el ejemplo de la figura~\ref{fig:ej_corpus}, nos concentraremos en verbalizar la primera expresión de la clase de prueba:
 
 \begin{figure}[H]
 \center
@@ -94,7 +97,7 @@ En este caso, según la verbalización propuesta anteriormente, podríamos verba
 $verb'(s? \in \dom st) \rightarrow verb'(s?) + \text{\emph{``pertenece a''}} + verb'(\dom st)$
 \end{figure}
 
-Teniendo que verbalizar las expresiones $s?$ y $\dom st$. En este caso, ambas expresiones se encuentran designadas, lo que será de gran ayuda para nuestra tarea de verbalización ya que en estas situaciones podremos construir la descripción en base al texto presente en la designación y no intentar verbalizar la expresión en base al término Z que la compone. En el ejemplo anterior, no deberíamos intentar verbalizar el término $\dom st$ como:
+Teniendo que verbalizar $s?$ y $\dom st$. En este caso, ambas expresiones se encuentran designadas, lo que será de gran ayuda para nuestra tarea de verbalización ya que en estas situaciones podremos construir la descripción en base al texto presente en la designación y no intentar verbalizar la expresión en base al término Z que la compone. En el ejemplo anterior, no deberíamos intentar verbalizar $\dom st$ como:
 
 \begin{figure}[H]
 \center
@@ -102,9 +105,9 @@ $verb'(\dom st) \rightarrow \text{\emph{``el dominio''}} + verb(st)$
 \end{figure}
 
 \noindent
-ya que estaríamos perdiendo información valiosa para nuestras descripciones, contenida en las designaciones, además de que las designaciones son nuestra única forma de introducir texto referente al dominio de aplicación en las descripciones. En general, para verbalizar una expresión designada, podremos utilizar el texto presente en las designaciones (en algunos casos , como veremos mas adelante, con algunas pequeñas modificaciones, para asegurarnos algunas cuestiones de concordancia gramatical). Será un requerimiento, entonces, para nuestra tarea de verbalización contemplar en primera instancia si la expresión a describir se encuentra designada antes de intentar describir la expresión en base a los términos que la componen; de estar designada, se deberá construir una descripción en base a su designación. 
+ya que estaríamos perdiendo información valiosa para nuestras descripciones contenida en las designaciones, además de que las designaciones son nuestra única forma de introducir texto referente al dominio de aplicación en las descripciones. En general, para verbalizar una expresión designada, podremos utilizar el texto presente en las designaciones (en algunos casos , como veremos mas adelante, con algunas pequeñas modificaciones, para asegurarnos ciertas cuestiones de concordancia gramatical). Será un requerimiento, entonces, para nuestra tarea de verbalización contemplar en primera instancia si la expresión a describir se encuentra designada antes de intentar describir la expresión en base a los operadores que la componen; de estar designada, deberemos construir una descripción en base a su designación. 
 
-En la figura~\ref{fig:def-verb} damos una definición para la tarea de verbalización, siendo la función \emph{verb'}, como dijimos anteriormente, la responsable de generar las verbalizaciones para las expresiones de Z en base a un conjunto de reglas dependientes de el término a describir, como la introducida anteriormente para el caso del operador $\in$.
+Como mencionamos previamente, el nombre de la función anterior (\emph{verb'}) fue primado intencionalmente a fin de utilizar ésta función como auxiliar para la definición de final de la tarea de verbalización. En la figura~\ref{fig:def-verb} introduciremos una nueva definición para ésta tarea donde consideraremos la designación de la expresión a verbalizar (si es que se encuentra designada) antes de intentar describir la misma en base a los operadores que la constituyen.
 
 \begin{figure}[H]
 \begin{align*}
@@ -116,10 +119,9 @@ En la figura~\ref{fig:def-verb} damos una definición para la tarea de verbaliza
 \label{fig:def-verb}
 \end{figure}
 
-En la definición anterior, abstraemos mediante la función \emph{designacion} la tarea de generar una descripción para una expresión designada en base al texto presente en la misma. Posteriormente desarrollaremos ésta con mayor profundidad. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
-%TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
-Finalmente, daremos una definicion mas completa para \emph{verb'}, intentando especificar la tarea de verbalización de expresiones Z en base a un conjunto de reglas obtenido a partir de un análisis de los textos de ejemplo presentes en el \emph{corpus}.
+Como podemos ver en la figura anterior, haremos uso de \emph{verb'} que será la responsable de generar las verbalizaciones para las expresiones de Z en base a un conjunto de reglas dependientes del operador a describir, como la introducida anteriormente para el caso del operador $\in$. Por otro lado, abstraeremos por medio de \emph{esta\_designada()} la tarea de verificar si una expresión se encuentra designada y por medio de la función \emph{designacion()} la tarea de generar una descripción en base a la designación de la expresión a describir. En lo que queda de este capítulo propondremos un conjunto de reglas para la definición de \emph{verb'} necesarios para la generación de descipciones en base a los distintos operadores de Z contemplados dentro del alcance del trabajo. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descipción en lenguaje natural para una expresión ya designada. Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, asi como las combinaciones más relevantes de los mismos. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
+%TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
 \begin{align*} 
 &\nlgfun{verb'($\{exp1\} = exp2$)} & = \quad & \nlgfun{verb($exp1$)} \quad +  \\
@@ -226,18 +228,37 @@ Finalmente, daremos una definicion mas completa para \emph{verb'}, intentando es
 \bigskip
 Como era de esperarse, podemos notar que, a fin de lograr descripciones mas naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se se encuentre vacío.
 
-Otro punto a tener en cuenta al momento de verbalizar una expresión será que las designaciones documentadas por el usuario pueden no contener un artículo que acompañe al sustantivo. En estos casos nuestro sistema deberá identificar los casos en los que sea necesario y agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
+Cabe aclarar que la definición anterior resulta una simplificación de la verbalización que deberá desarrollar nuestro sistema. Una cuestión importante que no estamos contemplando en detalle es la concordancia gramatical entre los distintos constituyentes de las oraciones a generar. Por ejemplo, la concordancia de número entre el verbo y el núcleo del sujeto para el caso del operador $\in$, en el que simplificamos en la definición anterior mediante el texto ``\emph{pertenece(n)}''. En estos casos, deberemos realizar una análisis del sujeto y según corresponda conjugar correctamente el verbo utilizando, para el ejemplo anterior, deberíamos utilizar el verbo ``\emph{pertenece}'' o ``\emph{pertenecen}'' según corresponda.
 
-En base a las reglas introducidas previamente, podemos ver que la mayoría de las frases a generar resultan oraciones bimembres ordenadas como: 
+Hay algunos casos de la definición anterior en los que el verbo que forma parte del predicado del texto a generar no requieren ningún tratamiento a fin de que el mismo concuerde en numero y forma con el sujeto (esto fue contemplado de antemano y no depende de cuestiones externas como podría ser texto introducido por medio de designaciones). Por ejemplo, las frases generadas para \nlgfun{verb'($exp1 = \{\}$)} y \nlgfun{verb'($exp1 \cap exp2 = \{\}$)}:
+
+\begin{itemize}
+ \item ``no hay ningún elemento en'' ...
+ \item ... ``y'' ... ``no tienen ningún elemento en común''
+\end{itemize}
+
+Por otro lado, podemos observar que las oraciones en las que debemos prestar especial atención a cuestiones de concordancia gramatical resultan oraciones bimembres, todas expresadas en tiempo presente, conformadas de la siguiente manera: 
 \begin{figure}[H]
 \center
 \emph{sujeto + verbo + objeto}
 \end{figure}
 
 \noindent
-Todas estas expresadas en tiempo presente. Además, en algunos casos será necesario conjugar el verbo de una oración de forma tal que concuerde con el número del sujeto de la misma. Algo parecido pasa con el atributo en los casos que utilizamos un verbo copulativo en el que deberemos hacer concordar el mismo con número y género del sujeto. Estas últimas observaciones deberemos tenerlas en cuenta para el desarrollo de nuestro realizador lingüístico.
+Como por ejemplo, las frases generadas para \nlgfun{verb'($exp1 \in exp2$)} y \nlgfun{verb'($exp1 \subset exp2$)}:
 
-Por último, retomemos a la verbalización de expresiones designadas. Como vimos en el capítulo~\ref{cap:designaciones} una designación podría encontrarse parametrizada. Volvamos a la función \emph{designacion} introducida anteriormente, para el caso en el que la expresión se encuentre designada mediante una designación no parametrizada el resultado de esta función debería ser el texto tal cual se encuentra en la designación. Por otro lado, si se tratase de una designación parametrizada el texto a generar deberá depender de la verbalización de su parametro. Por ejemplo, teniendo en cuenta las designaciones introducidas en la figura~\ref{fig:ej_designacion}, obtendríamos la siguiente designación para el término $s?$:
+\begin{itemize}
+ \item \emph{sujeto} + ``pertenece(n)'' + \emph{objeto}
+ \item \emph{sujeto} + ``está(n) incluido/a(s)'' + \emph{objeto}
+\end{itemize}
+
+\noindent
+Puntualmente observamos que será necesario conjugar el verbo de una oración de forma tal que concuerde con el número del sujeto de la misma. Algo parecido pasa con el atributo en los casos que utilizamos un verbo copulativo en el que deberemos hacer concordar el mismo con número y género del sujeto (por ejemplo para el primer caso de la verbalización de $\subset$). 
+
+Otro punto a tener en cuenta al momento de verbalizar una expresión será que las designaciones documentadas por el usuario pueden no contener un artículo que acompañe al sustantivo. Nuestro sistema deberá identificar los casos en los que sea necesario y agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
+
+Estas observaciones sobre la concordancia gramatical entre los constituyentes de nuestras oraciones serán importantes para el desarrollo de nuestro realizador lingüístico que estudiaremos en detalle en el capítulo \ref{cap:realization}.
+
+Por último, retomemos a la verbalización de expresiones designadas. Como vimos en el capítulo~\ref{cap:designaciones} una designación podría encontrarse parametrizada. Volvamos a la función \emph{designacion} introducida anteriormente, para el caso en el que la expresión se encuentre designada mediante una designación no parametrizada el resultado de esta función debería ser el texto tal cual se encuentra en la designación. Por otro lado, si se tratase de una designación parametrizada el texto a generar deberá depender de la verbalización de su parámetro. Por ejemplo, teniendo en cuenta las designaciones introducidas en la figura~\ref{fig:ej_designacion}, obtendríamos la siguiente designación para el término $s?$:
 
 \begin{figure}[H]
 \center
