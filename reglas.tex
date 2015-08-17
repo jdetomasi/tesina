@@ -1,0 +1,151 @@
+\documentclass{article}
+\usepackage{minted}
+\setminted{showtabs, obeytabs, showspaces}
+%\usemintedstyle{bw}
+
+\begin{document}
+\begin{minted}[escapeinside=@@]{haskell}
+
+verb' (@$\{exp_1\} = exp_2$@)          = verb(@$exp_1$@) + 
+                                "es el unico elemento de" + 
+                                verb(@$exp_2$@)
+
+verb' (@$exp_1 = \{\}$@)              = "no hay ningun elemento en" + 
+                                 verb(@$exp_1$@) 
+
+verb' (@$exp_1 \cap exp_2 = \{\}$@)        = verb(@$exp_1$@)  +  
+                                "y" +  
+                                verb(@$exp_2$@)  +  
+                                "no tienen ningun elemento en comun"
+
+verb' (@$exp_1 \cap \{exp_2\} = \{\}$@)      = verb(@$exp_2$@) +  
+                                "no pertenece a" +  
+                                verb(@$exp_1$@) 
+
+verb' (@$exp_1 = exp_2$@)
+     | (num == S) = verb(@$exp_1$@) + "es igual a" + verb(@$exp_2$@) 
+     | (num == P) = verb(@$exp_1$@) + "son iguales a" + verb(@$exp_2$@) 
+     where num = numero(@$exp_1$@)
+
+verb' (@$exp_1 \neq \{\}$@)              = "existe al menos un elemento en" +  
+                                 verb(@$exp_1$@) 
+
+verb' (@$exp1 \cap exp2 \neq \{\}$@)        = verb(@$exp_1$@)  +  
+                                 "y" +  
+                                 verb(@$exp_2$@) +  
+                                 "tienen al menos un elemento en comun" 
+
+verb' (@$exp_1 \neq exp_2$@)
+     | (num == S) = verb(@$exp_1$@) + "no es igual a" + verb(@$exp_2$@) 
+     | (num == P) = verb(@$exp_1$@) + "no son iguales a" + verb(@$exp_2$@) 
+     where num = numero(@$exp_1$@)
+
+verb' (@$exp_1 < exp_2$@)  = verb(@$exp_1$@) +  
+                                 "es menor a" +  
+                                 verb(@$exp_2$@) 
+
+verb' (@$exp_1 < 0$@)
+     | (gen == M) = verb(@$exp_1$@) + "es negativo" 
+     | (gen == F) = verb(@$exp_1$@) + "es negativa" 
+     where gen = genero(@$exp_1$@)
+                                 
+verb' (@$exp_1 \leq exp_2$@)            = verb(@$exp_1$@) +  
+                                "es menor o igual a" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$exp_1 > exp_2$@)            = verb(@$exp_1$@) +  
+                                "es mayor a" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$exp_1 > 0$@)  =
+     | (gen == M) = verb(@$exp_1$@) + "es positivo" 
+     | (gen == F) = verb(@$exp_1$@) + "es positiva" 
+     where gen = genero(@$exp_1$@)
+
+verb' (@$exp_1 \geq exp_2$@)  = verb(@$exp_1$@) +  
+                                "es mayor o igual a" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$exp_1 \in exp_2$@)
+     | (num == S) = verb(@$exp_1$@) + "pertenece a" + verb(@$exp_2$@) 
+     | (num == P) = verb(@$exp_1$@) + "pertenecen a" + verb(@$exp_2$@) 
+     where num = numero(@$exp_1$@)
+
+verb' (@$exp_1 \notin exp_2$@)  = 
+     | (num == S) = verb(@$exp_1$@) + "no pertenece a" + verb(@$exp_2$@) 
+     | (num == P) = verb(@$exp_1$@) + "no pertenecen a" + verb(@$exp_2$@) 
+     where num = numero(@$exp_1$@)
+
+verb' (@$exp_1 \subset exp_2$@)
+     | (gen == M && num == S) = verb(@$exp_1$@) + "esta incluido en" + verb(@$exp_2$@) 
+     | (gen == M && num == P) = verb(@$exp_1$@) + "estan incluidos en" + verb(@$exp_2$@) 
+     | (gen == F && num == S) = verb(@$exp_1$@) + "esta incluida en" + verb(@$exp_2$@) 
+     | (gen == F && num == P) = verb(@$exp_1$@) + "estan incluidas en" + verb(@$exp_2$@) 
+     where gen = genero(@$exp_1$@)
+           num = numero(@$exp_1$@)
+
+verb' (@$\{exp_1, ... , exp_n\} \subset exp_m$@)  = verb(@$exp_1$@) +  
+                                ", ... , y" +  
+                                verb(@$exp_n$@) +  
+                                "pertenecen a" +
+                                verb(@$exp_m$@)
+
+verb' (@$exp_1 \not\subset exp_2$@)  = 
+     | (gen == M && num == S) = verb(@$exp_1$@) + "no esta incluido en" + verb(@$exp_2$@) 
+     | (gen == M && num == P) = verb(@$exp_1$@) + "no estan incluidos en" + verb(@$exp_2$@) 
+     | (gen == F && num == S) = verb(@$exp_1$@) + "no esta incluida en" + verb(@$exp_2$@) 
+     | (gen == F && num == P) = verb(@$exp_1$@) + "no estan incluidas en" + verb(@$exp_2$@) 
+     where gen = genero(@$exp_1$@)
+           num = numero(@$exp_1$@)
+
+verb' (@$exp_1 \subseteq exp_2$@)             = verb(@$exp_1$@) +  
+                                "esta incluido o es igual a" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$\{exp_1, ... , exp_n\} \subseteq exp_m$@)  = verb(@$exp_1$@) +  
+                                ", ... , y" +  
+                                verb(@$exp_n$@) +  
+                                "pertenecen a" +
+                                verb(@$exp_m$@)
+
+verb' (@$exp_1 \not\subseteq exp_2$@)  = "existe al menos un elemento en" +  
+                                verb(@$exp_1$@) +  
+                                "que no se esta en" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$exp_1 \mapsto exp_2$@)  = "el par ordenado formado por:" +  
+                                verb(@$exp_1$@) +  
+                                "y" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$\{\}$@)  = "el conjunto vacio" 
+
+verb' (@$\{exp_1\}$@)  = "el conjunto formado por"  +  
+                                verb(@$exp_1$@) 
+
+verb' (@$\{exp_1, ... ,exp_n\}$@)  = "el conjunto formado por" +  
+                                verb(@$exp_1$@) +  
+                                ", ... , y" +  
+                                verb(@$exp_n$@) 
+
+verb' (@$exp_1 \cup exp_2$@)  = "elementos en" +  
+                                verb(@$exp_1$@) +  
+                                "y en" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$exp_1 \cap exp_2$@)  = "elementos en" +  
+                                verb(@$exp_1$@) +  
+                                "que tambien se encuentren en" +  
+                                verb(@$exp_2$@) 
+
+verb' (@$f~exp_1$@)  = verb(@$f$@) +  
+                                "aplicada a" +  
+                                verb(@$exp_1$@) 
+
+verb' (@$dom(exp_1)$@)  = "dominio de" +  
+                                verb(@$exp_1$@) 
+
+verb' (@$ran(exp_1)$@)  = "rango de" +  
+                                verb(@$exp_1$@)  
+\end{minted}
+\end{document}
