@@ -92,36 +92,36 @@
 %                                                               %
 
 % If colouring is available
-\if@color@
-  \PackageInfo{czt}{Rendering Z math mode with colours}
+%\if@color@
+  %\PackageInfo{czt}{Rendering Z math mode with colours}
 
   % check whether to load color package or not
-  \@ifpackageloaded{color}{%
+  %\@ifpackageloaded{color}{%
         \relax
-  }{%
-        \PackageInfo{czt}{Package `color' loaded with `dvipsnames' \MessageBreak and `usenames' options}
-        \RequirePackage[dvipsnames,usenames]{color}
-  }
+  %}{%
+  %      \PackageInfo{czt}{Package `color' loaded with `dvipsnames' \MessageBreak and `usenames' options}
+  %      \RequirePackage[dvipsnames,usenames]{color}
+  %}
 
   % define some nice colours to use within Z declarations
   %
   %\definecolor{ZedBoxColor}{cmyk}{0.99,0,0.52,0}
-  \definecolor{ZedBoxColor}{cmyk}{1,1,0,0}
-  \definecolor{AnnotationColor}{cmyk}{0.98,0.13,0,0.43}
-  \definecolor{ZedColor}{cmyk}{0.50,1,0,0}
+  %\definecolor{ZedBoxColor}{cmyk}{1,1,0,0}
+  %\definecolor{AnnotationColor}{cmyk}{0.98,0.13,0,0.43}
+  %\definecolor{ZedColor}{cmyk}{0.50,1,0,0}
   % add more color here if needed
 
-  \PackageInfo{czt}{Z colours defined as:\MessageBreak%
-    \space\space ZedBoxColor\space\space\space\space\space                = cmyk(   1,   1,0,   0) \MessageBreak%
-    \space\space AnnotationColor                                          = cmyk(0.98,0.13,0,0.43) \MessageBreak%
-    \space\space ZedColor\space\space\space\space\space\space\space\space = cmyk(0.50,   1,0,   0) \MessageBreak%
-  }
+  %\PackageInfo{czt}{Z colours defined as:\MessageBreak%
+  %  \space\space ZedBoxColor\space\space\space\space\space                = cmyk(   1,   1,0,   0) \MessageBreak%
+  %  \space\space AnnotationColor                                          = cmyk(0.98,0.13,0,0.43) \MessageBreak%
+  %  \space\space ZedColor\space\space\space\space\space\space\space\space = cmyk(0.50,   1,0,   0) \MessageBreak%
+  %}
 
-\else
-  \PackageInfo{czt}{Rendering Z math mode in monochrome.}
+%\else
+  %\PackageInfo{czt}{Rendering Z math mode in monochrome.}
   % if color is loaded do nothing, otherwise redefine \color as empty
-  \@ifpackageloaded{color}{\relax}{\def\color#1{\relax}}%
-\fi
+  %\@ifpackageloaded{color}{\relax}{\def\color#1{\relax}}%
+%\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Some needed markers used in some symbols - font independant   %
@@ -1094,7 +1094,7 @@
 \def\@zrulefill{\leaders\hrule height\arrayrulewidth\hfill}
 
 % creates a particular skip after new lines? - (old) zed.sty
-\def\@zskip#1{\crcr \omit \hbox{\color{ZedBoxColor}\vrule height#1%
+\def\@zskip#1{\crcr \omit \hbox{\vrule height#1%
     width\arrayrulewidth} \cr}
 %\def\@zskip#1{\crcr \omit \vrule height#1 width\arrayrulewidth \cr} zed-csp.sty
 
@@ -1108,14 +1108,14 @@
 % then creates an \hbox relative to \zedleftsep filled with appropriate spacing.
 % #1 = possible name or generic parameters to be added
 \def\@topline#1{\hbox to\linewidth{%
-    \color{ZedBoxColor}%
+    %
     \vrule height\arrayrulewidth width\arrayrulewidth
     \vrule height0pt depth\@jot width0pt
     \hbox to\zedleftsep{\@zrulefill\thinspace}%
-    {\color{ZedColor}#1}\thinspace\@zrulefill}}
+    {#1}\thinspace\@zrulefill}}
 
 % creates a line of sorts. - used (old) zed.sty
-\def\@zedline{\omit\hbox to 0pt{\color{ZedBoxColor}\vrule
+\def\@zedline{\omit\hbox to 0pt{\vrule
     height\arrayrulewidth width\linewidth\hss} \cr}
 %\def\@zedline{\omit \vrule height\arrayrulewidth width\linewidth \cr} zed-csp.sty
 
@@ -1155,7 +1155,7 @@
 
 \def\@zed{%
   \@@zed\@znoskip\halign to\linewidth\bgroup
-  {\strut$\color{ZedColor}\@zlign##$}\hfil \tabskip=0pt plus1fil\cr}
+  {\strut$\@zlign##$}\hfil \tabskip=0pt plus1fil\cr}
 
 %%%%%%%%%% \begin{zed}\end{zed} definition                      %
 
@@ -1204,12 +1204,12 @@
 \def\@@theorem#1{%
   \@zcountingwhat=5    % sets the kind of counter to addto, 0=unboxed para
   \@@zed\@znoskip\halign to\linewidth\bgroup%
-  {\strut$\color{ZedColor}\@zlign\hskip\zedleftsep##$}\hfil \tabskip=0pt plus1fil\crcr
-\hskip -\zedleftsep\hbox{\bf theorem \rm \@ability {\color{ZedColor}#1}}\cr}
+  {\strut$\@zlign\hskip\zedleftsep##$}\hfil \tabskip=0pt plus1fil\crcr
+\hskip -\zedleftsep\hbox{\bf theorem \rm \@ability {#1}}\cr}
 %\def\@ability{\relax} % don't follow why z-eves needed this command here. = no need.
 
 % synonym for \endzed - could not add colour to the theorem's body :-(
-%\def\endtheorem{\color{ZedColor}\endzed}
+%\def\endtheorem{\endzed}
 \let\endtheorem=\endzed
 
 %%%%%%%%%% \begin{axdef}\end{axdef} definition                  %
@@ -1226,8 +1226,8 @@
   \def\also{\@zskip\zedskip}%
   \predisplaypenalty=\preboxpenalty
   \@@zed\@znoskip \halign to\linewidth\bgroup
-    \strut{\color{ZedBoxColor}\vrule width\arrayrulewidth} \hskip\zedleftsep
-    {$\color{ZedColor}\@zlign##$}\hfil \tabskip=0pt plus1fil\cr}
+    \strut{\vrule width\arrayrulewidth} \hskip\zedleftsep
+    {$\@zlign##$}\hfil \tabskip=0pt plus1fil\cr}
 \def\axdef{%
   \@zcountingwhat=1    % sets the kind of counter to addto, 1=axdef para
   \@axdef}
@@ -1299,7 +1299,7 @@
 
 % draws the |- line separating declarations from predicates (zed.sty)
 \def\where{\@zskip\@jot
-  \omit\hbox{\color{ZedBoxColor}\vrule height\arrayrulewidth width\zedbar} \cr
+  \omit\hbox{\vrule height\arrayrulewidth width\zedbar} \cr
   \@zskip\@jot}
 %\def\where{\@zskip\@jot            zed-csp.sty
 %  \omit \vrule height\arrayrulewidth width\zedbar \cr
