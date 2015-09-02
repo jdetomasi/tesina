@@ -120,8 +120,26 @@ Como mencionamos previamente, el nombre de la función anterior (\emph{verb'}) f
 \label{fig:def-verb}
 \end{figure}
 
+Como podemos ver en la figura anterior, haremos uso de \emph{verb'} que será la responsable de generar las verbalizaciones para las expresiones de Z en base a un conjunto de reglas dependientes del operador a describir, como la introducida anteriormente para el caso del operador $\in$. Por otro lado, abstraeremos por medio de \emph{esta\_designada()} la tarea de verificar si una expresión se encuentra designada y mientras que la función \emph{designacion()} será la encargada de generar una descripción en base a la designación de la expresión a describir. 
 
-Como podemos ver en la figura anterior, haremos uso de \emph{verb'} que será la responsable de generar las verbalizaciones para las expresiones de Z en base a un conjunto de reglas dependientes del operador a describir, como la introducida anteriormente para el caso del operador $\in$. Por otro lado, abstraeremos por medio de \emph{esta\_designada()} la tarea de verificar si una expresión se encuentra designada y por medio de la función \emph{designacion()} la tarea de generar una descripción en base a la designación de la expresión a describir. En lo que queda de este capítulo presentaremos un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición de \emph{verb'} necesarios para la generación de descripciones en base a los distintos operadores de Z contemplados dentro del alcance del trabajo. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada. Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
+
+Tanto para determinar si una expresión se encuentra designada como para generar una descripción para la misma, deberemos considerar el hecho de que ésta podría estar parametrizada. En particular, para la verbalización de una expresión que se encuentra designada por medio de una designación parametrizada, deberíamos considerar tanto el texto presente en la designación como también la verbalización del argumento parametrizado. Por otro lado, de tratarse de una designación no parametrizada podríamos utilizar el texto tal cual se encuentra en la misma. Por ejemplo, teniendo en cuenta las designaciones introducidas en la figura~\ref{fig:ej_designacion}, obtendríamos la siguiente designación para el término $s?$:
+
+\begin{figure}[H]
+\center
+$designacion(s?) \rightarrow \text{\emph{``símbolo a buscar''}}$
+\end{figure}
+
+\noindent
+Por otro lado, si se tratase de un termino que concuerda con una designación parametrizada, como $st~s?$, podríamos generar la descripción haciendo uso de su designación y la verbalización del argumento de la siguiente manera: 
+
+\begin{figure}[H]
+\center
+$designacion(st~s?) \rightarrow \text{\emph{``información asociada a''}} + verb(s?)$
+\end{figure}
+
+
+Finalmente retomaremos al análisis de la función \emph{verb'} y en lo que queda de este capítulo nos concentraremos en estudiar el comportamiento requerido para la misma. A continuación, presentaremos un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición de la misma, necesario para la generación de descripciones en base a los distintos operadores de Z contemplados dentro del alcance del trabajo. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada. Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
 %TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
 \begin{minted}[escapeinside=@@]{haskell}
@@ -316,24 +334,15 @@ Como por ejemplo, los siguientes casos:
 \bigskip
 Puntualmente observamos que será necesario conjugar el verbo de una oración de forma tal que concuerde con el número del sujeto de la misma. Algo parecido pasa con el atributo en los casos que utilizamos un verbo copulativo en el que deberemos hacer concordar el mismo con número y género del sujeto. Podemos ver que en el ejemplo anterior la palabra \emph{``incluido''} cumple el rol de atributo del verbo copulativo \emph{``estar''} y deberá concordar en número y forma con el sujeto de la oración. 
 
-Otro punto a tener en cuenta al momento de verbalizar una expresión será que las designaciones documentadas por el usuario pueden no contener un artículo que acompañe al sustantivo. Nuestro sistema deberá identificar los casos en los que sea necesario y agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
 
-Estas observaciones sobre la concordancia gramatical entre los constituyentes de nuestras oraciones serán importantes para el desarrollo del realizador lingüístico que estudiaremos en detalle en el capítulo \ref{cap:realization}.
-
-Por último, retomemos a la verbalización de expresiones designadas. Como vimos en el capítulo~\ref{cap:designaciones} una designación podría encontrarse parametrizada. Volvamos a la función \emph{designacion} introducida anteriormente, para el caso en el que la expresión se encuentre designada mediante una designación no parametrizada el resultado de esta función debería ser el texto tal cual se encuentra en la designación. Por otro lado, si se tratase de una designación parametrizada el texto a generar deberá depender de la verbalización de su parámetro. Por ejemplo, teniendo en cuenta las designaciones introducidas en la figura~\ref{fig:ej_designacion}, obtendríamos la siguiente designación para el término $s?$:
+Otra cuestión que podemos observar a partir de las designaciones documentadas es que, en general, utilizamos frases nominales para escribir las designaciones. Es decir, presentarán la siguiente estructura:
 
 \begin{figure}[H]
 \center
-$designacion(s?) \rightarrow \text{\emph{``símbolo a buscar''}}$
+\textbf{[artículo]} + \textbf{sustantivo} + \textbf{[complemento]}
 \end{figure}
 
-\noindent
-Por otro lado, si se tratara de un termino que machea con una designación parametrizada, como $st~s?$ deberíamos resolverla de la siguiente manera: 
+Como vemos, el artículo puede o no estar presente en las designaciones. Por ejemplo, en ninguna de las designaciones de la figura~\ref{fig:ej_corpus} se incluyeron los artículos, pero fue necesario determinar el artículo indicado (de acuerdo al sujero) y agregarlos en la descripción. Será un requerimiento, entonces, que nuestro sistema identifique los casos en los que sea necesario agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
 
-\begin{figure}[H]
-\center
-$designacion(st~s?) \rightarrow \text{\emph{``información asociada a''}} + verb(s?)$
-\end{figure}
-
-
+Todas estas observaciones sobre la concordancia gramatical entre los constituyentes de nuestras oraciones serán importantes para el desarrollo del realizador lingüístico que estudiaremos en detalle en el capítulo \ref{cap:realization}.
 
