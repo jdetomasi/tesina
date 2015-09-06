@@ -20,7 +20,10 @@
 \newtheorem{example}{Ejemplo}[section] % Defines the example environment
 \usepackage{minted}
 \usemintedstyle{bw}
-
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\usepackage[framemethod=default]{mdframed}
+\mdfdefinestyle{codebox}{backgroundcolor=bg,skipabove=10,linewidth=0}
 
 %TODO \usepackage{program}
 % ver de emprolijar algoritmo y recuadro

@@ -111,11 +111,11 @@ ya que estaríamos perdiendo información valiosa para nuestras descripciones co
 Como mencionamos previamente, el nombre de la función anterior (\emph{verb'}) fue primado intencionalmente a fin de utilizar ésta función como auxiliar para la definición de final de la tarea de verbalización. En la figura~\ref{fig:def-verb} introduciremos una nueva definición para ésta tarea donde consideraremos la designación de la expresión a verbalizar (si es que se encuentra designada) antes de intentar describir la misma en base a los operadores que la constituyen.
 
 \begin{figure}[H]
-\begin{align*}
-\nlgfun{verb($exp$)} = & \text{\textbf{ if }} \nlgfun{esta\_designada($exp$)} \\
- & \text{\textbf{ then }} \nlgfun{designacion($exp$)} \\
- & \text{\textbf{ else }} \nlgfun{verb'($exp$)} \\
-\end{align*}
+\begin{minted}[escapeinside=@@,bgcolor=bg]{haskell}
+verb(@$exp$@) = if esta_designada(@$exp$@)
+            then designacion(@$exp$@)
+            else verb'(@$exp$@)
+\end{minted}
 \caption{Definición verbalización.}
 \label{fig:def-verb}
 \end{figure}
@@ -142,150 +142,168 @@ $designacion(st~s?) \rightarrow \text{\emph{``información asociada a''}} + verb
 Finalmente retomaremos al análisis de la función \emph{verb'} y en lo que queda de este capítulo nos concentraremos en estudiar el comportamiento requerido para la misma. A continuación, presentaremos un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición de la misma, necesario para la generación de descripciones en base a los distintos operadores de Z contemplados dentro del alcance del trabajo. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada. Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
 %TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
+\begin{mdframed}[style=codebox]
 \begin{minted}[escapeinside=@@]{haskell}
 
-verb' (@$\{exp_1\} = exp_2$@)          = verb(@$exp_1$@) + 
-                                "es el unico elemento de" + 
-                                verb(@$exp_2$@)
+verb' (@$\{exp_1\} = exp_2$@) = verb(@$exp_1$@) + 
+                       "es el unico elemento de" + 
+                       verb(@$exp_2$@)
 
-verb' (@$exp_1 = \{\}$@)              = "no hay ningun elemento en" + 
-                                 verb(@$exp_1$@) 
+verb' (@$exp_1 = \{\}$@) = "no hay ningun elemento en" + 
+                    verb(@$exp_1$@) 
 
-verb' (@$exp_1 \cap exp_2 = \{\}$@)        = verb(@$exp_1$@)  +  
-                                "y" +  
-                                verb(@$exp_2$@)  +  
-                                "no tienen ningun elemento en comun"
+verb' (@$exp_1 \cap exp_2 = \{\}$@) = verb(@$exp_1$@)  +  
+                         "y" +  
+                         verb(@$exp_2$@)  +  
+                         "no tienen ningun elemento en comun"
 
-verb' (@$exp_1 \cap \{exp_2\} = \{\}$@)      = verb(@$exp_2$@) +  
-                                "no pertenece a" +  
-                                verb(@$exp_1$@) 
+verb' (@$exp_1 \cap \{exp_2\} = \{\}$@) = verb(@$exp_2$@) +  
+                           "no pertenece a" +  
+                           verb(@$exp_1$@) 
 
 verb' (@$exp_1 = exp_2$@)
-     | (num == S) = verb(@$exp_1$@) + "es igual a" + verb(@$exp_2$@) 
-     | (num == P) = verb(@$exp_1$@) + "son iguales a" + verb(@$exp_2$@) 
-     where num = numero(@$exp_1$@)
+    | (num == S) = verb(@$exp_1$@) + "es igual a" + verb(@$exp_2$@) 
+    | (num == P) = verb(@$exp_1$@) + "son iguales a" + verb(@$exp_2$@) 
+    where num = numero(@$exp_1$@)
 
-verb' (@$exp_1 \neq \{\}$@)              = "existe al menos un elemento en" +  
-                                 verb(@$exp_1$@) 
+verb' (@$exp_1 \neq \{\}$@) = "existe al menos un elemento en" +  
+                    verb(@$exp_1$@) 
 
-verb' (@$exp1 \cap exp2 \neq \{\}$@)        = verb(@$exp_1$@)  +  
-                                 "y" +  
-                                 verb(@$exp_2$@) +  
-                                 "tienen al menos un elemento en comun" 
+verb' (@$exp1 \cap exp2 \neq \{\}$@) = verb(@$exp_1$@)  +  
+                         "y" +  
+                         verb(@$exp_2$@) +  
+                         "tienen al menos un elemento en comun" 
 
 verb' (@$exp_1 \neq exp_2$@)
-     | (num == S) = verb(@$exp_1$@) + "no es igual a" + verb(@$exp_2$@) 
-     | (num == P) = verb(@$exp_1$@) + "no son iguales a" + verb(@$exp_2$@) 
-     where num = numero(@$exp_1$@)
+    | (num == S) = verb(@$exp_1$@) + "no es igual a" + verb(@$exp_2$@) 
+    | (num == P) = verb(@$exp_1$@) + "no son iguales a" + verb(@$exp_2$@) 
+    where num = numero(@$exp_1$@)
 
-verb' (@$exp_1 < exp_2$@)             = verb(@$exp_1$@) +  
-                                 "es menor a" +  
-                                 verb(@$exp_2$@) 
+verb' (@$exp_1 < exp_2$@) = verb(@$exp_1$@) +  
+                     "es menor a" +  
+                     verb(@$exp_2$@) 
 
 verb' (@$exp_1 < 0$@)
-     | (gen == M) = verb(@$exp_1$@) + "es negativo" 
-     | (gen == F) = verb(@$exp_1$@) + "es negativa" 
-     where gen = genero(@$exp_1$@)
+    | (gen == M) = verb(@$exp_1$@) + "es negativo" 
+    | (gen == F) = verb(@$exp_1$@) + "es negativa" 
+    where gen = genero(@$exp_1$@)
                                  
-verb' (@$exp_1 \leq exp_2$@)            = verb(@$exp_1$@) +  
-                                "es menor o igual a" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \leq exp_2$@) = verb(@$exp_1$@) +  
+                     "es menor o igual a" +  
+                     verb(@$exp_2$@) 
 
-verb' (@$exp_1 > exp_2$@)            = verb(@$exp_1$@) +  
-                                "es mayor a" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 > exp_2$@) = verb(@$exp_1$@) +  
+                     "es mayor a" +  
+                     verb(@$exp_2$@) 
 
 verb' (@$exp_1 > 0$@)  =
-     | (gen == M) = verb(@$exp_1$@) + "es positivo" 
-     | (gen == F) = verb(@$exp_1$@) + "es positiva" 
-     where gen = genero(@$exp_1$@)
+    | (gen == M) = verb(@$exp_1$@) + "es positivo" 
+    | (gen == F) = verb(@$exp_1$@) + "es positiva" 
+    where gen = genero(@$exp_1$@)
 
-verb' (@$exp_1 \geq exp_2$@)            = verb(@$exp_1$@) +  
-                                "es mayor o igual a" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \geq exp_2$@) = verb(@$exp_1$@) +  
+                     "es mayor o igual a" +  
+                     verb(@$exp_2$@) 
 
 verb' (@$exp_1 \in exp_2$@)
-     | (num == S) = verb(@$exp_1$@) + "pertenece a" + verb(@$exp_2$@) 
-     | (num == P) = verb(@$exp_1$@) + "pertenecen a" + verb(@$exp_2$@) 
-     where num = numero(@$exp_1$@)
+    | (num == S) = verb(@$exp_1$@) + "pertenece a" + verb(@$exp_2$@) 
+    | (num == P) = verb(@$exp_1$@) + "pertenecen a" + verb(@$exp_2$@) 
+    where num = numero(@$exp_1$@)
 
 verb' (@$exp_1 \notin exp_2$@)  = 
-     | (num == S) = verb(@$exp_1$@) + "no pertenece a" + verb(@$exp_2$@) 
-     | (num == P) = verb(@$exp_1$@) + "no pertenecen a" + verb(@$exp_2$@) 
-     where num = numero(@$exp_1$@)
+    | (num == S) = verb(@$exp_1$@) + "no pertenece a" + verb(@$exp_2$@) 
+    | (num == P) = verb(@$exp_1$@) + "no pertenecen a" + verb(@$exp_2$@) 
+    where num = numero(@$exp_1$@)
 
 verb' (@$exp_1 \subset exp_2$@)
-     | (gen == M && num == S) = verb(@$exp_1$@) + "esta incluido en" + verb(@$exp_2$@) 
-     | (gen == M && num == P) = verb(@$exp_1$@) + "estan incluidos en" + verb(@$exp_2$@) 
-     | (gen == F && num == S) = verb(@$exp_1$@) + "esta incluida en" + verb(@$exp_2$@) 
-     | (gen == F && num == P) = verb(@$exp_1$@) + "estan incluidas en" + verb(@$exp_2$@) 
-     where gen = genero(@$exp_1$@)
-           num = numero(@$exp_1$@)
+    | (gen == M && num == S) = verb(@$exp_1$@) + 
+                               "esta incluido en" + 
+                               verb(@$exp_2$@) 
+    | (gen == M && num == P) = verb(@$exp_1$@) + 
+                               "estan incluidos en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == S) = verb(@$exp_1$@) + 
+                               "esta incluida en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == P) = verb(@$exp_1$@) + 
+                               "estan incluidas en" + 
+                               verb(@$exp_2$@) 
+    where gen = genero(@$exp_1$@)
+          num = numero(@$exp_1$@)
 
-verb' (@$\{exp_1, ... , exp_n\} \subset exp_m$@)  = verb(@$exp_1$@) +  
-                                ", ... , y" +  
-                                verb(@$exp_n$@) +  
-                                "pertenecen a" +
-                                verb(@$exp_m$@)
+verb' (@$\{exp_1, ... , exp_n\} \subset exp_m$@) = verb(@$exp_1$@) +  
+                               ", ... , y" +  
+                               verb(@$exp_n$@) +  
+                               "pertenecen a" +
+                               verb(@$exp_m$@)
 
 verb' (@$exp_1 \not\subset exp_2$@)  = 
-     | (gen == M && num == S) = verb(@$exp_1$@) + "no esta incluido en" + verb(@$exp_2$@) 
-     | (gen == M && num == P) = verb(@$exp_1$@) + "no estan incluidos en" + verb(@$exp_2$@) 
-     | (gen == F && num == S) = verb(@$exp_1$@) + "no esta incluida en" + verb(@$exp_2$@) 
-     | (gen == F && num == P) = verb(@$exp_1$@) + "no estan incluidas en" + verb(@$exp_2$@) 
-     where gen = genero(@$exp_1$@)
-           num = numero(@$exp_1$@)
+    | (gen == M && num == S) = verb(@$exp_1$@) + 
+                               "no esta incluido en" + 
+                               verb(@$exp_2$@) 
+    | (gen == M && num == P) = verb(@$exp_1$@) + 
+                               "no estan incluidos en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == S) = verb(@$exp_1$@) + 
+                               "no esta incluida en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == P) = verb(@$exp_1$@) + 
+                               "no estan incluidas en" + 
+                               verb(@$exp_2$@) 
+    where gen = genero(@$exp_1$@)
+        num = numero(@$exp_1$@)
 
-verb' (@$exp_1 \subseteq exp_2$@)             = verb(@$exp_1$@) +  
-                                "esta incluido o es igual a" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \subseteq exp_2$@) = verb(@$exp_1$@) +  
+                    "esta incluido o es igual a" +  
+                    verb(@$exp_2$@) 
 
-verb' (@$\{exp_1, ... , exp_n\} \subseteq exp_m$@)  = verb(@$exp_1$@) +  
-                                ", ... , y" +  
-                                verb(@$exp_n$@) +  
-                                "pertenecen a" +
-                                verb(@$exp_m$@)
+verb' (@$\{exp_1, ... , exp_n\} \subseteq exp_m$@) = verb(@$exp_1$@) +  
+                               ", ... , y" +  
+                               verb(@$exp_n$@) +  
+                               "pertenecen a" +
+                               verb(@$exp_m$@)
 
-verb' (@$exp_1 \not\subseteq exp_2$@)            = "existe al menos un elemento en" +  
-                                verb(@$exp_1$@) +  
-                                "que no se esta en" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \not\subseteq exp_2$@) = "existe al menos un elemento en" +  
+                     verb(@$exp_1$@) +  
+                     "que no se esta en" +  
+                     verb(@$exp_2$@) 
 
-verb' (@$exp_1 \mapsto exp_2$@)           = "el par ordenado formado por:" +  
-                                verb(@$exp_1$@) +  
-                                "y" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \mapsto exp_2$@) = "el par ordenado formado por:" +  
+                      verb(@$exp_1$@) +  
+                      "y" +  
+                      verb(@$exp_2$@) 
 
-verb' (@$\{\}$@)                    = "el conjunto vacio" 
+verb' (@$\{\}$@) = "el conjunto vacio" 
 
-verb' (@$\{exp_1\}$@)                = "el conjunto formado por"  +  
-                                verb(@$exp_1$@) 
+verb' (@$\{exp_1\}$@) = "el conjunto formado por"  +  
+                 verb(@$exp_1$@) 
 
-verb' (@$\{exp_1, ... ,exp_n\}$@)         = "el conjunto formado por" +  
-                                verb(@$exp_1$@) +  
-                                ", ... , y" +  
-                                verb(@$exp_n$@) 
+verb' (@$\{exp_1, ... ,exp_n\}$@) = "el conjunto formado por" +  
+                        verb(@$exp_1$@) +  
+                        ", ... , y" +  
+                        verb(@$exp_n$@) 
 
-verb' (@$exp_1 \cup exp_2$@)            = "elementos en" +  
-                                verb(@$exp_1$@) +  
-                                "y en" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \cup exp_2$@) = "elementos en" +  
+                     verb(@$exp_1$@) +  
+                     "y en" +  
+                     verb(@$exp_2$@) 
 
-verb' (@$exp_1 \cap exp_2$@)             = "elementos en" +  
-                                verb(@$exp_1$@) +  
-                                "que tambien se encuentren en" +  
-                                verb(@$exp_2$@) 
+verb' (@$exp_1 \cap exp_2$@) = "elementos en" +  
+                    verb(@$exp_1$@) +  
+                    "que tambien se encuentren en" +  
+                    verb(@$exp_2$@) 
 
-verb' (@$f~exp_1$@)                = verb(@$f$@) +  
-                                "aplicada a" +  
-                                verb(@$exp_1$@) 
+verb' (@$f~exp_1$@) = verb(@$f$@) +  
+                 "aplicada a" +  
+                 verb(@$exp_1$@) 
 
-verb' (@$dom(exp_1)$@)             = "dominio de" +  
-                                verb(@$exp_1$@) 
+verb' (@$dom(exp_1)$@) = "dominio de" +  
+                    verb(@$exp_1$@) 
 
-verb' (@$ran(exp_1)$@)              = "rango de" +  
-                                 verb(@$exp_1$@)  
+verb' (@$ran(exp_1)$@) = "rango de" +  
+                    verb(@$exp_1$@)  
 \end{minted}
+\end{mdframed}
 
 \bigskip
 Como era de esperarse, podemos notar que, a fin de lograr descripciones mas naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se se encuentre vacío.
@@ -293,7 +311,8 @@ Como era de esperarse, podemos notar que, a fin de lograr descripciones mas natu
 Por otro lado, podemos observar que en algunos casos el texto generado por nuestra verbalización puede variar de acuerdo a aspectos gramaticales, en particular, las distintas variantes de nuestras oraciones dependerán del género y número de los constituyentes de las mismas. En estos casos, nos debemos asegurar que las palabras generadas por nuestro sistema concuerden con rasgos gramaticales de, por ejemplo, otra palabra introducida por medio de una designación. Para esto deberemos considerar algunas reglas de \emph{concordancia gramatical}, como, la concordancia de número entre el verbo y el núcleo del sujeto para el caso del operador $\in$:
 
 
-\begin{minted}[escapeinside=@@]{haskell}
+\bigskip
+\begin{minted}[escapeinside=@@,bgcolor=bg]{haskell}
 verb' (@$exp_1 \in exp_2$@)
      | (num == S) = verb(@$exp_1$@) + "pertenece a" + verb(@$exp_2$@) 
      | (num == P) = verb(@$exp_1$@) + "pertenecen a" + verb(@$exp_2$@) 
@@ -305,14 +324,15 @@ En estos casos, deberemos realizar una análisis del sujeto y según corresponda
 
 Hay algunos casos de la definición anterior en los que el verbo que forma parte del predicado del texto a generar no requieren ningún tratamiento a fin de que el mismo concuerde en numero y forma con el sujeto (esto fue contemplado de antemano y no depende de cuestiones externas como podría ser texto introducido por medio de designaciones). Por ejemplo, los siguientes casos:
 
-\begin{minted}[escapeinside=@@]{haskell}
-verb' (@$exp_1 = \{\}$@)              = "no hay ningun elemento en" + 
-                                 verb(@$exp_1$@) 
+\bigskip
+\begin{minted}[escapeinside=@@,bgcolor=bg]{haskell}
+verb' (@$exp_1 = \{\}$@)       = "no hay ningun elemento en" + 
+                          verb(@$exp_1$@) 
                                  
-verb' (@$exp_1 \cap exp_2 = \{\}$@)        = verb(@$exp_1$@)  +  
-                                "y" +  
-                                verb(@$exp_2$@)  +  
-                                "no tienen ningun elemento en comun"
+verb' (@$exp_1 \cap exp_2 = \{\}$@) = verb(@$exp_1$@)  +  
+                         "y" +  
+                         verb(@$exp_2$@)  +  
+                         "no tienen ningun elemento en comun"
 \end{minted} 
 
 \bigskip
