@@ -1,53 +1,70 @@
-\chapter{Document Planning}
+\chapter{\textit{Document Planning}}
 \label{cap:document_planning}
 
-En la arquitectura presentada en el capítulo~\ref{cap:nlg_intro} mencionamos que el \emph{document planner} es el responsable de decidir que información comunicar (\emph{determinación de contenido}) y como deberá estar estructurada esta información en el texto final (\emph{estructuración de documento}). El document planner será el encargado de que el documento final contenga toda la información requerida por el usuario y que la misma se encuentre estructurada de una forma razonablemente coherente. El resultado de esta etapa será un \emph{document plan} en el cual se especificará qué contenido debe ser incluido en el texto final y de que forma deberá estar estructurado.
+En la arquitectura presentada en el capítulo~\ref{cap:nlg_intro} mencionamos que el \emph{document planner} es el responsable de decidir que información comunicar (determinación de contenido) y como deberá estar estructurada esta información en el texto final (estructuración de documento). El \textit{document planner} será el encargado de que el documento final contenga toda la información requerida por el usuario y de que la misma se encuentre estructurada de una forma razonablemente coherente. El resultado de esta etapa será un \emph{document plan} en el cual se especificará qué contenido debe ser incluido en el texto final y de que forma deberá estar estructurado.
 
 
-A continuación describiremos brevemente la entrada y salida de nuestro \emph{document planner}, definiremos como modelar los elementos informativos (estos serán elementos de nuestro \emph{document plan}) y finalmente describiremos las tareas de \emph{determinación de contenido} y \emph{estructuración de documento}.
+A continuación detallaremos las tareas que debe realizar el \textit{document planner}, describiremos brevemente la entrada y salida del mismo, definiremos como modelar los elementos informativos (estos serán elementos de nuestro \emph{document plan}) y finalmente estudiaremos las tareas puntuales.
 
-\section{Entrada y salida del document planner}
+%TODO
+
+\section{Tareas del \textit{document planner}}
+Como mencionamos anteriormente, el \textit{document planner} será el encargado de llevar a cabo las tareas de: \emph{determinación de contenido} y \emph{estructuración de documento}.
+
+La \emph{determinación del contenido} es el nombre que se le da a la tarea de decidir y obtener la información que debemos comunicar en un texto. Este proceso generalmente involucra una o más procesos de \emph{selección}, \emph{resumen} y \emph{razonamiento con los datos} de entrada.
+
+%TODO ejemplos?
+\bigskip
+\noindent
+\textbf{Selección:} será el proceso encargado de recopilar un subconjunto de la información de entrada para luego poder ser comunicada al usuario final. El objetivo de éste será proveerle al usuario la información relevante requerida por el mismo.
+
+\bigskip
+\noindent
+\textbf{Resumen:} será necesario cuando los datos de entrada son muy ``granulados'' para ser comunicados directamente o si la información relevante consiste alguna generalización o abstracción de los mismos.
+
+\bigskip
+\noindent
+\textbf{Razonamiento con los datos:} resulta un caso general de las dos anteriores, generalmente mas sofisticado y más específico del dominio de aplicación. 
+
+Para nuestro sistema de NLG será necesario realizar una tarea de \emph{selección} que recopile el conjunto de clases de prueba que debemos describir y luego procesaremos el resultado de la selección con el objetivo de, posteriormente, obtener mejores descripciones. En particular llevaremos a cabo dos tareas del tipo \emph{procesamiento con los datos}: \emph{eliminación de tautologías} y \emph{reducción de expresiones}. La primera nos permitirá filtrar expresiones que no añadirán información adicional a la descripción final y mientras que la \emph{eliminación de tautologías} será la encargada de simplificar algunas expresiones presentes en las clases de prueba lo que nos permitirá obtener descripciones mas concisas. En la sección \ref{cap:determinacion_contenido} retomaremos la \emph{determinación de contenido} estudiaremos mas en detalle las tareas mencionadas.
+
+Finalmente, una vez seleccionada y procesada la información que debemos comunicar, será la etapa de \emph{estructuración de documento} la encargada de agrupar dicha información a fin de que el texto final resulte coherente y posea una estructura que le permita al lector interpretar con facilidad el contenido del mismo. Necesitaremos considerar como organizar y estructurar la información que tenemos que transmitir en el texto final con el fin de producir una descripción razonablemente fácil de leer y comprender. La \emph{estructuración de documento} deberá encargarse de aspectos estructurales a nivel del documento que deseamos producir, donde se contemplaran, por ejemplo, cuestiones como el orden en el que debe que ser comunicada la información, como estará agrupada la misma, etc. El resultado de la \emph{estructuración de documento} (y por lo tanto del \textit{document planner}), no será el texto final, sino que será una estructura intermedia de nuestro \textit{pipeline} que contendrá la información a comunicar en texto final agrupada convenientemente, llamada \emph{document plan}. 
+
+En la próxima sección continuaremos definiremos detalladamente la entrada y salida del \textit{document planner} para luego estudiar en detalle las tareas a realizar durante la \emph{determinación de contenido} y finalmente veremos como estructurar nuestro documento. Esta estructura, el \emph{document plan}, será luego, la entrada del \emph{microplanner}.
+
+\section{Entrada y salida del \textit{document planner}}
 Como el document planner es el primer módulo de nuestro pipeline, la entrada de éste será la misma que la entrada de nuestro sistema. Reiter y Dale~\cite{reiter_dale} generalizan la entrada de un sistema de NLG  como una cuádrupla compuestas por los siguientes componentes:
 
 \bigskip
 \noindent
-\emph{Fuente de conocimiento:} Se refiere a las bases de datos e información del dominio de aplicación que nos proporcionará el contenido de la información que los textos generados deberán contener.
-En nuestro caso la fuente de conocimiento estará compuesta por la especificación a testear, las clases de prueba generadas para ésta y las designaciones de la misma. TODO: deberíamos explayar un poco mas? (mas que nada sobre el tema designaciones...?)
+\textbf{Fuente de conocimiento:} Se refiere a las bases de datos e información del dominio de aplicación que nos proporcionará el contenido de la información que los textos generados deberán contener.
+En nuestro caso la fuente de conocimiento estará compuesta por la especificación a testear, las clases de prueba generadas para ésta y las designaciones de la misma. 
 
 \bigskip
 \noindent
-\emph{Objetivo comunicacional:} Especifica el propósito que debe cumplir el sistema. En general esta compuesto por un ``tipo de objetivo'' y un parámetro.
+\textbf{Objetivo comunicacional:} Especifica el propósito que debe cumplir el sistema. En general esta compuesto por un ``tipo de objetivo'' y un parámetro.
 En este trabajo tendremos solo un tipo de objetivo comunicacional: \emph{Describir(x)}, dónde el parámetro \emph{x} será un conjunto de identificadores de las clases de prueba a describir.
 
 \bigskip
 \noindent
-\emph{Modelo de usuario:} Provee información acerca del usuario (nivel de experiencia, preferencias, etc.). En nuestro caso el sistema se comportará de la misma forma independientemente del usuario, por lo que no tendremos en cuenta información del mismo.
+\textbf{Modelo de usuario:} Provee información acerca del usuario (nivel de experiencia, preferencias, etc.). En nuestro caso el sistema se comportará de la misma forma independientemente del usuario, por lo que no tendremos en cuenta información del mismo.
 
 \bigskip
 \noindent
-\emph{Historial de discurso:} Consta de información sobre interacciones previas entre el usuario y el sistema. Este historial puede servir para algunos sistemas interactivos donde las interacciones previas con el usuario pueden resultar de utilidad. 
+\textbf{Historial de discurso:} Consta de información sobre interacciones previas entre el usuario y el sistema. Este historial puede servir para algunos sistemas interactivos donde las interacciones anteriores con el usuario pueden resultar de utilidad. 
 
 \bigskip
-Como mencionamos anteriormente, la salida del document planner será un document plan que en nuestra arquitectura estará estructurado como un árbol, donde las hojas representarán el contenido y los nodos internos especificarán información estructural, por ejemplo sobre como debe agruparse la el contenido a comunicar. En la sección~\ref{sec:document_structure} desarrollaremos este tema mas en profundidad.
+Como mencionamos anteriormente, la salida del document planner será un document plan que en nuestra arquitectura estará estructurado como un árbol, donde las hojas representarán el contenido y los nodos internos especificarán información estructural, por ejemplo sobre como debe agruparse la el contenido a comunicar. Para poder definir esta estructura, deberemos analizar primero como representar la información que necesitamos comunicar.
 
 \section{Representación del dominio}
 
-En los sistemas de NLG el texto generado se utiliza principalmente para transmitir información. Esta información será expresada generalmente en frases y palabras, pero estas  frases y palabras no son en si mismo la información; la información subyace estos constructores lingüísticos y es ``llevada'' por ellos. Nos deberemos concentrar entonces en como representar este conocimiento y como ``mapear'' estas estructuras a una representación semántica. 
 
-En lo que queda de esta sección intentaremos definir los \emph{mensajes} que manipulará nuestro sistema. Llamamos mensajes \emph{mensajes}~\cite{reiter_dale} a los elementos informativos que conceptualizan la información que queremos comunicar; son paquetes de información que debe estar presente en el texto final. Estos estarán compuestos por elementos del dominio de aplicación.
+En los sistemas de NLG el texto generado se utiliza principalmente para transmitir información. Esta información será expresada generalmente en frases y palabras, pero estas  frases y palabras no son en si mismo la información; la información subyace estos constructores lingüísticos y es ``llevada'' por ellos. Nos deberemos concentrar entonces en como representar este conocimiento y como \textit{mapear} estas estructuras a una representación semántica. 
+
+En esta sección definiremos los \emph{mensajes} que manipulará nuestro sistema. Llamamos \emph{mensajes}~\cite{reiter_dale} a los elementos informativos que conceptualizan la información que queremos comunicar; son paquetes de información que debe estar presente en el texto final. Estos estarán compuestos por elementos del dominio de aplicación.
 
 
-El \emph{corpus de descripciones} (apéndice~\ref{ape:corpus}) resulta una buena fuente para estudiar el modelado del dominio y los tipos de \emph{mensajes} que necesitamos comunicar. Anteriormente, vimos del \emph{corpus} que existe una relación entre la información a comunicar y las expresiones Z pertenecientes a las clases de prueba generadas por Fastest. Observamos que las mismas están compuestas por una conjunción de predicados atómicos y que cada uno de estos predicados se corresponde con una oración en lenguaje natural dentro de la descripción de la clase de prueba. Por ejemplo, cada una de las siguientes líneas de la descripción de LookUp\_SP\_1 (pág.~\pageref{fig:ej_desc_lookup_sp_1}):
-
-\medskip
-\begin{enumerate}
- \item{\emph{``El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.''}}
- \item{\emph{``El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.''}}
-\end{enumerate}
-
-\medskip
-\noindent
-están respectivamente caracterizadas por la expresiones Z que intentan describir:
+El \emph{corpus de descripciones} (apéndice~\ref{ape:corpus}) resulta una buena fuente para estudiar el modelado del dominio y los tipos de \emph{mensajes} que necesitamos comunicar. Anteriormente, observamos en el \emph{corpus} la relación entre las frases pertenecientes a la información a comunicar y las expresiones Z de las clases de prueba generadas por Fastest. Observamos que estas clases de prueba están compuestas por una conjunción de predicados atómicos y que cada uno de estos predicados se corresponde con una oración en lenguaje natural dentro de la descripción de la clase de prueba. Podemos ver esta correspondencia en la figura \ref{fig:ej_test_desc}, donde las siguientes expresiones:
 
 \medskip
 \begin{enumerate}
@@ -55,9 +72,20 @@ están respectivamente caracterizadas por la expresiones Z que intentan describi
   \item{$\dom st = \{ s? \}$}
 \end{enumerate}
 
-Por otro lado, también vimos que los textos correspondientes para cada uno de los predicados que componen una clase de prueba son independientes. Por lo que podríamos separar esta información en distintos mensajes facilitándole la tarea a las siguientes etapas de procesamiento. Es por esto que decidimos definir un único tipo de \emph{mensaje} para nuestro sistema: \emph{VerbalizacionExpresion} que representa, como su nombre lo indica, una verbalización de una expresión Z. Idealmente, tendremos un mensaje \emph{VerbalizacionExpresion} por cada predicado atómico perteneciente a una clase de prueba.
+\medskip
+\noindent
+se encuentran, respectivamente, descritas por las siguientes frases:
 
-En la figura~\ref{fig:ej_mensajes} podemos ver como quedarían definidos los mensajes para las dos lineas de la descripción de \emph{LookUp\_SP\_1}.
+\medskip
+\begin{enumerate}
+ \item{\emph{``El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.''}}
+ \item{\emph{``El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.''}}
+\end{enumerate}
+
+\bigskip
+Por otro lado, también vimos que los textos correspondientes para cada uno de los predicados que componen una clase de prueba son independientes. Por lo que podríamos separar esta información en distintos mensajes facilitándole la tarea a las siguientes etapas de procesamiento. Es por esto que decidimos definir un único tipo de \emph{mensaje} para nuestro sistema: \emph{VerbalizacionExpresion} que representa, como su nombre lo indica, una verbalización de una expresión Z. Idealmente, tendremos un mensaje \emph{VerbalizacionExpresion} para cada uno de los predicado atómico pertenecientes a una clase de prueba.
+
+En la figura~\ref{fig:ej_mensajes} podemos ver como quedarían definidos los mensajes para las expresiones mencionadas anteriormente.
 
 \begin{figure}[H]
   	\centering
@@ -66,19 +94,102 @@ En la figura~\ref{fig:ej_mensajes} podemos ver como quedarían definidos los men
   	\label{fig:ej_mensajes}
 \end{figure}
 
-Por último, vale la pena aclarar que en nuestro caso, los datos con los que trabajamos resultan esquemas Z de las clases de prueba, por lo que ya se encuentran modelados de antemano y no fue necesario realizar un nuevo modelo del dominio.
+Vale la pena aclarar que en nuestro caso, los datos con los que trabajamos resultan esquemas Z de las clases de prueba, por lo que ya se encuentran modelados de antemano y no fue necesario realizar un nuevo modelo del dominio.
  
 
 \section{Determinación del contenido}
+\label{cap:determinacion_contenido}
 
-La determinación del contenido es el nombre que se le da a la tarea de decidir y obtener la información que se debe comunicar en un texto. Este proceso generalmente involucra una o más tareas de \emph{selección}, \emph{resumen} y \emph{razonamiento con los datos} de entrada.
-El proceso de \emph{selección} recopilará un subconjunto de la información de entrada para luego poder ser comunicada al usuario. El objetivo del mismo será el de proveer la información relevante requerida por el mismo.
-La tarea de \emph{resumen} es necesaria cuando los datos de entrada son muy ``granulados'' para ser comunicados directamente o si la información relevante consiste alguna generalización o abstracción de los mismos, que no es el caso de nuestro sistema donde las expresiones de Z con las que trabajaremos contienen exactamente la información que se desea comunicar.
-Por último el \emph{razonamiento con los datos} resulta un caso general de las dos anteriores, generalmente mas sofisticado y específico del dominio de aplicación. 
+Como mencionamos anteriormente, en la \emph{determinación de contenido} se suelen llevar a cabo una o mas tareas de \emph{selección}, \emph{resumen} y \emph{razonamiento con los datos}. En la figura                     \ref{fig:tareas_determinacion_contenido} podemos observar estas tareas y posteriormente veremos cada una de ellas mas detalladamente.
+
+Podemos observar en la figura \ref{fig:tareas_determinacion_contenido} las tres tareas que nuestro sistema deber
+
+\begin{figure}[H]
+  	\centering
+	\includegraphics[scale=0.4]{img/tareas_determinacion_contenido.png}
+	\caption{Tareas determinación de contenido.}
+  	\label{fig:tareas_determinacion_contenido}
+\end{figure}
+
+
+
+\subsection*{Selección}
+Como vimos en la sección anterior, nuestro sistema de NLG deberá ser capaz de producir descripciones para un subconjunto de clases de prueba del total de las clases generadas por \emph{Fastest} para una especificación. Es decir, el usuario podría solicitarle a nuestro sistema la generación de descripciones para una, un grupo o todas las clases de pruebas incluidas en la especificación y el sistema debería generar descripciones únicamente para las clases de prueba indicadas. Es por esto que deberemos realizar una \emph{selección de la información} que tendrá luego que ser incluida dentro del \textit{document plan} a fin de ser comunicada, posteriormente, en el texto final.
+
+Como mencionamos previamente, la tarea de \emph{selección de información} para nuestro trabajo se resumirá a la búsqueda y filtrado de las clases de prueba indicadas por el usuario dentro de todo el conjunto de clases de prueba que forma parte de la entrada del sistema. Por ejemplo, si deseamos generar una descripción para la clase de prueba \emph{LookUp\_SP\_1} de la figura~\ref{fig:ej_tcl_lookup}, la misión de de esta tarea será la de identificar y seleccionar la clase \emph{LookUp\_SP\_1} entre todas las generadas por \emph{Fastest} que formarán parte de los datos de entrada de nuestro sistema de NLG.
+
+%TODO agregar grafico aca para ejemplificar?
+
+A continuación veremos como podemos mejorar las descripciones de nuestro sistema realizando algunos procesamientos sobre la información seleccionada previo a la construcción del \textit{document plan}. En particular veremos dos tareas que podríamos enmarcar dentro del \emph{razonamiento con los datos}, la \emph{eliminación de tautologías} y la \emph{reducción de expresiones}. 
+
+% que eliminando tautologías de los esquemas de clase de prueba y realizando algunas reducciones simples sobre las expresiones de los mismos podremos, posteriormente, obtener mejores descripciones.
+
+\subsection*{Eliminación de tautologías}
+Como mencionamos anteriormente, todas las clases de prueba incluidas en el \emph{corpus} fueron generadas utilizando \emph{Fastest 1.6}. Hemos observado que en ciertos casos, esta herramienta genera clases de prueba como la que podemos ver, por ejemplo, en la figura \ref{fig:ej_update_sp_4}.
+
+\begin{figure}[H]
+  \centering
+  \begin{schema}{Update\_ SP\_ 4}\\
+   st : SYM \pfun VAL \\
+   s? : SYM \\
+   v? : VAL 
+  \where
+   st \neq \{ \} \\
+   \{ s? \mapsto v? \} \neq \{ \} \\
+   \dom st = \dom \{ s? \mapsto v? \}
+  \end{schema}
+  \caption{Clase de prueba para operación Update (pág.~\pageref{fig:spec_symbol_table}).}
+  \label{fig:ej_update_sp_4}
+\end{figure}
+
+Podemos observar en este caso, que la siguiente expresión del ejemplo anterior:
+
+\begin{figure}[H]
+  \centering
+  $\{ s? \mapsto v? \} \neq \{ \}$ 
+\end{figure}
+
+\noindent
+no aporta información relevante para el usuario, de hecho esta expresión no agrega ninguna restricción para el caso de prueba ya que será siempre verdadera y si intentáramos describir este predicado, terminaríamos con un texto parecido al siguiente:
+
+\begin{figure}[H]
+  \centering
+  \emph{``el conjunto formado por el par de el símbolo a actualizar y el nuevo valor, es distinto al conjunto vacío''}
+\end{figure}
+
+\noindent
+que además de resultar algo difícil de interpretar, no aporta nada al objetivo comunicacional.
+
+En la versión de \emph{Fastest} utilizada observamos que sólo se introducían tautologías similares a la del ejemplo anterior. Puntualmente sólo vimos que ocurría con predicados del tipo:
+
+\begin{figure}[H]
+  \centering
+  $\{ a, b, ... , n \} \neq \{ \}$ 
+\end{figure}
+
+
+
+Por lo tanto, obtendremos descripciones mas claras si no intentamos comunicar esta clase de predicados. Para nuestro sistema deberá filtrar las tautologías presentes en las clases de prueba y no incluirlas dentro del \emph{document plan}.
+
+%TODO
+%1- como determino tautologias
+%2- casos
+%3- que simplifico/reduzco
+%4- no dijimos que eran atómicos?
+%hablo de todo esto en el capitulo del corpus?
+
+
+
+\subsection*{Reducción de expresiones}
+
+%TODO en algun lado decir que hay predicados que no son atomicos y de ellos nos encargaremos en esta secciòn
+
+%TODO cierre capítulo
+
 
 Una vez seleccionada y procesada la información necesaria será ésta etapa la encargada de construir los mensajes introducidos en la sección anterior, que luego formarán parte de nuestro \emph{document plan}.
 
-Para nuestro trabajo, la tarea de \emph{selección} se resume en la búsqueda y filtrado de las clases de prueba indicadas por el usuario dentro de todo el conjunto de clases de prueba que forma parte de la entrada del sistema. Por ejemplo, si deseamos generar una descripción para la clase de prueba \emph{LookUp\_SP\_1} de la figura~\ref{fig:ej_tcl_lookup}, la misión de de esta tarea será la de identificar y seleccionar la clase de prueba \emph{LookUp\_SP\_1} entre todas las clases generadas por \emph{Fastest} que formarán parte de los datos de entrada de nuestro sistema de NLG.
+Para nuestro trabajo, la tarea de \emph{selección} 
 
 Luego de la \emph{selección}, nuestro sistema deberá procesar los datos de entrada con el fin de obtener mejores descripciones. Hemos observado\footnote{Análisis en base a clases de prueba generados utilizando \emph{Fastest 1.6}} que trabajando ciertas expresiones en las clases de prueba podemos mejorar considerablemente los textos producidos. Veamos por ejemplo la figura~\ref{fig:ej_update_sp_4} donde se muestra una clase de prueba generada con \emph{Fastest} en la que se pueden ver dos problemas que abordaremos en esta etapa.
 
@@ -97,19 +208,11 @@ Luego de la \emph{selección}, nuestro sistema deberá procesar los datos de ent
   \label{fig:ej_update_sp_4}
 \end{figure}
 
-Podemos observar que la siguiente expresión del ejemplo anterior:
 
-\begin{figure}[H]
-  \centering
-  $\{ s? \mapsto v? \} \neq \{ \}$ 
-\end{figure}
 
-\noindent
-no aporta información relevante para el usuario, de hecho esta expresión no agrega ninguna restricción para el caso de prueba ya que será siempre verdadera. Si intentamos describir este predicado, terminaríamos con un texto generando parecido al siguiente:
 
-\begin{figure}[H]
-  \emph{``el conjunto formado por el par de el símbolo a actualizar y el nuevo valor, es distinto al conjunto vacío''}
-\end{figure}
+
+
 
 \noindent
 que además de poder resultar algo difícil de interpretar, no aportaría nada al objetivo comunicacional.
@@ -152,6 +255,7 @@ En conclusión, el procesamiento que nos proponemos a realizar en esta etapa ten
 Una vez seleccionada y procesada la información deberemos construir los \emph{mensajes} (\emph{VerbalizacionExpresion}) que luego formarán parte del \emph{document plan} desarrollado en el siguiente capítulo.
 
 \section{Estructuración del documento}
+\label{sec:document_structure}
 
 Como dijimos antes, el texto generado no podrá ser una colección al azar de frases y palabras. Deberá tener coherencia y poseer una estructura que le permita al lector interpretar con facilidad el contenido del mismo.
 Necesitaremos considerar como organizar y estructurar la información que debemos comunicar con el fin de producir un texto razonablemente fácil de leer y comprender.
@@ -178,4 +282,3 @@ Llamaremos \emph{DocumentoDP} a la raíz de nuestro \emph{document plan}, \emph{
 \end{figure}
 
 
-\label{sec:document_structure}

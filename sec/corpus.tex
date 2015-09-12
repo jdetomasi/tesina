@@ -37,16 +37,15 @@ En la Figura~\ref{fig:ej_corpus} podemos observar uno de los ejemplos incluidos 
 \bigskip
 \item \emph{Descripción en lenguaje natural para LookUp\_SP\_1}\\
 
-\fbox{\begin{minipage}{13 cm}
-  \textbf{LookUp\_SP\_1:} Se busca un símbolo en la tabla.  
-    \begin{itemize}
-     \item{Cuando:}
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=LookUp\_SP\_1]
+  Se busca un símbolo en la tabla, cuando:
      \begin{itemize}
-  	    \item{El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.}
-  	    \item{El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.}   
+  	    \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos.}
+  	    \item[--]{El símbolo a buscar es el único elemento del conjunto formado por los símbolos cargados en la tabla de símbolos.}   
      \end{itemize}
-    \end{itemize}
-\end{minipage}}
+\end{tcolorbox}
+
 \end{itemize}
 \caption{Corpus de textos.}
 \label{fig:ej_corpus}
@@ -55,15 +54,29 @@ En la Figura~\ref{fig:ej_corpus} podemos observar uno de los ejemplos incluidos 
 \section{Análisis del corpus}
 \label{sec:corpus_analisis}
 
-En lo que queda de este capítulo nos encargaremos de analizar los ejemplos presentes en el \emph{corpus} a fin de extraer los requerimientos para nuestro sistema.
+En lo que queda de este capítulo nos encargaremos de analizar los ejemplos presentes en el \emph{corpus} a fin de extraer los requerimientos para nuestro sistema. Este estudio nos ayudará a sustentar muchas las decisiones que tomaremos al realizar el diseño de nuestro sistema de NLG. 
 
-Comencemos observando las clases de prueba generadas por \emph{Fastest}. Podemos notar que estas se encuentran formadas siempre por conjunciones de predicados atómicos y que a cada uno de estos le corresponde exactamente una oración en lenguaje natural dentro del texto final. Además, estas oraciones dependen exclusivamente del predicado que describen, es decir, estas no contienen información sobre otros predicados ni hacen referencia a otras frases generadas. Por lo tanto, la tarea de describir el cuerpo de del esquema Z de la clase de prueba, se puede reducir básicamente a \emph{verbalizar} individualmente cada uno de estos predicados. Esta tarea, la \emph{verbalización} de predicados Z, resultará el desafío principal de este trabajo. Definir con precisión los detalles será de vital importancia para el desarrollo de las etapas de \emph{microplanning} y \emph{realization} de nuestro sistema de NLG (capítulo~\ref{cap:microplanning} y \ref{cap:realization}).
+Comenzaremos analizando las clases de prueba generadas por \emph{Fastest} y la correlación entre la estructura de las mismas y la estructura de las descripciones en lenguaje natural, luego estudiaremos la verbalización de las expresiones Z presentes en las clases de prueba, analizaremos el rol de las designaciones y daremos un conjunto de reglas para describir estas expresiones. Por último contemplaremos cuestiones gramaticales que deberemos tener en cuenta para la realización del sistema.
 
-Por otro lado, veamos la estructura de las descripciones de ejemplo. En estos podemos ver que todas las descripciones de las clases de prueba poseen la misma estructura. En todas se comienza por el nombre de la clase de prueba, seguido por un pequeño detalle de la operación a testear y luego una lista de oraciones encargadas de describir cada uno de los predicados presentes en el cuerpo de la clase de prueba. Conocer la estructura del texto a generar nos será de utilidad para la elaboración del \emph{document plan} (capítulo ~\ref{cap:document_planning}).
+\section{Estructura de las descripciones}
+\label{sec:corpus_descripciones}
+Podemos notar que las clases de prueba generadas por \emph{Fastest} se encuentran formadas siempre por conjunciones de predicados atómicos y que a cada uno de estos le corresponde exactamente una oración en lenguaje natural dentro del texto final. Además, estas oraciones dependen exclusivamente del predicado que describen, es decir, estas no contienen información sobre otros predicados ni hacen referencia a otras frases generadas. En la figura~\ref{fig:ej_test_desc} podemos evidenciar esta correspondencia.
 
-Como ya mencionamos, la verbalización de expresiones Z resultará una de las tareas mas importantes para nuestro sistema de NLG. En lo que resta de esta sección nos concentraremos especialmente en analizar y especificar la misma.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{img/ej_test_desc.png}
+\caption{Estructura descripciones.}
+\label{fig:ej_test_desc}
+\end{figure}
 
-Podemos notar dos aspectos fundamentales en relación a la \emph{verbalización} de expresiones Z. En primer lugar, podemos ver que hay textos que se repiten (con pequeñas variantes, que analizaremos posteriormente) independientemente del dominio de aplicación y estos surgen a raíz de los operadores de Z presentes en los predicados que se describen. Por otro lado, podemos observar el rol fundamental de las designaciones que posibilitan la introducción de texto dependiente del dominio de aplicación en las descripciones y a su vez estos se encuentran combinados con las frases antes mencionadas correspondientes a la descripción de operadores de Z. Consideremos, por ejemplo, las siguientes dos expresiones y sus respectivas descripciones en lenguaje natural, una pertenece al ejemplo de la figura~\ref{fig:ej_corpus} y la otra describe un predicado que forma parte de una clase de prueba para la especificación de un sistema bancario:
+Además, podemos observar del \emph{corpus} que todas las descripciones de las clases de prueba poseen la misma estructura. En todas se comienza por el nombre de la clase de prueba, seguido por un pequeño detalle de la operación a testear y luego una lista de oraciones encargadas de describir cada uno de los predicados presentes en el cuerpo de la clase de prueba. Conocer la estructura del texto a generar nos será de utilidad para la elaboración del \emph{document plan} (capítulo ~\ref{cap:document_planning}).
+
+\section{Verbalización de expresiones Z}
+\label{sec:corpus_verbalizacion}
+
+La tarea de describir un esquema Z correspondiente a una clase de prueba, se puede reducir básicamente a \emph{verbalizar} individualmente cada uno de los predicados atómicos que constituyen el cuerpo del esquema Z. Esta \emph{verbalización} de predicados Z, será el desafío principal de este trabajo. Definir con precisión los detalles de ésta será de vital importancia para el desarrollo de las etapas de \emph{microplanning} y \emph{realization} de nuestro sistema de NLG (capítulo~\ref{cap:microplanning} y \ref{cap:realization}). En esta sección nos concentraremos especialmente en analizar y especificar la misma.
+
+Podemos notar dos aspectos fundamentales sobre la \emph{verbalización} de expresiones Z. En primer lugar, podemos ver que hay textos que se repiten (con pequeñas variantes, que analizaremos posteriormente) independientemente del dominio de aplicación y estos surgen a raíz de los operadores de Z presentes en los predicados que se describen. Por otro lado, podemos observar el rol fundamental de las designaciones que posibilitan la introducción de texto dependiente del dominio de aplicación en las descripciones y a su vez estos se encuentran combinados con las frases antes mencionadas correspondientes a la descripción de operadores de Z. Consideremos, por ejemplo, las siguientes dos expresiones y sus respectivas descripciones en lenguaje natural, una pertenece al ejemplo de la figura~\ref{fig:ej_corpus} y la otra describe un predicado que forma parte de una clase de prueba para la especificación de un sistema bancario:
 
 \bigskip
 \begin{enumerate}
@@ -138,8 +151,16 @@ Por otro lado, si se tratase de un termino que concuerda con una designación pa
 $designacion(st~s?) \rightarrow \text{\emph{``información asociada a''}} + verb(s?)$
 \end{figure}
 
+%\section{Rol de las designaciones}
+%\label{sec:corpus_designaciones}
 
-Finalmente retomaremos al análisis de la función \emph{verb'} y en lo que queda de este capítulo nos concentraremos en estudiar el comportamiento requerido para la misma. A continuación, presentaremos un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición de la misma, necesario para la generación de descripciones en base a los distintos operadores de Z contemplados dentro del alcance del trabajo. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada. Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos. %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
+\section{Reglas de verbalización}
+\label{sec:corpus_reglas}
+
+En esta sección retomaremos al análisis de la función \emph{verb'} presentando una especificación para la misma, basada en un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición por casos de la misma de la misma. Luego, en lo que queda de este capítulo nos concentraremos en estudiar, como consecuencia de estas reglas, algunos aspectos gramaticales que que deberemos contemplar.
+
+Comenzaremos, a continuación, por completar la definición de \emph{verb'}, basándonos en los textos presentes en el \emph{corpus}, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos.
+%. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada.  %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
 %TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
 \begin{mdframed}[style=codebox]
@@ -305,6 +326,10 @@ verb' (@$ran(exp_1)$@) = "rango de" +
 \end{minted}
 \end{mdframed}
 
+
+\section{Aspectos gramaticales}
+\label{sec:corpus_gramatica}
+
 \bigskip
 Como era de esperarse, podemos notar que, a fin de lograr descripciones mas naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se se encuentre vacío.
 
@@ -362,7 +387,9 @@ Otra cuestión que podemos observar a partir de las designaciones documentadas e
 \textbf{[artículo]} + \textbf{sustantivo} + \textbf{[complemento]}
 \end{figure}
 
-Como vemos, el artículo puede o no estar presente en las designaciones. Por ejemplo, en ninguna de las designaciones de la figura~\ref{fig:ej_corpus} se incluyeron los artículos, pero fue necesario determinar el artículo indicado (de acuerdo al sujero) y agregarlos en la descripción. Será un requerimiento, entonces, que nuestro sistema identifique los casos en los que sea necesario agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
+Como vemos, el artículo puede o no estar presente en las designaciones. Por ejemplo, en ninguna de las designaciones de la figura~\ref{fig:ej_corpus} se incluyeron los artículos, pero fue necesario determinar el artículo indicado (de acuerdo al sujeto) y agregarlos en la descripción. Será un requerimiento, entonces, que nuestro sistema identifique los casos en los que sea necesario agregar el artículo apropiado de forma que concuerde en género y número con el sustantivo. 
 
 Todas estas observaciones sobre la concordancia gramatical entre los constituyentes de nuestras oraciones serán importantes para el desarrollo del realizador lingüístico que estudiaremos en detalle en el capítulo \ref{cap:realization}.
+
+TODO cierre
 
