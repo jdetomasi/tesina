@@ -246,14 +246,12 @@ Será tarea de nuestro \textit{document planner}, entonces, trabajar también es
 \section{Estructuración del documento}
 \label{sec:document_structure}
 
-Como mencionamos anteriormente, el texto generado no podrá ser una colección al azar de frases y palabras. Deberá tener coherencia y poseer una estructura que le permita al lector interpretar con facilidad el contenido del mismo. Para esto, necesitaremos considerar como organizaremos y estructuraremos la información que debemos comunicar a fin de producir un texto razonablemente fácil de leer y comprender.
+Como mencionamos anteriormente, el texto generado no podrá ser una colección de frases y palabras al azar. Deberá tener coherencia y poseer una estructura que le permita al lector interpretar con facilidad el contenido del mismo. Para esto, necesitaremos considerar como organizaremos y estructuraremos la información que debemos comunicar a fin de producir un texto razonablemente fácil de leer y comprender.
 
 %~\footnote{Las decisiones sobre como debe estar ordenado y agrupado el documento final son resultado del análisis del \emph{corpus} de descripciones.}
-En esta tarea nos concentraremos en construir una estructura que contenga la información seleccionada y procesada en la etapa de \emph{determinación de contenido}; estableciendo el agrupamiento y ordenamiento de la misma.
+Esta tarea se concentrará en construir una estructura que contenga la información seleccionada y procesada en la etapa de \emph{determinación de contenido}; estableciendo el agrupamiento y ordenamiento de la misma. Esta estructura deberá caracterizar la disposición de los elementos pertenecientes a los textos recopilados en el \emph{corpus}. De este, podemos observar que los documentos a generar poseen una estructura bastante simple y rígida a la vez. Estos están formados por una secuencia de descripciones para las clases de prueba seleccionadas en la etapa de \emph{determinación de contenido}, a su vez, cada una de estas descripciones agrupa los \emph{mensajes} que modelan la verbalización de las expresiones pertenecientes a cada clase, ordenados de la misma forma en la que aparecen en el esquema de la clase de prueba en cuestión. 
 
-Esta estructura deberá caracterizar la disposición de los elementos pertenecientes a los textos recopilados en el \emph{corpus}, del que podemos observar que los documentos a generar documentos poseen una estructura bastante simple y rígida a la vez. Estos están formados por una secuencia de descripciones para las clases de prueba indicadas por el usuario, a su vez, cada una de estas descripciones agrupa las verbalizaciones de las clases de prueba seleccionadas en la etapa de \emph{determinación de contenido}, ordenadas de la misma forma en la que aparecen en el esquema de la clase de prueba en cuestión. Por lo tanto 
-
-En la figura~\ref{fig:png_document_plan} podemos observar una representación abstracta para un \emph{document plan} de nuestro sistema.
+Para modelar nuestro \emph{document plan}, utilizaremos un elemento al que llamaremos \emph{DocumentoDP}, este elemento modelará el documento completo (será la raíz de nuestro \emph{document plan}), éste elemento estará contendrá el título para el documento a generar y un conjunto de elementos que modelarán las descripciones de las distintas clases de prueba. Llamaremos \emph{DescripcionClasePrueba} a estos últimos utilizado para modelar las descripciones de las distintas clases de prueba. Estos estarán formado por información general de la clase de prueba a describir (como el nombre de la misma y una pequeña descripción de la operación a testear) y un conjunto de los \emph{mensajes} introducidos anteriormente: \emph{VerbalizacionExpresion} que modelaran las verbalizaciones de las expresiones Z contenidas dentro de las clases de prueba. En la figura~\ref{fig:png_document_plan} podemos observar una representación abstracta de la estructura que tendrá nuestro \emph{document plan}.
 
 \begin{figure}[H]
   	\centering
@@ -262,13 +260,14 @@ En la figura~\ref{fig:png_document_plan} podemos observar una representación ab
   	\label{fig:png_document_plan}
 \end{figure}
 
-Llamaremos \emph{DocumentoDP} a la raíz de nuestro \emph{document plan}, \emph{DocumentoDP} contendrá a su vez una lista ordenada de las descripciones de las clases de prueba (\emph{DescripcionClasePrueba}) que debemos incluir en el texto final. El elemento \emph{DescripcionClasePrueba} representa el texto a generar para una clase de prueba (por ejemplo el texto de la figura~\ref{fig:ej_lookup_sp_1}) y tendremos uno de estos elementos por cada clase de prueba indicada por el usuario. Finalmente los mensajes seleccionados en la etapa anterior formarán se encontrarán agrupados en la \emph{DescripcionClasePrueba} correspondiente. Podemos ver en la figura~\ref{fig:png_document_plan_ej} un ejemplo del document plan para la descripción de la clase de prueba \emph{LookUp\_SP\_1} introducida anteriormente. 
+Podemos ver en la figura~\ref{fig:png_document_plan_ej} un ejemplo del document plan para la descripción de la clase de prueba \emph{LookUp\_SP\_1} utilizada en el capítulo anterior (pág \pageref{fig:ej_test_desc}). 
 
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.4]{img/document_plan_ej.png}
-	\caption{Document plan correspondiente al texto de la figura~\ref{fig:ej_lookup_sp_1}.}
+	\caption{Document plan correspondiente al texto de la figura~\ref{fig:ej_test_desc}.}
   	\label{fig:png_document_plan_ej}
 \end{figure}
 
-
+\bigskip
+En este capítulo analizamos las tareas que debe realizar nuestro \emph{document planner}. Como vimos, la misión del mismo es construir un \emph{document plan} que contenga la información requerida por el usuario, filtrada, procesada y agrupada. Tomamos decisiones generales sobre la estructura del documento, dejando para etapas posteriores el trabajo mas detallado, a nivel de las oraciones por ejemplo. Será tarea del \emph{microplanner}, como veremos el próximo capítulo, procesar los \emph{mensajes} construidos en esta etapa y generar a partir de estos una especificación de frase para cada expresión de Z que debemos verbalizar así como también deberá transformar los elementos que contienen información estructural en especificaciones mas concretas del texto a generar (utilizando elementos que modelarán párrafos, secciones, lista de ítems, etc.).
