@@ -1,21 +1,21 @@
 \chapter{Microplanning}
 \label{cap:microplanning}
 
-La etapa de \textit{microplanning} será la encargada de, a partir del \textit{document plan} producido por la etapa anterior, generar una especificación mas detallada del texto a generar. 
+La etapa de \textit{microplanning} será la encargada de, a partir del \textit{document plan} producido por la etapa anterior, producir una especificación mas detallada para el texto a generar. 
 
-En éste capítulo presentaremos las tres tareas que, según Reiter y Dale~\cite{reiter_dale}, deberían llevarse a cabo en esta etapa: lexicalización, agregación y generación de expresiones de referencia. Luego definiremos en detalle la entrada y salida de esta etapa. Finalmente profundizaremos particularmente sobre la tarea de lexicalización llevada a cabo por nuestro \textit{microplanner}. 
+En éste capítulo presentaremos las tres tareas que, según Reiter y Dale~\cite{reiter_dale}, deberían llevarse a cabo en esta etapa: lexicalización, agregación y generación de expresiones de referencia. Luego definiremos en detalle la entrada y salida del \textit{microplanner}. Finalmente profundizaremos particularmente sobre la tarea de lexicalización que debemos llevar a cabo para este trabajo.
 
-A lo lago de este capítulo continuaremos con el ejemplo utilizado en la etapa anterior, ilustrando como a partir del \textit{document plan} de la figura \ref{fig:png_document_plan_ej} construiremos una especificación mas detallada del documento a generar.
+A lo lago de este capítulo continuaremos con el ejemplo utilizado en la etapa anterior, ilustrando como a partir del \textit{document plan} presentado en la la figura \ref{fig:png_document_plan_ej} construiremos una especificación mas detallada del documento a generar.
 
 \section{Tareas del \textit{Microplanner}}
 
-La tarea del \textit{microplanner} será la refinar el \textit{document plan} generado en la etapa anterior con el fin de producir una especificación mas detallada del texto a generar. Cabe aclarar que el resultado de esta etapa no será todavía el texto final ya que quedarán por tomar decisiones acerca de la sintaxis, morfología y cuestiones de presentación, de las cuales se encargará el \emph{realizador de superficie}.
+Como mencionamos previamente, el \textit{microplanner} será el encargado de transformar el \textit{document plan} generado en la etapa anterior en una especificación mas refinada del texto a generar. Cabe aclarar que el resultado de esta etapa no será todavía el texto final ya que quedarán por tomar decisiones acerca de la sintaxis, morfología y cuestiones de presentación, de las cuales se encargará el realizador de superficie.
 
-Como mencionamos en el capítulo~\ref{cap:nlg_intro}, las tareas generalmente realizadas por el \emph{microplanner} son:
+Como mencionamos en el capítulo~\ref{cap:nlg_intro}, dentro de las tareas generalmente realizadas por el \emph{microplanner} podemos destacar las siguientes:
 
 \medskip
 \noindent
-\textbf{Lexicalización.} Esta tarea se encarga de elegir que palabras particulares y constructores sintácticos usar para comunicar la información contenida en el \textit{document plan}. Desarrollaremos más en detalle el trabajo realizado por esta etapa en la sección~\ref{sec:microplanning_lexicalization}
+\textbf{Lexicalización.} Esta tarea se encarga de elegir que palabras particulares y que constructores sintácticos usar para comunicar la información contenida en el \textit{document plan}. Desarrollaremos más en detalle el trabajo realizado por esta etapa en la sección~\ref{sec:microplanning_lexicalization}
 
 
 \medskip
@@ -50,9 +50,9 @@ La generación de expresiones de referencia se encuentra fuera del alcance de es
 
 
 \section{Entrada y salida del \textit{microplanner}}
-Como ya mencionamos anteriormente, la entrada del \textit{microplanner} será un \textit{document plan} producido por la etapa anterior. Observemos por ejemplo el \textit{document plan} presentado en la figura \ref{fig:png_document_plan_ej} del capítulo anterior, utilizado para modelar la descripción de la clase de prueba \emph{LookUp\_SP\_1}. Esta abstracción no especifica las frases que nuestro sistema debe generar, ni si deben estar enumeradas en una lista de ítems o agrupadas en secciones por ejemplo. Necesitaremos una especificación mas concreta, un modelo mas detallado del documento y de las frases a generar. Será entonces la tarea del \textit{microplanner}  construir a partir del \textit{document plan} una especificación mas concreta del texto a generar.
+La entrada del \textit{microplanner} será un \textit{document plan} producido por la etapa anterior. Observemos por ejemplo el \textit{document plan} presentado en la figura \ref{fig:png_document_plan_ej} del capítulo anterior, utilizado para modelar la descripción de la clase de prueba \emph{LookUp\_SP\_1}. Esta abstracción no especifica las frases que nuestro sistema debe generar, ni si deben estar enumeradas en una lista de ítems o agrupadas en secciones por ejemplo. Necesitaremos una especificación mas concreta, un modelo mas detallado del documento y de las frases a generar. Será entonces responsabilidad del \textit{microplanner}  construir a partir del \textit{document plan} una especificación mas concreta del texto a generar.
 
-Llamaremos \emph{text specification} o (especificación del texto) a la especificación resultado de esta etapa. Ésta se encargará de modelar los distintos elementos que compondrán el documento final (como párrafos, lista de ítems, etc.) y estará compuesta en base a \textit{phrase specification} (o especificaciones de frase) encargadas de modelar las distintas oraciones que serán incluidas en el texto final (veremos que cada una de estas se construirán a partir de los mensajes contenidos en el \textit{document plan}). Será luego tarea de la siguiente etapa convertir los nodos internos en anotaciones especificas para el sistema de presentación (realización de estructura) y transformar las \emph{phrase specification} en oraciones o frases sintáctica, morfológica y ortográficamente correctas (realización lingüística). 
+Llamaremos \emph{text specification} (o especificación del texto) a la especificación resultado de esta etapa. Ésta se encargará de modelar los distintos elementos que compondrán el documento final (como párrafos, lista de ítems, etc.). Esta especificación estará compuesta en base a \textit{phrase specification} (o especificaciones de frase) encargadas de modelar las distintas oraciones que serán incluidas en el texto final (veremos que cada una de estas se construirán a partir de los mensajes contenidos en el \textit{document plan}). Será luego tarea de la siguiente etapa convertir los nodos internos de la especificación del texto en anotaciones especificas para el sistema de presentación (realización de estructura) y transformar las \emph{phrase specification} en oraciones o frases sintáctica, morfológica y ortográficamente correctas (realización lingüística). 
 
 %para que luego, en la etapa de realización de superficie podamos generar el texto final en base a los requerimientos analizados en el capítulo \ref{cap:corpus}. 
 
@@ -67,7 +67,7 @@ En lo que queda de esta sección estudiaremos como se encuentra constituida nues
 
 La especificación de texto para nuestro sistema, deberá caracterizar la estructura del documento final que nuestro sistema debe producir. Es por esto que modelaremos los mismos utilizando un árbol, donde los hojas especificarán las frases u oraciones a generar (las \emph{phrase specification}), y los nodos internos establecerán cómo estas frases tendrán que ser agrupadas en elementos del documento (como párrafos, secciones, lista de ítems, etc). 
 
-La estructura de los documentos que debemos generar en este trabajo resulta relativamente simple. Como vimos en el capítulo \ref{cap:corpus}, los documentos de descripciones poseen un título y luego se detallaran una por una las descripciones de las distintas clases de prueba, donde para cada una de éstas aparece el nombre de la clase de prueba, junto a una pequeña descripción de la operación a testear y luego una lista de ítems que describirán cada una de las restricciones pertenecientes a la clase de prueba que se describe. Es por esto que para este trabajo utilizaremos sólo dos elementos para modelar la estructura interna del documento \emph{TSDocumento} y \emph{TSListaItems}.
+La estructura de los documentos que debemos generar en este trabajo resulta relativamente simple. Como vimos en el capítulo \ref{cap:corpus}, los documentos de descripciones poseen un título y luego se detallan una por una las descripciones de las distintas clases de prueba, donde para cada una de éstas aparece el nombre de la clase de prueba, junto a una pequeña descripción de la operación a testear y luego una lista de ítems que describirán cada una de las restricciones pertenecientes a la clase de prueba que se describe. Es por esto que para este trabajo utilizaremos sólo dos elementos para modelar la estructura interna del documento \emph{TSDocumento} y \emph{TSListaItems}.
 
 \medskip
 \noindent
@@ -75,7 +75,7 @@ La estructura de los documentos que debemos generar en este trabajo resulta rela
 
 \medskip
 \noindent
-\textbf{TSListaItems:} modela el texto que describirá a una clase de prueba. Este elemento contiene una \emph{phrase specification} para generar el texto correspondiente al titulo y al detalle de la operación testeada. Además contendrá una lista de \emph{phrase specification} que modelarán las frases para cada una de las verbalizaciones de las expresiones contenidas en la clase de prueba en cuestión.
+\textbf{TSListaItems:} modela el texto que describirá a una clase de prueba. Este elemento contiene una \emph{phrase specification} modelar el texto correspondiente al titulo y al detalle de la operación testeada. Además contendrá una lista de \emph{phrase specification} que modelarán las frases para cada una de las verbalizaciones de las expresiones contenidas en la clase de prueba en cuestión.
 
 \begin{figure}[H]
   	\centering
@@ -93,23 +93,23 @@ En la figura anterior podemos observar la estructura abstracta que tendrán nues
   	\label{fig:text_spec}
 \end{figure}
 
-Luego en la siguiente etapa, la de \emph{realización de estructura}, se deberán transformar estas estructuras en anotaciones para el sistema de presentación.
+Veremos en el próximo capítulo como, en la etapa de realización estructural, transformaremos estos elementos en anotaciones para el sistema de presentación.
 
 \subsection{Especificación de frase}
 
-En la literatura sobre NLG Podemos encontrar muchas alternativas en lo que respecta a la especificación de frases. Todas estas varían en el nivel de abstracción que poseen las mismas. Las representaciones mas abstractas le darán mas flexibilidad a las etapas de \textit{document planning} y \textit{microplanning}, pero al mismo tiempo nos obligarán a tener un realizador de superficie mas sofisticado. Por otro lado, las especificaciones menos abstractas, requieren que el \textit{document planner} y el \textit{microplanner} realicen un mayor trabajo, pero también tendrán mas control sobre el texto a producir. Uno de los objetivos que tuvimos a la hora de idear una estructura para nuestra especificación de frases fue que ésta sea independiente de nuestro problema, pretendemos que hable en términos de la lengua (castellano en nuestro caso) que queremos generar y no en términos específicos de Z en nuestro caso. De esta forma podremos implementar un realizador de superficie que sea independiente de este problema y que pueda ser reutilizado. %TODO nota sobra la falta de un realizador en español al momento de desarrollar el trabajo
+En la literatura sobre NLG Podemos encontrar muchas alternativas en lo que respecta a la especificación de frases. Todas estas varían en el nivel de abstracción que poseen las mismas. Las representaciones mas abstractas le darán mas flexibilidad a las etapas de \textit{document planning} y \textit{microplanning}, pero al mismo tiempo nos obligarán a tener un realizador de superficie mas sofisticado. Por otro lado, las especificaciones menos abstractas, requieren que el \textit{document planner} y el \textit{microplanner} realicen un mayor trabajo, pero también tendrán mas control sobre el texto a producir. Uno de los objetivos que tuvimos a la hora de idear una estructura para nuestra especificación de frases fue que ésta sea independiente de nuestro problema, pretendemos que hable en términos de la lengua (castellano en nuestro caso) que queremos generar y no en términos específicos de Z. De esta forma podremos implementar un realizador de superficie que sea independiente de este problema y que pueda ser reutilizado. %TODO nota sobra la falta de un realizador en español al momento de desarrollar el trabajo
 
-
-Es por esto que decidimos especificar las oraciones a generar mediante árboles sintácticos, donde los constituyentes de éstos son los sintagmas\footnote{Grupo de palabras que ejercen una función sintáctica dentro de una oración} de la oración que deseamos generar. Esto le dará la posibilidad al realizador lingüístico de poder identificar la función de cada uno de los constituyentes de la oración. Por ejemplo, como detallamos en los requerimientos de la sección \ref{sec:corpus_gramatica}, el \emph{realizador de superficie} necesitará identificar el núcleo de un sintagma nominal (núcleo del sujeto) para poder producir una oración en la que haya concordancia de número y persona entre el verbo y el sujeto. Como consecuencia del ejemplo anterior, nuestro sistema deberá tener la posibilidad de poder identificar el sujeto, predicado y verbo de una oración. A partir de un análisis del \emph{corpus} creemos que con los elementos presentes en la figura~\ref{fig:phase_spec} podremos modelar todas la frases que deberá producir nuestro sistema.
+%\footnote{Grupo de palabras que ejercen una función sintáctica dentro de una oración}
+Es por esto que decidimos especificar las oraciones a generar mediante árboles sintácticos, donde los constituyentes de éstos son los sintagmas de la oración que deseamos generar. Esto le dará la posibilidad al realizador lingüístico de poder identificar la función de cada uno de los constituyentes de la oración. Por ejemplo, como detallamos en los requerimientos de la sección \ref{sec:corpus_gramatica}, el \emph{realizador de superficie} necesitará identificar el núcleo de un sintagma nominal (núcleo del sujeto) para poder producir una oración en la que haya concordancia de número y persona entre el verbo y el sujeto. Como consecuencia del ejemplo anterior, nuestro realizador lingüístico deberá tener identificar también el sujeto, predicado y verbo de una oración. Creemos que con los elementos presentes en la figura~\ref{fig:phase_spec} podremos modelar la frases incluidas en el \emph{corpus}.
 
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.7]{img/phrase_spec.png}
-	\caption{Phrase Specification.}
+	\caption{\textit{Phrase Specification}.}
   	\label{fig:phase_spec}
 \end{figure}
 
-No pretendemos modelar todo la lengua castellana con estos elementos sino solo un subconjunto que nos provea las herramientas necesarias permitirle al \emph{realizador de superficie} generar las frases definidas en el capítulo \ref{sec:corpus_analisis}, ya que el desarrollo de un realizador lingüístico que tenga en cuenta todas las construcciones sintácticas de nuestra lengua escapa el alcance de este trabajo. Es por esto que sólo modelamos los sintagmas nominales (FraseNominal) y verbales (FraseVerbal) y nos vemos obligados a incluir otros elementos como \emph{ElementosYuxtapuestos} para salvaguardar la falta de algunos constituyentes sintácticos como sintagmas adjetivales, preposicionales, etc. 
+No pretendemos modelar todo la lengua castellana con estos elementos sino solo un subconjunto que nos provea las herramientas necesarias para permitirle al \emph{realizador de superficie} generar las frases definidas en el capítulo \ref{sec:corpus_analisis}, ya que el desarrollo de un realizador lingüístico que considere todas las construcciones sintácticas de nuestra lengua escapa el alcance de este trabajo. Es por esto que sólo modelamos los sintagmas nominales (FraseNominal) y verbales (FraseVerbal) y nos vemos obligados a incluir otros elementos como \emph{ElementosYuxtapuestos} para salvaguardar la falta de algunos constituyentes sintácticos como sintagmas adjetivales, preposicionales, etc. 
 
 A continuación describiremos brevemente cada uno de estos elementos, profundizando sobre la realización de los mismos en el capítulo \ref{cap:linguistic_realization}.
 
@@ -124,16 +124,18 @@ A continuación describiremos brevemente cada uno de estos elementos, profundiza
 \item{\emph{\textbf{ElementosYuxtapuestos}}: Representa una lista ordenada de elementos que deberán ser realizados y \emph{concatenados} en la oración final. Nos vimos obligados a introducir este tipo de elementos para salvaguardar la falta de algunos constituyentes sintácticos como sintagmas adjetivales, preposicionales, etc.}
 \end{itemize}
 
-
+En la siguiente sección veremos como, la tarea de lexicalización, construirá estas especificaciones de frase en base a la información contenida en los mensajes del \textit{document plan}.
 %\section{Arquitectura}
 
 \section{Lexicalización}
 \label{sec:microplanning_lexicalization}
 
-Como mencionamos anteriormente, el proceso de lexicalización será el encargado de elegir que palabras particulares y constructores sintácticos usar para comunicar la información contenida en el \textit{document plan}. En esta etapa deberemos producir una especificación de frase para cada mensaje contenido en el \textit{document plan}. En nuestro caso debemos hacerlo siguiendo el conjunto de reglas definidas en el capítulo \ref{sec:corpus_reglas}, es decir, nuestro proceso de lexicalización tendrá que comportarse de la misma forma que la función \emph{verb} que estudiamos durante el análisis de requerimientos.
+Como mencionamos anteriormente, el proceso de lexicalización será el encargado de elegir que palabras particulares y constructores sintácticos usar para comunicar la información contenida en el \textit{document plan}. En esta etapa deberemos producir una especificación de frase para cada mensaje contenido en el \textit{document plan}. En nuestro caso debemos hacerlo contemplando todos los casos definidos en el capítulo \ref{sec:corpus_reglas}, es decir, nuestro proceso de lexicalización tendrá que comportarse de forma similar a la función \emph{verb} que estudiamos durante el análisis de requerimientos. Tanto las palabras, como los sintagmas a utilizar se desprenderán de las frases presentes en la definición de ésta.
 
-El módulo encargado de esta tarea deberá ser capaz de generar una \emph{especificación de frase} a partir de la expresión Z contenida en cada mensaje del \emph{document plan}. Para esto, de acuerdo a los requerimientos introducidos en el capítulo \ref{cap:corpus}, primero deberá verificar si la expresión en cuestión se encuentra designada, en este caso, tendrá que construir una especificación de frase en base a su designación. De lo contrario deberá intentar construirla recursivamente de acuerdo a las reglas mencionadas. En la figura~\ref{fig:algoritmo_lexicalizacion} podemos ver un bosquejo del comportamiento esperado para esta tarea, de acuerdo al análisis realizado en el capítulo \ref{sec:corpus_reglas}, trabajando esta vez con las \emph{phrase specification} definidas en la sección anterior. Incluimos sólo un bosquejo ya que ilustrar el comportamiento completo de esta tarea resulta extenso debido a la construcción y composición de elementos que debemos realizar para cada caso. 
+Como analizamos en el capítulo \ref{cap:corpus}, nuestro sistema deberá producir una oración en lenguaje natural para cada predicado incluido dentro del cuerpo de cada clase de prueba, a su vez, la verbalización para cada una de estas expresiones se encuentra caracterizada por un mensaje dentro del \textit{document plan}. Es por esto, que el módulo encargado de esta tarea deberá ser capaz de generar una \emph{especificación de frase} a partir de la expresión Z contenida en cada uno de estos mensajes. De acuerdo a los requerimientos introducidos en el capítulo \ref{cap:corpus}, nuestro lexicalizador primero deberá verificar si la expresión en cuestión se encuentra designada, en este caso, tendrá que construir una especificación de frase en base a su designación. De lo contrario deberá intentar construirla recursivamente contemplando los casos para los distintos operadores y las posibles combinaciones. En la figura~\ref{fig:algoritmo_lexicalizacion} podemos ver un bosquejo del comportamiento esperado para esta tarea, de acuerdo al análisis realizado en el capítulo \ref{sec:corpus_reglas}, trabajando esta vez con las \emph{phrase specification} definidas en la sección anterior. Incluimos sólo un bosquejo ya que ilustrar el comportamiento completo de esta tarea resulta extenso debido a la construcción y composición de elementos que debemos realizar para cada caso. 
 
+%TODO ver como cambiar el caption de esto
+\begin{figure}
 \begin{algorithm}[H]
 \begin{algorithmic}
 \Function {lexicalizacion}{$exp$}
@@ -155,11 +157,16 @@ El módulo encargado de esta tarea deberá ser capaz de generar una \emph{especi
 \State \textbf{return} $oracion$
 \EndFunction
 \end{algorithmic}
-\caption{Bosquejo Lexicalización.}
-\label{fig:algoritmo_lexicalizacion}
 \end{algorithm}
+\label{fig:algoritmo_lexicalizacion}
+\caption{Bosquejo Lexicalización.}
+\end{figure}
 
-La función \emph{designacion} deberá ser capaz de construir una especificación de frase a partir de una expresión designada. En la siguiente sección analizaremos este caso con mayor profundidad. Por otro lado, notemos que en el caso que la expresión a lexicalizar no se encuentre designada, se deberá analizar recursivamente la expresión para generar el texto adecuado. Creemos que describir detalladamente nuestro algoritmo de lexicalización puede resultar muy engorroso para el lector debido a la cantidad de casos que debemos detallar (uno por cara regla de las antes mencionadas) y lo complejas que pueden resultar la creación y composición de especificaciones de frases. Es por esto que ilustraremos el resultado esperado de la tarea mediante un pequeño ejemplo. Intentaremos graficar nuestra tarea de verbalización para el primer \emph{mensaje} incluido en el \textit{document plan} de la figura \ref{fig:png_document_plan_ej}. Podemos observar en la figura \ref{fig:phase_spec_ej} este mensaje y la lexicalización del mismo. A continuación detallaremos los pasos realizados por nuestra tarea de lexicalización para obtener dicho resultado.
+La función \emph{designacion} deberá ser capaz de construir una especificación de frase a partir de una expresión designada. Analizaremos este caso con mayor profundidad en la siguiente sección. Por otro lado, notemos que en el caso que la expresión a lexicalizar no se encuentre designada, se deberá analizar recursivamente la expresión para generar el texto adecuado. 
+
+A continuación, retomaremos el ejemplo de la figura \ref{fig:text_spec} y veremos como deberá nuestro sistema generar la especificación de frase para uno de los mensajes incluido en el \textit{document plan}. En la figura \ref{fig:phase_spec_ej} podemos observar este mensaje y el resultado de la lexicalización del mismo. Veremos a continuación los pasos que deberá realizar nuestro sistema durante la tarea de lexicalización para lograr el resultado ilustrado en la imagen.
+
+%A continuación detallaremos los pasos realizados por nuestra tarea de lexicalización para obtener dicho resultado.
 
 \begin{figure}
   	\centering
@@ -168,14 +175,14 @@ La función \emph{designacion} deberá ser capaz de construir una especificació
   	\label{fig:phase_spec_ej}
 \end{figure}
 
-Entonces, nuestra misión será lexicalizar la expresión:
+El objetivo del lexicalizador será construir una especificación de frase escogiendo adecuadamente las palabras y constructores sintácticos para siguiente la expresión:
 
 \begin{center}
 $s? \in \dom st$
 \end{center}
 
 \noindent
-contando con las siguientes designaciones:
+Recordemos que contaremos con las siguientes designaciones:
 
 %TODO ver esto
 \begin{figure}[H]
@@ -185,13 +192,15 @@ contando con las siguientes designaciones:
 \end{align*}
 \end{figure}
 
-En primer instancia, al no encontrarse designada $s? \in \dom st$ nuestro lexicalizador intentará construir la especificación en base a los operadores que componen la expresión a describir. En este caso, utilizará la función incluida en el algoritmo anterior (algoritmo \ref{fig:algoritmo_lexicalizacion}). Para esto, será necesario \emph{lexicalizar} recursivamente las expresiones: $s?$ y $\dom st$, que se encuentran ambas designadas. Veremos luego en la siguiente sección siguiente la tarea de la función \emph{designacion()} utilizada en el algoritmo anterior encargada de producir una especificación de frase a partir de una expresión designada. Finalmente nuestra tarea de lexicalización deberá componer las especificaciones antes mencionadas a fin construir la especificación para la oración. Esta será una oración bimembre cuyo sujeto será el resultado de la lexicalización del primer argumento y el predicado estará representado mediante una \emph{FraseVerbal}.
+En primer instancia, al no encontrarse designada $s? \in \dom st$ nuestro lexicalizador intentará construir la especificación en base a los operadores que componen la expresión a describir. En el bosquejo anterior (figura \ref{fig:algoritmo_lexicalizacion}) incluimos el caso para lexicalizar el predicado $x \in y$ que deberemos utilizar para lexicalizar $s? \in \dom st$. 
 
-Para esto deberá resolver recursivamente la lexicalizacion de $s?$ y de $\dom st$ para formar el \emph{sujeto} y \emph{predicado} necesarios para la oración. Luego deberá construir una \emph{FraseVerbal} utilizando tanto el \emph{verbo} como el \emph{complemento} a fin de obtener el texto ``pertenece a'' en el texto final.
+Será necesario lexicalizar recursivamente las expresiones: $s?$ y $\dom st$. El resultado de estas lexicalizaciones será usado para construir el sujeto y parte del predicado de la oración a especificar. Estas expresiones se encuentran ambas designadas y por lo tanto su especificación de frase se construirá a partir del texto incluido en sus designaciones. Veremos luego en la siguiente sección siguiente la tarea de la función \emph{designacion} utilizada en el algoritmo anterior encargada de producir una especificación de frase a partir de una expresión designada. 
 
+Como ya mencionamos, utilizaremos el resultado de la lexicalización de $s?$ para formar el sujeto de la oración que deseamos especificar y deberemos luego construir la \emph{FraseVerbal} que cumplirá el rol de predicado. Para construir esta última usaremos la especificación de frase que modelará la verbalización $\dom st$, también mencionada anteriormente. 
 
-Para construcción de \emph{FraseVerbal} estableceremos el verbo en infinitivo siendo luego tarea del realizador lingüístico la de conjugar el mismo de acuerdo a las reglas gramaticales introducidas en el capítulo~\ref{sec:corpus_gramatica}. Otra cuestión a mencionar es el uso del elemento \emph{ElementoYuxtapuestos} para salvaguardar la falta de un elemento que nos sirva para modelar un sintagma preposicional en este caso. Nuestro realizador lingüístico deberá procesar los elementos contenidos en cada \emph{ElementoYuxtapuestos} generando un texto resultado de la concatenación de la realización los mismos.
+Finalmente escogeremos las palabras indicadas a fin de que nuestro sistema pueda dar con una descripción similar a la presentada en el capítulo \ref{sec:corpus_reglas} del análisis de requerimientos. Notemos que para esto utilizamos el verbo ``pertenece'', en infinitivo, siendo luego tarea del realizador lingüístico la de conjugar el mismo de acuerdo a las reglas gramaticales introducidas en el capítulo~\ref{sec:corpus_gramatica}. Otra cuestión a mencionar es el uso del elemento \emph{ElementoYuxtapuestos} para salvaguardar la falta de un elemento que nos sirva para modelar un sintagma preposicional en este caso. Nuestro realizador lingüístico deberá procesar los elementos contenidos en cada \emph{ElementoYuxtapuestos} generando un texto resultado de la concatenación de la realización los mismos.
 
+A continuación, en la siguiente sección estudiaremos finalmente, la lexicalización de expresiones designadas.
 
 %TODO cambiar nombre
 \section{Lexicalización de expresiones designadas}
@@ -200,24 +209,24 @@ Como vimos en la sección anterior, nuestra tarea de lexicalización deberá hac
 
 Para este trabajo, estudiaremos por separado las designaciones parametrizadas y las no parametrizadas.
 
-Comencemos por analizar la lexicalización de una expresión que se encuentra designada por medio de una designación no parametrizada. Por ejemplo, supongamos que queremos construir una especificación de frase para la expresión $s?$ del ejemplo utilizado en la sección anterior. Recordemos que la designación de para la misma es:
+Comencemos por analizar la lexicalización de una expresión que se encuentra designada por medio de una designación no parametrizada. Por ejemplo, supongamos que queremos construir una especificación de frase para la expresión $s?$ del ejemplo utilizado en la sección anterior. Recordemos que la designación para la misma es:
 
-\begin{figure}[H]
-\begin{align*} 
-  &s? && \approx \text{el símbolo a buscar}
-\end{align*}
-\end{figure}
+\begin{center} 
+  $s? \approx \text{el símbolo a buscar}$ 
+\end{center}
 
-La oración utilizada en la designación anterior, como en los casos observados en el \textit{corpus} (para designaciones no parametrizadas) resulta un \emph{sintagma nominal}. En este caso ``símbolo'' es el núcleo, ``el'' cumple la función de determinante y `` a buscar'' es el complemento. Será posible entonces, para nuestra tarea de lexicalización, modelar estas frases utilizando una \emph{FraseNominal}. Para que nuestro sistema sea capaz de esto deberá analizar síntacticamente las designaciones, \textit{parseando} las mismas con la ayuda de un analizador morfológico que nos permitirá obtener la función sintáctica de cada constituyente de la frase. Además de esto, requeriremos que el usuario escriba las designaciones como frases nominales. Es decir, esperaremos que las designaciones posean la siguiente estructura:
+La oración utilizada en la designación anterior, como en los casos observados en el \textit{corpus} (para designaciones no parametrizadas) resulta un \emph{sintagma nominal}. En este caso ``símbolo'' es el núcleo, ``el'' cumple la función de determinante y `` a buscar'' es el complemento. Será posible entonces, para nuestra tarea de lexicalización, modelar estas frases utilizando una \emph{FraseNominal}. 
+
+Para que nuestro sistema sea capaz de esto deberá analizar síntacticamente las designaciones, \textit{parseando} las mismas con la ayuda de un analizador morfológico que nos permitirá obtener la función sintáctica de cada constituyente de la frase. Además de esto, para simplificar la la tarea de \emph{parseo} de nuestro sistema, requeriremos que el usuario escriba las designaciones mediante un sintagma nominal. Es decir, respetando la siguiente estructura:
 
 \begin{figure}[H]
   \centering
    \textbf{Sintagma Nominal} = [\textbf{Determinante}] + \textbf{Núcleo} + [\textbf{Complemento}]
 \end{figure}
 
-Esto resulta algo bastante razonable de esperar en el texto de una designación y permitirá simplificar nuestro trabajo de \emph{parseo}. 
+En el capítulo \ref{TODO} veremos mas en detalle cómo utilizamos un analizador morfológico para ayudarnos con la especificación de las frases incluidas en las designaciones.
 
-Por otro lado, las frases incluidas en las designaciones parametrizadas no poseen la misma estructura. La tarea de modelar minuciosamente estos textos resulta más compleja que para el caso anterior, por ejemplo, podríamos tener uno o más parámetros presentes dentro del texto, para los cuales deberíamos identificar el rol que cumplen dentro de la oración. Por otro lado nuestro realizador lingüístico sólo soportará oraciones de la forma SVO (sujeto, verbo, objeto) lo cual podría no respetarse en una designación introducida por el usuario. Es por esto que nuestro sistema proveerá solo soporte parcial para las designaciones parametrizadas, aceptando sólo designaciones con un único parámetro y para describir una expresión parametrizada requeriremos también que el argumento de la misma también se encuentre designado. De esta forma podríamos describir una designación parametrizada de la misma forma que vimos en el capítulo \ref{cap:corpus} reemplazando el parámetro presente en el texto de la designación parametrizada por el texto incluido en la designación del argumento e la anterior.
+Por otro lado, las frases incluidas en las designaciones parametrizadas no poseen la misma estructura. La tarea de modelar minuciosamente estos textos resulta más compleja que para el caso anterior, por ejemplo, podríamos tener uno o más parámetros presentes dentro del texto, para los cuales deberíamos identificar el rol que cumple cada uno de los anteriores dentro de la oración. Por otro lado nuestro realizador lingüístico sólo soportará oraciones de la forma SVO (sujeto, verbo, objeto) lo cual podría no respetarse en una designación introducida por el usuario. Es por esto que nuestro sistema proveerá solo soporte parcial para las designaciones parametrizadas, aceptando sólo designaciones con un único parámetro y para describir una expresión parametrizada requeriremos también que el argumento de la misma también se encuentre designado. De esta forma podríamos describir una designación parametrizada de la misma forma que vimos en el capítulo \ref{cap:corpus} reemplazando el parámetro presente en el texto de la designación por el texto incluido en la designación del argumento.
 
 Veamos por ejemplo las siguientes designaciones para una especificación que modela un pequeño sistema de monitoreo de sensores:
 
@@ -230,52 +239,15 @@ Veamos por ejemplo las siguientes designaciones para una especificación que mod
 
 Donde para describir la expresión $s? \in \dom smax$ bastará con reemplazar el parámetro dentro del texto de la designación parametrizada con el texto incluido en la designación de $s?$ como vemos en la figura \ref{fig:ej_lexicalizacion_desig}.
 
-\begin{figure}
+\begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.5]{img/ej_lexicalizacion_desig.png}
 	\caption{Lexicalización $s? \protect\in \protect\dom smax$.}
   	\label{fig:ej_lexicalizacion_desig}
 \end{figure}
 
-el identificador del sensor leído es un identificador válido
-
-Para el modelado de los textos incluidos en las designaciones asumiremos que para el caso de las designaciones no parametrizadas, las frases utilizadas son 
-
-Este modelado de frases a partir del texto de las designaciones deberá realizarse a medida que vamos procesando los distintos \emph{mensajes} del \textit{document plan} ya que será necesario conocer los argumentos utilizados en el caso de que debamos modelar una frase para una designación parametrizada.
-
-
-%TODO designaciones parametrizadas = frase ya designada
-%Los únicos predicados que uso del lado derecho son var \in set. Si eso te
-% decir como verbalizar las designaciones parametrizadas, comentar lo complejo que sería debido que no sabemos cual es el orden, cual es el sujeto, cual el predicado, etc. asi que simplemente supondremos que es una frase enlatada
-
-Un requerimiento que exigiremos al usuario para el uso de designaciones parametrizadas es que los posibles argumentos para estas expresiones que puedan aparecer en una clase de prueba también se encuentren designados. Por ejemplo, si tenemos la siguiente designacion en una especificación para un pequeño sistema de monitoreo de sensores:
-
-
-\begin{center} 
-  $x \in \dom smax \approx \text{x es un identificador válido}$ 
-\end{center}
-
-\medskip
-\noindent
-y tenemos la siguiente expresión en una de las clases de prueba que queremos describir:
-
-\begin{center}
-$s? \in \dom smax$
-\end{center}
-
-\noindent
-sería deseable que la variable $s?$, en este caso, se encuentre designada. En el caso de este ejemplo lo está y la designacion para la misma es:
-
-\begin{center} 
-  $s? \approx \text{el identificador del sensor leído}$ 
-\end{center}
-
-En este caso nuestro sistema simplemente remplazará el parámetro con la designación correspondiente al argumento, quedando como resultado el siguiente texto:
-
-\begin{center}
-\emph{``el identificador del sensor leído es un identificador válido''}
-\end{center}
+Como podemos observar en el ejemplo anterior, al desconocer la estructura de las oraciones introducidas por el usuario para las designaciones parametrizadas, deberemos modelar el texto producido por la composición de ambas designaciones utilizando una \emph{FraseEnlatada}. Este texto texto contenido en estas será luego realizado sin ningún procesamiento previo, por lo que será responsabilidad del usuario que el mismo sea sintáctica y ortográficamente correcto.
 
 \bigskip
-En este capítulo vimos las tareas necesarias para, partiendo de la salida producida por el \textit{document planner}, constituir una especificación mas refinada del texto final que le facilitará el trabajo a la siguiente etapa. En el próximo capítulo veremos finalmente las tareas que deberán llevarse a cabo para transformar esta especificación del texto en el documento final que contendrá todas las descripciones requeridas por el usuario.
+En este capítulo vimos las tareas necesarias para, partiendo de la salida producida por el \textit{document planner}, constituir una especificación mas refinada del texto final. En el próximo capítulo veremos finalmente las tareas que deberán llevarse a cabo para transformar esta especificación del texto en el documento final que contendrá todas las descripciones requeridas por el usuario.
 
