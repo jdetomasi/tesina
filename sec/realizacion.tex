@@ -1,9 +1,50 @@
 \chapter{Realización de superficie}
 \label{cap:realization}
-En los capítulos anteriores vimos los procesos que necesitan ser llevados a cabo para lograr una especificación del texto a generar. Finalmente, en esta última etapa de nuestro sistema nos concentraremos en estudiar las tareas que deben ser realizadas a fin de transformar esta especificación del texto en texto de superficie, formado por frases, símbolos de puntuación y algunas etiquetas de mark-up necesarias.
+En los capítulos anteriores vimos los procesos que necesitan ser llevados a cabo para lograr una especificación del texto a generar. Finalmente, en esta última etapa nos concentraremos en estudiar las tareas que deben ser realizadas a fin de transformar esta especificación en texto de superficie, formado por frases, símbolos de puntuación y algunas etiquetas de mark-up necesarias.
 
-Como mencionamos en el capítulo~\ref{cap:microplanning}, nuestra especificación del texto es un árbol en el que las horas representan las frases individuales y los nodos internos establecen como éstas están agrupadas (según estructuras como párrafos, secciones, listas de ítems, etc). En base a esta diferenciación entre los elementos de nuestra especificación del texto podemos distinguir dos grandes aspectos dentro de esta tarea: la \emph{realización estructural} responsable de transformar los nodos internos de nuestra especificación de texto en anotaciones particulares del sistema de presentación y por otro lado, la tarea de \emph{realización lingüística} que se concentrará en generar frases sintáctica, morfológica, ortográficamente correctas.
+A lo largo de este capítulo introduciremos las tareas que deberemos llevar a cabo durante esta etapa, repasaremos brevemente la entrada y salida de la misma y finalmente estudiaremos en detalle las tareas de \emph{realización estructural} y \emph{realización lingüística} realizadas en este trabajo.
+
+%Como mencionamos en el capítulo~\ref{cap:microplanning}, nuestra especificación del texto es un árbol en el que las hojas representan las frases individuales y los nodos internos establecen como éstas están agrupadas (según estructuras como párrafos, secciones, listas de ítems, etc). En base a esta diferenciación entre los elementos de nuestra especificación del texto podemos distinguir dos grandes aspectos dentro de esta tarea: la \emph{realización estructural} responsable de transformar los nodos internos de nuestra especificación de texto en anotaciones particulares del sistema de presentación y por otro lado, la tarea de \emph{realización lingüística} que se concentrará en generar frases sintáctica, morfológica, ortográficamente correctas.
 %Además, como señalamos en el capítulo~\ref{sec:corpus_analisis}, deberemos agregar un artículo como determinante en el caso de ser necesario. 
+
+\section{Tareas del realizador de superficie}
+
+Como mencionamos en el capítulo \ref{cap:nlg_intro} el realizador de superficie será el encargado de transformar la especificación del texto producida en la etapa de \textit{microplanning} en el documento final. Deberá transformar esta representación abstracta del documento en frases, símbolos de puntuación y algunas etiquetas de mark-up necesarias (estas últimas dependerán del sistema de presentación utilizado).
+
+En el capítulo anterior vimos que la especificación del documento es un árbol, cuyas hojas son especificaciones de frases y sus nodos internos representan cómo las anteriores se deberán estar agrupadas en el documento final (en general estos nodos representan: secciones, párrafos, lista de ítem, etc). Para transformar esta especificación en texto de superficie nuestro realizador deberá llevar a cabo dos tareas: \emph{realización estructural} y \emph{realización lingüística}. La primera se encargará de mapear los nodos internos antes mencionados en anotaciones para el sistema de presentación a utilizar. Por otro lado, la realización lingüística también deberá convertir las especificaciones de frase en oraciones sintáctica, morfológica y ortográficamente correctas.
+
+En la sección \ref{cap:structure_realization} veremos en detalle la tarea de \emph{realización estructural} para este trabajo trabajo y al final de este capítulo, en la sección \ref{cap:linguistic_realization}, estudiaremos las tareas involucradas en la \emph{realización lingüística} de nuestro sistema de NLG.
+
+\section{Entrada y salida del realizador de superficie}
+
+La tarea del realizador de superficie será transformar la especificación abstracta del documento, producida por la etapa de \textit{microplanning} en texto de superficie. Este texto estará formado por anotaciones dependientes del sistema de presentación y oraciones generadas por la tarea de realización lingüística.
+
+Será la tarea de realización lingüística la encargada de que en el documento final tengamos una oración por cada especificación de frase incluida en la especificación del texto. Por otro lado, las anotaciones para el sistema de presentación serán generadas por la realización estructural, siendo entonces ésta claramente dependiente del sistema de presentación utilizado. Por ejemplo, si nuestro sistema debe producir un documento \LaTeX para luego ser compilado y generar un pdf, será el realizador de superficie (más específicamente de la tarea de realización estructural) el encargado de producir el código necesario para que este luego se compile apropiadamente. Por ejemplo, en la figura \ref{fig:text_spec} podemos observar un documento producido para la especificación del texto de la figura \ref{fig:ej_latex}.
+
+\begin{figure}[H]
+  \begin{verbatim}
+  \documentclass{article}
+  \title{Descripción clase de prueba del ejemplo: SymbolTable}
+  
+  \begin{document}
+  \maketitle
+
+  LookUp\_SP\_1: Se busca un símbolo en la tabla.  
+  \begin{itemize}
+    \item{Cuando:}
+    \begin{itemize}
+      \item{El símbolo a buscar pertenece ...}
+      \item{El símbolo a buscar es el único ...}   
+    \end{itemize}
+  \end{itemize}
+  
+  \end{document}
+  \end{verbatim}
+  \caption{Texto final en \LaTeX.}
+  \label{fig:ej_latex}
+\end{figure}
+
+A continuación en lo que queda de éste capítulo estudiaremos las tareas de realización estructural y lingüística realizadas para este trabajo.
 
 \section{Realización estructural}
 \label{cap:structure_realization}
@@ -12,7 +53,7 @@ Como mencionamos en el capítulo~\ref{cap:microplanning}, nuestra especificació
 
 Como mencionamos anteriormente, en la etapa de realización estructural se deberán transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. Hoy en día no debemos ocuparnos de cuestiones de formateo de bajo nivel, sino que la mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización.
 
-Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} el código \LaTeX para una lista de items de una descripción y en la figura~\ref{fig:ej_html} la realización para la misma especificación de texto pero en lenguaje HTML, donde el texto contenido en ambos ejemplos es exactamente el mismo, sólo diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
+Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} el código \LaTeX para una lista de ítems de una descripción y en la figura~\ref{fig:ej_html} la realización para la misma especificación de texto pero en lenguaje HTML, donde el texto contenido en ambos ejemplos es exactamente el mismo, sólo diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
 
 \begin{figure}[H]
   \begin{verbatim}
@@ -98,7 +139,7 @@ Veamos por ejemplo la regla para describir el operador $\subset$ definida en el 
 	\hspace*{0.56cm} $\rightarrow$ \nlgfun{verb(exp1)} + \nlgtext{está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}
 \end{figure}
 \noindent
-Como podemos ver, tenemos el verbo copulativo \emph{``está''} acompañado del atributo \emph{``incluido''}. En este caso deberemos escojer el genero y numero del atributo de forma tal que concuerde con el sujeto.
+Como podemos ver, tenemos el verbo copulativo \emph{``está''} acompañado del atributo \emph{``incluido''}. En este caso deberemos escoger el genero y numero del atributo de forma tal que concuerde con el sujeto.
 
 \medskip
 \noindent
@@ -125,7 +166,7 @@ Debemos aclarar que en las reglas mencionadas anteriormente podemos observar ora
 %TODO hablar algo de negacion?
 
 \bigskip
-En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y mofológicamente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
+En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y morfológicamente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
 
 \medskip
 \noindent
@@ -202,7 +243,7 @@ En base a los aspectos mencionados anteriormente analizaremos la tarea de realiz
 \end{algorithm}
 
 \noindent
-La función \emph{determinar\_articulo} deberá recuperar el determinate apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
+La función \emph{determinar\_articulo} deberá recuperar el determinante apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
 
 \medskip
 \noindent
