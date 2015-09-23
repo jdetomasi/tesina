@@ -126,55 +126,110 @@ Para completar la realización de superficie será necesario definir el comporta
 \section{Realización lingüística}
 \label{cap:linguistic_realization}
 
-La realización lingüística desempeñará su tarea al nivel de la oración. Como mencionamos anteriormente, la misión de esta tarea será transformar las especificaciones de frases de nuestro sistema en oraciones bien formadas. Entendiendo por oración bien formada aquellas que cumplan con las reglas gramaticales del lenguaje (español en nuestro caso); estas reglas se ocuparán tanto de la morfología como de la sintaxis de las mismas. Entonces, la realización lingüística consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y morfológicamente correcto.
+La realización lingüística desempeñará su tarea al nivel de la oración. La misión de ésta será transformar las especificaciones de frases producidas por la etapa anterior en oraciones bien formadas. Entendiendo por oración bien formada a aquellas que cumplan con las reglas gramaticales de la lengua (castellana en nuestro caso); estas reglas se ocuparán tanto de la de la sintaxis como de la gramática de las mismas. La realización lingüística, entonces, consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y gramaticalmente correcto.
 
-Es importante también, que el texto producido sea ortográficamente correcto. Para esto, asumiremos que las designaciones provistas por el usuario son ortogáficamente correctas, no tendremos que comprometer a que las palabras generadas por nuestro sistema también lo sean y finalmente nos deberemos encargar de que la primer palabra de una oración comience con mayúscula y de colocar un signo de puntuación al final de la misma.
+Será importante también, que el texto producido sea ortográficamente correcto. Para esto, asumiremos que las designaciones provistas por el usuario son ortogáficamente correctas y por nuestro lado, nos comprometeremos a que las palabras generadas por nuestro sistema también lo sean. Además de esto, deberemos encargarnos de que la primer palabra de una oración comience con mayúscula y de colocar un signo de puntuación al final de la misma.
 
-En base a las reglas introducidas en el capítulo~\ref{sec:corpus_analisis} podemos extraer algunos de los aspectos sintácticos y morfológicos que debemos tener en cuenta durante esta etapa para ser capaces de producir los textos esperados. En particular nos focalizaremos en tres reglas de \emph{concordancia gramatical} que nuestro realizador lingüístico deberá contemplar, extraídas del ``Diccionario panhispánico de dudas'' de la Real Academia Española~\cite{???}.
+En lo que queda de este capítulo nos encargaremos de estudiar las tareas que nuestro realizador lingüístico deberá llevar a cabo para producir, finalmente, oraciones en lenguaje natural. 
+
+Comenzaremos detallando las reglas de concordancia gramatical, introducidas en el capítulo \ref{sec:corpus_gramatica}, que deberemos contemplar en esta etapa: \emph{concordancia entre artículo y sustantivo}, \emph{concordancia entre sujeto y atributo de verbo copulativo} y finalmente veremos la \emph{concordancia entre sujeto y verbo de la oración}.
 
 \medskip
 \noindent
 \textbf{\emph{Concordancia entre artículo y sustantivo.}} Establece que el artículo debe concordar en género y número con el sustantivo al que acompaña.
 \noindent
-Como mencionamos anteriormente, el usuario podría no incluir el artículo en una designación. Por ejemplo, continuando con el ejemplo de la figura~\ref{fig:ej_designacion}, se podría haber omitido el artículo de ``el símbolo a buscar'' y solo haber designado:
+Como mencionamos anteriormente, el usuario podría no incluir el artículo en una designación. Por ejemplo, podríamos haber omitido el artículo en una de las designaciones utilizadas en los capítulos anteriores (figura \ref{fig:ej_designacion}), se podría haber omitido el artículo de:
+
+\begin{figure}[H]
+	\center
+    $s? \approx \text{el símbolo a buscar}$
+\end{figure}
+
+\noindent
+y haber designado:
+
 \begin{figure}[H]
 	\center
     $s? \approx \text{símbolo a buscar}$
 \end{figure}
+
+Veamos por ejemplo, que para verbalizar la expresión $s? \in \dom st$ necesitaremos incluir el artículo en el caso que no se encuentre presente:
+
+\begin{figure}[H]
+	\center
+    $verb(s? \in \dom st) \rightarrow$ \emph{``\textbf{El} símbolo a buscar pertenece a los símbolos cargados en la tabla de símbolos''}.
+\end{figure}
+
 \noindent
 Será entonces nuestro sistema el encargado de agregar el artículo de ser necesario\footnote{Podría no ser necesario, por ejemplo si el núcleo de la frase designada fuese un nombre propio.}, asegurándose de que el mismo concuerde con el sustantivo. Para esto deberemos ser capaces de identificar el género y número del sustantivo mediante el uso de un analizador morfológico.
 
 \medskip
 \noindent
-\textbf{\emph{Concordancia entre sujeto y atributo de verbo copulativo.}} Establece que el atributo de un verbo copulativo (ser, estar, parecer) debe concordar en género y número con el sujeto.
-\noindent
-Veamos por ejemplo la regla para describir el operador $\subset$ definida en el capítulo~\ref{sec:corpus_analisis}
+\textbf{\emph{Concordancia entre sujeto y atributo de verbo copulativo.}} Establece que el atributo de un verbo copulativo (ser, estar, parecer) debe concordar en género y número con el sujeto. Veamos por ejemplo el siguiente caso incluido en la definición presentada en el capítulo \ref{sec:corpus_reglas}.
 
-\begin{figure}[H]
-	$exp1 \subset exp2$ \\
-	\hspace*{0.56cm} $\rightarrow$ \nlgfun{verb(exp1)} + \nlgtext{está(n) incluido/a(s) en} + \nlgfun{verb(exp2)}
-\end{figure}
-\noindent
-Como podemos ver, tenemos el verbo copulativo \emph{``está''} acompañado del atributo \emph{``incluido''}. En este caso deberemos escoger el genero y numero del atributo de forma tal que concuerde con el sujeto.
+\begin{mdframed}[style=codebox]
+\begin{minted}[escapeinside=@@]{haskell}
+verb' (@$exp_1 \subset exp_2$@)
+    | (gen == M && num == S) = verb(@$exp_1$@) + 
+                               "esta incluido en" + 
+                               verb(@$exp_2$@) 
+    | (gen == M && num == P) = verb(@$exp_1$@) + 
+                               "estan incluidos en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == S) = verb(@$exp_1$@) + 
+                               "esta incluida en" + 
+                               verb(@$exp_2$@) 
+    | (gen == F && num == P) = verb(@$exp_1$@) + 
+                               "estan incluidas en" + 
+                               verb(@$exp_2$@) 
+    where gen = genero(@$exp_1$@)
+          num = numero(@$exp_1$@)
+\end{minted}
+\end{mdframed}
 
+\noindent
+Donde podemos ver que tenemos el verbo copulativo \emph{``estar''} acompañado del atributo \emph{``incluido''}. En este caso deberemos escoger el genero y numero del atributo de forma tal que concuerde con el sujeto.
+
+%TODO agregar en el capitulo del corpus que las frases estarán siempre en tercera persona
 \medskip
 \noindent
-\textbf{\emph{Concordancia entre sujeto y verbo.}} El verbo debe concordar con el sujeto en número y persona. En el caso de haber varios sujetos, la concordancia debe hacerse con el verbo en plural.
+\textbf{\emph{Concordancia entre sujeto y verbo.}} El verbo debe concordar con el sujeto en número y persona. En el caso de haber varios sujetos, la concordancia debe hacerse con el verbo en plural. Como vimos durante el análisis de requerimientos en el capítulo \ref{cap:corpus}, las frases a generar por nuestro sistema se encontrarán siempre en tercera persona por lo cual no será necesario que nuestro sistema no deberá preocuparse por la concordancia de persona entre sujeto y verbo de la oración. Por lo tanto nuestro realizador deberá asegurarse únicamente de que el número del verbo y el sujeto concuerden.
 \noindent
-Observemos por ejemplo la regla por defecto para el operador $\subset$:
+Veamos, por ejemplo, el siguiente caso también incluido en la definición presentada en el capítulo \ref{sec:corpus_reglas}, que el verbo \emph{``pertenecer''} deberá concordar en número y persona con el número del sujeto (en este caso $exp_1$). 
 
-\begin{figure}[H]
-	$\{exp1, exp2, \ldots , expn\} \subset expm$ \\
-	\hspace*{0.56cm} $\rightarrow$\nlgfun{verb(exp1)} + \nlgtext{,} + \nlgfun{verb(exp2)} + \nlgtext{, \ldots , y} + \nlgfun{verb(expn)} + \nlgtext{pertenece(n) a} + \nlgfun{verb(expm)}
-\end{figure}
+\begin{mdframed}[style=codebox]
+\begin{minted}[escapeinside=@@]{haskell}
+verb' (@$exp_1 \in exp_2$@)
+    | (num == S) = verb(@$exp_1$@) + "pertenece a" + verb(@$exp_2$@) 
+    | (num == P) = verb(@$exp_1$@) + "pertenecen a" + verb(@$exp_2$@) 
+    where num = numero(@$exp_1$@)
+\end{minted}
+\end{mdframed}
+
+\bigskip
+Otra cuestión a observar, además de las reglas de concordancia ya vistas, es que nuestro sistema deberá generar casi exclusivamente oraciones bimembres ordenadas como:
+
+\begin{center}
+\emph{\textbf{sujeto}} + \emph{\textbf{verbo}} + \emph{\textbf{objeto}}
+\end{center}
+
+Siempre expresadas en tercera persona y tiempo presente. Nuestro realizador siempre deberá respetar el orden de palabras y tiempo verbal mencionado para realizar los elementos de tipo \emph{Oracion} de nuestra especificación de frase. 
+
+Debemos aclarar que en las reglas mencionadas anteriormente podemos observar oraciones en las cuales el orden de palabras difiere del mencionado anteriormente, por ejemplo, la frase:
+
+\begin{center}
+\emph{``no hay elementos en la tabla de símbolos''}
+\end{center}
 
 \noindent
-Si la expresión a la izquierda del $\subset$ es un conjunto unitario deberemos usar el verbo \emph{``pertenece''} (en singular), pero de tratarse de un conjunto con más de un elemento, deberemos usar el verbo en plural.
+cuyo orden es: 
 
-\medskip
-Otra cuestión a observar, además de las reglas de concordancia ya vistas, es que nuestro sistema deberá generar casi exclusivamente oraciones bimembres ordenadas como \emph{sujeto + verbo + objeto}. Siempre expresadas en tiempo presente. Por lo tanto nuestro realizador siempre deberá respetar el orden de palabras y tiempo verbal mencionado para realizar los elementos de tipo \emph{Oracion} de nuestra especificación de frase. 
+\begin{center}
+\emph{verbo} + \emph{sujeto} + \emph{objeto}
+\end{center}
 
-Debemos aclarar que en las reglas mencionadas anteriormente podemos observar oraciones en las cuales el orden de palabras difiere del mencionado anteriormente, por ejemplo: la frase ``no hay elementos en ...'' cuyo orden es \emph{verbo + sujeto + objeto}. Para poder generar estas frases no modelaremos estos casos como una \emph{Oracion} sino como \emph{ElementosYuxtapuestos} entre una \emph{FraseEnlatada} con el texto ``no hay elementos en'' y el objeto al que se haga referencia. Podemos hacerlo de esta forma ya que no tenemos necesidad procesar la especificación de la frase ``no hay elementos en'' ya que sabemos de antemano que es sintáctica y morfológicamente correcta. Esto no podríamos asegurarlo si el sujeto de la oración pudiese ser una designación por ejemplo, pero en este caso, ya lo conocemos.
+
+En estos casos conoceremos de antemano el sujeto y el verbo de la oración a generar por lo que no tendremos la necesidad de trabajar con los mismos a fin de asegurarnos concordancia gramatical entre estos. Es por esto que, en estos casos, podremos modelar estas frases, no mediante el elemento \emph{Oracion} presentado en el capítulo anterior sino como \emph{ElementosYuxtapuestos} entre una \emph{FraseEnlatada} con el texto ``no hay elementos en'' y la especificación de frase correspondiente al objeto al que hace referencia, para el ejemplo anterior será una \emph{FraseNominal} utilizada para modela el texto ``la tabla de símbolos'' proveniente de las designaciones de la especificación.
 
 %hablar un poco sobre tiempo verbal
 %Introducir acá con ejemplos las reglas sobre concordancia necesarias
@@ -182,7 +237,7 @@ Debemos aclarar que en las reglas mencionadas anteriormente podemos observar ora
 %TODO hablar algo de negacion?
 
 \bigskip
-En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y morfológicamente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
+En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y gramaticalmente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
 
 \medskip
 \noindent
