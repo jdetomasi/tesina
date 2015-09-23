@@ -51,27 +51,16 @@ A continuación en lo que queda de éste capítulo estudiaremos las tareas de re
 
 %La tarea de realización estructural puede resultar relativamente sencilla, pero es importante que se realice por separado a fin de poder generar textos para distintos sitemas de presentacion utilizando la misma realizacion linguistica. Es decir, separar las cuestiones del sistema de presentacion utilizado de las frases u oraciones generadas por nuestro sistema.
 
-Como mencionamos anteriormente, en la etapa de realización estructural se deberán transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. Hoy en día no debemos ocuparnos de cuestiones de formateo de bajo nivel, sino que la mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización.
+En la etapa de realización estructural deberemos transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. La mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización. Por ejemplo, para crear una lista en \LaTeX, debemos utilizar el entorno \emph{itemize}, para lo cual tenemos que inicializar y terminar el mismo mediante las sentencias \verb|\begin{itemize}| y \verb|\end{itemize}| respectivamente; entre las anteriores debemos utilizar el comando \verb|\item| para indicar los elemento de la lista.
 
-Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} el código \LaTeX para una lista de ítems de una descripción y en la figura~\ref{fig:ej_html} la realización para la misma especificación de texto pero en lenguaje HTML, donde el texto contenido en ambos ejemplos es exactamente el mismo, sólo diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
-
-\begin{figure}[H]
-  \begin{verbatim}
-  LookUp\_SP\_1: Se busca un símbolo en la tabla.  
-  \begin{itemize}
-    \item{Cuando:}
-    \begin{itemize}
-      \item{El símbolo a buscar pertenece ...}
-      \item{El símbolo a buscar es el único ...}   
-    \end{itemize}
-  \end{itemize}
-  \end{verbatim}
-  \caption{Texto final en \LaTeX.}
-  \label{fig:ej_latex}
-\end{figure}
+Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} de la sección anterior el código \LaTeX resultado de la realización de superficie para la especificación de frase introducida en el capítulo anterior (cap. \ref{fig:text_spec}). En la figura~\ref{fig:ej_html} podemos ver otra la realización para la misma especificación de texto pero en lenguaje HTML, donde podemos notar que el texto contenido en ambos ejemplos es exactamente el mismo, sólo se diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
 
 \begin{figure}[H]
   \begin{verbatim}
+<html>
+<body>
+  <h1>Descripción clase de prueba del ejemplo: SymbolTable</h1>
+
   LookUp_SP_1: Se busca un símbolo en la tabla.  
   <ul>
     <li>Cuando:</li>
@@ -80,35 +69,62 @@ Es evidente que esta etapa será dependiente del sistema de presentación escogi
       <li>El símbolo a buscar es el único ...</li>
     </ul>
   </ul>
+
+</body>
+</html>
   \end{verbatim}
   \caption{Texto final en HTML.}
   \label{fig:ej_html}
 \end{figure}
 
-Podemos pensar el problema de realización estructural como el proceso de mapear los constructores lógicos de nuestra especificación del texto en constructores lógicos del lenguaje de presentación a utilizar. En nuestro caso sólo tenemos que considerar dos elementos: \emph{TSDocumento} y \emph{TSListaItems}.
+El realizador estructural para este trabajo deberá generar código latex para luego ser compilado y convertido a un archivo pdf. Para esto, tenemos que considerar cómo mapear los dos constructores lógicos de nuestra especificación de texto anotaciones o sentencias de latex. Para realizar \emph{TSDocumento} agregaremos las etiquetas de encabezado necesarias según el tipo del documento, deberemos especificar el título y generalmente deberemos delimitar el principio y final del texto a incluir en el documento. Luego deberemos realizar recursivamente los elementos contenidos en el documento (\emph{TSListaItems}) y ubicarlos adecuadamente en el cuerpo del mismo.
 
-Para realizar \emph{TSDocumento} se deberán agregar algunas etiquetas de encabezado necesarias según el tipo del documento, deberemos especificar el título y generalmente deberemos delimitar el principio y final del texto a incluir en el documento. Luego deberemos realizar recursivamente los elementos contenidos en el documento (\emph{TSListaItems}) y ubicarlos adecuadamente en el cuerpo del mismo. En la figura~\ref{fig:ej_latex2} podemos ver un ejemplo del código que deberíamos generar para la realización estructural del documento, la realización de \emph{TSListaItems} se puede apreciar en el ejemplo anterior de la figura~\ref{fig:ej_latex}.
-
-\begin{figure}[H]
-  \begin{verbatim}
-  \documentclass{article}
-  \title{titulo}
+\begin{algorithm}
+  \caption{Realización superficie}\label{alg:realization}
+  \begin{algorithmic}[1]
+  \Function {realizar}{TSDocumento $doc$}
   
-  \begin{document}
-  \maketitle
-      ...
-  \end{document}
-  \end{verbatim}
-  \caption{Código \LaTeX para estructura del documento.}
-  \label{fig:ej_latex2}
-\end{figure}
+  \State resultado$\gets$``\verb|\documentclass{article}|''
+  \State resultado$\gets$resultado + ``\verb|\title{|'' + \Call{verbalizar}{doc.titulo} + ``\verb|}|''
+  
+  \State resultado$\gets$resultado + ``\verb|\begin{document}|''
+  \State resultado$\gets$resultado + ``\verb|\maketitle|''
+  
+  \For{\textbf{each} desc \textbf{in} doc.descs}
+    \State resultado$\gets$resultado + \Call{realizar\_items}{desc}  
+  \EndFor
 
+  \State ret$\gets$ret + ``\verb|\end{document}|''
+  \State \textbf{return} $resultado$
+  \EndFunction
+  \Statex
+  \Function {realizar\_items}{TSListaItems $li$}
+    \State resultado$\gets$ \Call{verbalizar}{li.encabezado}
+	\State resultado$\gets$resultado + ``\verb|Cuando:|''
+    \State resultado$\gets$resultado + ``\verb|\begin{itemize}|''
+    \For{\textbf{each} ef \textbf{in} li.elementos}
+      \State resultado$\gets$resultado + ``\verb|\item{|'' + \Call{verbalizar}{ef} + ``\verb|}|'' 
+    \EndFor  
+    \State resultado$\gets$resultado + ``\verb|\end{itemize}|''
+    \State \textbf{return} $resultado$
+  \EndFunction
+\end{algorithmic}
+\end{algorithm}
 
-\section{Realización lingüística}
-\label{cap:linguistic_realization}
+En la figura \ref{alg:realization} presentamos un algoritmo, en pseudocódigo, para la tarea de realización de superficie que nos permitirá transformar nuestras especificaciones de texto en código latex. Podemos ver que para esto necesitaremos construir primero el código necesario para el preámbulo. Aquí es donde definiremos el título del documento, donde podemos notar la llamada a la función \emph{verbalizar}; esta será la encargada de realizar la tarea de realización lingüística y producir una frase en lenguaje natural en base a una especificación de frase dada. Luego construiremos el cuerpo del documento, procesando una por una las descripciones de las clases de prueba a generar, delegando la responsabilidad de la realización de cada una de estas en la función \emph{realizar\_items}. Esta agregará el código necesario para construir la lista de ítems, requiriendo también para este caso la realización lingüística de las especificaciones de frases presentes en cada \emph{TSListaItems}.
+
+Para completar la realización de superficie será necesario definir el comportamiento de la función \emph{verbalizar} antes mencionada. Esta realizará la tarea de realización lingüística y en la próxima sección nos encargaremos especificar la misma.
+
+%En nuestro caso sólo tenemos que considerar dos elementos: \emph{TSDocumento} y \emph{TSListaItems}.
+
+%En la figura~\ref{fig:ej_latex2} podemos ver un ejemplo del código que deberíamos generar para la realización estructural del documento, la realización de \emph{TSListaItems} se puede apreciar en el ejemplo anterior de la figura~\ref{fig:ej_latex}.
+
 
 % introducir reglas del leguaje (concordancia)
 % explicar lexicalizacion para cada elemento de nuestra especificacion de frase
+
+\section{Realización lingüística}
+\label{cap:linguistic_realization}
 
 La realización lingüística desempeñará su tarea al nivel de la oración. Como mencionamos anteriormente, la misión de esta tarea será transformar las especificaciones de frases de nuestro sistema en oraciones bien formadas. Entendiendo por oración bien formada aquellas que cumplan con las reglas gramaticales del lenguaje (español en nuestro caso); estas reglas se ocuparán tanto de la morfología como de la sintaxis de las mismas. Entonces, la realización lingüística consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y morfológicamente correcto.
 
