@@ -19,7 +19,7 @@ En la sección \ref{cap:structure_realization} veremos en detalle la tarea de \e
 
 La tarea del realizador de superficie será transformar la especificación abstracta del documento, producida por la etapa de \textit{microplanning} en texto de superficie. Este texto estará formado por anotaciones dependientes del sistema de presentación y oraciones generadas por la tarea de realización lingüística.
 
-Será la tarea de realización lingüística la encargada de que en el documento final tengamos una oración por cada especificación de frase incluida en la especificación del texto. Por otro lado, las anotaciones para el sistema de presentación serán generadas por la realización estructural, siendo entonces ésta claramente dependiente del sistema de presentación utilizado. Por ejemplo, si nuestro sistema debe producir un documento \LaTeX para luego ser compilado y generar un pdf, será el realizador de superficie (más específicamente de la tarea de realización estructural) el encargado de producir el código necesario para que este luego se compile apropiadamente. Por ejemplo, en la figura \ref{fig:text_spec} podemos observar un documento producido para la especificación del texto de la figura \ref{fig:ej_latex}.
+Será la tarea de realización lingüística la encargada de que en el documento final tengamos una oración por cada especificación de frase incluida en la especificación del texto. Por otro lado, las anotaciones para el sistema de presentación serán generadas por la realización estructural, siendo entonces ésta claramente dependiente del sistema de presentación utilizado. Por ejemplo, si nuestro sistema debe producir un documento latex para luego ser compilado y generar un PDF, será el realizador de superficie (más específicamente de la tarea de realización estructural) el encargado de producir el código necesario para que este luego se compile apropiadamente. Por ejemplo, en la figura \ref{fig:text_spec} podemos observar un documento producido para la especificación del texto de la figura \ref{fig:ej_latex}.
 
 \begin{figure}[H]
   \begin{verbatim}
@@ -30,12 +30,10 @@ Será la tarea de realización lingüística la encargada de que en el documento
   \maketitle
 
   LookUp\_SP\_1: Se busca un símbolo en la tabla.  
+  Cuando:
   \begin{itemize}
-    \item{Cuando:}
-    \begin{itemize}
-      \item{El símbolo a buscar pertenece ...}
-      \item{El símbolo a buscar es el único ...}   
-    \end{itemize}
+    \item{El símbolo a buscar pertenece ...}
+    \item{El símbolo a buscar es el único ...}   
   \end{itemize}
   
   \end{document}
@@ -51,9 +49,9 @@ A continuación en lo que queda de éste capítulo estudiaremos las tareas de re
 
 %La tarea de realización estructural puede resultar relativamente sencilla, pero es importante que se realice por separado a fin de poder generar textos para distintos sitemas de presentacion utilizando la misma realizacion linguistica. Es decir, separar las cuestiones del sistema de presentacion utilizado de las frases u oraciones generadas por nuestro sistema.
 
-En la etapa de realización estructural deberemos transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. La mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización. Por ejemplo, para crear una lista en \LaTeX, debemos utilizar el entorno \emph{itemize}, para lo cual tenemos que inicializar y terminar el mismo mediante las sentencias \verb|\begin{itemize}| y \verb|\end{itemize}| respectivamente; entre las anteriores debemos utilizar el comando \verb|\item| para indicar los elemento de la lista.
+En la etapa de realización estructural deberemos transformar los constructores lógicos existentes en la especificación del texto en constructores del sistema de presentación. La mayoría de los sistemas de procesamiento de texto nos permiten indicar mediante el uso de símbolos o etiquetas la naturaleza de una estructura determinada; estas luego estas serán procesadas y renderizadas de manera apropiada permitiéndole al lector una correcta visualización. Por ejemplo, para crear una lista en latex, debemos utilizar el entorno \emph{itemize}, para lo cual tenemos que inicializar y terminar el mismo mediante las sentencias \verb|\begin{itemize}| y \verb|\end{itemize}| respectivamente; entre las anteriores debemos utilizar el comando \verb|\item| para indicar los elemento de la lista.
 
-Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} de la sección anterior el código \LaTeX resultado de la realización de superficie para la especificación de frase introducida en el capítulo anterior (cap. \ref{fig:text_spec}). En la figura~\ref{fig:ej_html} podemos ver otra la realización para la misma especificación de texto pero en lenguaje HTML, donde podemos notar que el texto contenido en ambos ejemplos es exactamente el mismo, sólo se diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
+Es evidente que esta etapa será dependiente del sistema de presentación escogido para el documento final y a su vez independiente del proceso de realización lingüística de la las oraciones o frases a generar.  Por ejemplo, podemos observar en la figura~\ref{fig:ej_latex} de la sección anterior el código latex resultado de la realización de superficie para la especificación de frase introducida en el capítulo anterior (cap. \ref{fig:text_spec}). En la figura~\ref{fig:ej_html} podemos ver otra la realización para la misma especificación de texto pero en lenguaje HTML, donde podemos notar que el texto contenido en ambos ejemplos es exactamente el mismo, sólo se diferencian en las diferentes anotaciones utilizadas para cada sistema de presentación.
 
 \begin{figure}[H]
   \begin{verbatim}
@@ -77,35 +75,35 @@ Es evidente que esta etapa será dependiente del sistema de presentación escogi
   \label{fig:ej_html}
 \end{figure}
 
-El realizador estructural para este trabajo deberá generar código latex para luego ser compilado y convertido a un archivo pdf. Para esto, tenemos que considerar cómo mapear los dos constructores lógicos de nuestra especificación de texto anotaciones o sentencias de latex. Para realizar \emph{TSDocumento} agregaremos las etiquetas de encabezado necesarias según el tipo del documento, deberemos especificar el título y generalmente deberemos delimitar el principio y final del texto a incluir en el documento. Luego deberemos realizar recursivamente los elementos contenidos en el documento (\emph{TSListaItems}) y ubicarlos adecuadamente en el cuerpo del mismo.
+El realizador estructural para este trabajo deberá generar código latex para luego ser compilado y convertido a un archivo PDF. Para esto, tenemos que considerar cómo mapear los dos constructores lógicos de nuestra especificación de texto anotaciones o sentencias de latex. Para realizar \emph{TSDocumento} agregaremos las etiquetas de encabezado necesarias según el tipo del documento, deberemos especificar el título y generalmente deberemos delimitar el principio y final del texto a incluir en el documento. Luego deberemos realizar recursivamente los elementos contenidos en el documento (\emph{TSListaItems}) y ubicarlos adecuadamente en el cuerpo del mismo.
 
 \begin{algorithm}
   \caption{Realización superficie}\label{alg:realization}
   \begin{algorithmic}[1]
   \Function {realizar}{TSDocumento $doc$}
   
-  \State resultado$\gets$``\verb|\documentclass{article}|''
-  \State resultado$\gets$resultado + ``\verb|\title{|'' + \Call{verbalizar}{doc.titulo} + ``\verb|}|''
+  \State resultado $\gets$ ``\verb|\documentclass{article}|''
+  \State resultado $\gets$ resultado + ``\verb|\title{|'' + \Call{verbalizar}{doc.titulo} + ``\verb|}|''
   
-  \State resultado$\gets$resultado + ``\verb|\begin{document}|''
-  \State resultado$\gets$resultado + ``\verb|\maketitle|''
+  \State resultado $\gets$ resultado + ``\verb|\begin{document}|''
+  \State resultado $\gets$ resultado + ``\verb|\maketitle|''
   
   \For{\textbf{each} desc \textbf{in} doc.descs}
-    \State resultado$\gets$resultado + \Call{realizar\_items}{desc}  
+    \State resultado $\gets$ resultado + \Call{realizar\_items}{desc}  
   \EndFor
 
-  \State ret$\gets$ret + ``\verb|\end{document}|''
+  \State ret $\gets$ ret + ``\verb|\end{document}|''
   \State \textbf{return} $resultado$
   \EndFunction
   \Statex
   \Function {realizar\_items}{TSListaItems $li$}
-    \State resultado$\gets$ \Call{verbalizar}{li.encabezado}
-	\State resultado$\gets$resultado + ``\verb|Cuando:|''
-    \State resultado$\gets$resultado + ``\verb|\begin{itemize}|''
+    \State resultado $\gets$  \Call{verbalizar}{li.encabezado}
+	\State resultado $\gets$ resultado + ``\verb|Cuando:|''
+    \State resultado $\gets$ resultado + ``\verb|\begin{itemize}|''
     \For{\textbf{each} ef \textbf{in} li.elementos}
-      \State resultado$\gets$resultado + ``\verb|\item{|'' + \Call{verbalizar}{ef} + ``\verb|}|'' 
+      \State resultado $\gets$ resultado + ``\verb|\item{|'' + \Call{verbalizar}{ef} + ``\verb|}|'' 
     \EndFor  
-    \State resultado$\gets$resultado + ``\verb|\end{itemize}|''
+    \State resultado $\gets$ resultado + ``\verb|\end{itemize}|''
     \State \textbf{return} $resultado$
   \EndFunction
 \end{algorithmic}
@@ -126,19 +124,19 @@ Para completar la realización de superficie será necesario definir el comporta
 \section{Realización lingüística}
 \label{cap:linguistic_realization}
 
-La realización lingüística desempeñará su tarea al nivel de la oración. La misión de ésta será transformar las especificaciones de frases producidas por la etapa anterior en oraciones bien formadas. Entendiendo por oración bien formada a aquellas que cumplan con las reglas gramaticales de la lengua (castellana en nuestro caso); estas reglas se ocuparán tanto de la de la sintaxis como de la gramática de las mismas. La realización lingüística, entonces, consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y gramaticalmente correcto.
+La realización lingüística desempeñará su tarea al nivel de la oración. La misión de ésta será transformar las especificaciones de frases producidas por la etapa anterior en oraciones bien formadas. Entendiendo por oraciones bien formadas a aquellas que cumplan con las reglas gramaticales de la lengua del texto a generar (castellana en nuestro caso). La realización lingüística, entonces, consistirá en aplicar alguna caracterización de estas reglas a cada especificación de frase a fin de producir un texto que sea sintáctica y gramaticalmente correcto.
 
-Será importante también, que el texto producido sea ortográficamente correcto. Para esto, asumiremos que las designaciones provistas por el usuario son ortogáficamente correctas y por nuestro lado, nos comprometeremos a que las palabras generadas por nuestro sistema también lo sean. Además de esto, deberemos encargarnos de que la primer palabra de una oración comience con mayúscula y de colocar un signo de puntuación al final de la misma.
+Será importante también, que el texto producido sea ortográficamente correcto. Para esto, asumiremos que las designaciones provistas por el usuario son ortogáficamente correctas y por nuestro lado, nos deberemos compremeter a que las palabras generadas por nuestro sistema también lo sean. Además de esto, deberemos encargarnos de que la primer palabra de una oración comience con mayúscula y de colocar un signo de puntuación al final de la misma.
 
-En lo que queda de este capítulo nos encargaremos de estudiar las tareas que nuestro realizador lingüístico deberá llevar a cabo para producir, finalmente, oraciones en lenguaje natural. 
+En lo que queda de este capítulo estudiaremos las tareas que nuestro realizador lingüístico deberá llevar a cabo para finalmente producir oraciones en lenguaje natural. 
 
-Comenzaremos detallando las reglas de concordancia gramatical, introducidas en el capítulo \ref{sec:corpus_gramatica}, que deberemos contemplar en esta etapa: \emph{concordancia entre artículo y sustantivo}, \emph{concordancia entre sujeto y atributo de verbo copulativo} y finalmente veremos la \emph{concordancia entre sujeto y verbo de la oración}.
+En el capítulo \ref{sec:corpus_gramatica} presentamos tres aspectos gramaticales que deberemos tener en cuenta para la realización lingüística de nuestras frases: concordancia entre artículo y sustantivo, concordancia entre sujeto y atributo de verbo copulativo y finalmente veremos la concordancia entre sujeto y verbo de la oración.
 
 \medskip
 \noindent
 \textbf{\emph{Concordancia entre artículo y sustantivo.}} Establece que el artículo debe concordar en género y número con el sustantivo al que acompaña.
 \noindent
-Como mencionamos anteriormente, el usuario podría no incluir el artículo en una designación. Por ejemplo, podríamos haber omitido el artículo en una de las designaciones utilizadas en los capítulos anteriores (figura \ref{fig:ej_designacion}), se podría haber omitido el artículo de:
+Como mencionamos anteriormente, el usuario podría no incluir el artículo en una designación. Por ejemplo, podríamos haber omitido el artículo en una de las designaciones utilizadas en los capítulos anteriores (figura \ref{fig:ej_designacion}), el usuario podría haber omitido el artículo en el texto de la siguiente designación:
 
 \begin{figure}[H]
 	\center
@@ -146,7 +144,7 @@ Como mencionamos anteriormente, el usuario podría no incluir el artículo en un
 \end{figure}
 
 \noindent
-y haber designado:
+y haber designado en su lugar:
 
 \begin{figure}[H]
 	\center
@@ -165,7 +163,7 @@ Será entonces nuestro sistema el encargado de agregar el artículo de ser neces
 
 \medskip
 \noindent
-\textbf{\emph{Concordancia entre sujeto y atributo de verbo copulativo.}} Establece que el atributo de un verbo copulativo (ser, estar, parecer) debe concordar en género y número con el sujeto. Veamos por ejemplo el siguiente caso incluido en la definición presentada en el capítulo \ref{sec:corpus_reglas}.
+\textbf{\emph{Concordancia entre sujeto y atributo de verbo copulativo.}} Establece que el atributo de un verbo copulativo (ser, estar, parecer) debe concordar en género y número con el núcleo del sujeto de la oración. Veamos por ejemplo el siguiente caso incluido en la definición presentada en el capítulo \ref{sec:corpus_reglas}:
 
 \begin{mdframed}[style=codebox]
 \begin{minted}[escapeinside=@@]{haskell}
