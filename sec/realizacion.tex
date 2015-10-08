@@ -233,17 +233,19 @@ En estos casos no modelaremos estas frases utilizando elementos de tipo \emph{Or
 %TODO hablar algo de negacion?
 
 \bigskip
-En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase ilustrando cada caso con un pseudocódigo para el algoritmo de verbalización. Llamaremos \emph{verbalizar} a la función encargada de generar una oración sintáctica y gramaticalmente correcta en lenguaje natural en base a una especificación de frase. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
+En base a los aspectos mencionados anteriormente analizaremos la tarea de realización lingüística para cada elemento de nuestra especificación de frase, esta tarea será recursiva sobre la estructura de las especificaciones antes mencionadas. Para ilustrar el comportamiento de la misma presentaremos una definición en pseudocódigo para cada posible elemento de una especificación de frase. Llamaremos \textbf{verbalizar} a la función encargada de llevar a cabo esta tarea, será la encargada de generar una oración sintáctica y gramaticalmente correcta  en base a una especificación de frase dada. Ésta resultará la función principal de nuestro realizador lingüístico dando como resultado una oración a la que sólo deberemos realizarle algunas pequeñas modificaciones para satisfacer los aspectos ortográficos antes mencionados y dar por finalizada la tarea de realización lingüística.
+
+A continuación analizaremos la realización lingüística de cada uno de los elementos que pueden formar parte de una especificación de frase.
 
 \medskip
 \noindent
-\textbf{\emph{FraseEnlatada.}} La realización de una frase enlatada será trivial, simplemente habrá que extraer el texto contenido en la misma sin necesidad de realizar ningún tipo de procesamiento.
+\textbf{\emph{FraseEnlatada.}} La realización de una frase enlatada resulta trivial, simplemente habrá que extraer el texto contenido en la misma sin necesidad de realizar ningún tipo de procesamiento.
 
 \begin{algorithm}[H]
 \caption{Realización lingüística frase enlatada.}
 \begin{algorithmic}[1]
-\Function {verbalizar}{FraseEnlatada $frase$}
-\State \textbf{return} $frase.texto$
+\Function {verbalizar}{FraseEnlatada frase}
+\State \textbf{return} frase.texto
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -256,11 +258,11 @@ En base a los aspectos mencionados anteriormente analizaremos la tarea de realiz
 \begin{algorithm}[H]
 \caption{Realización lingüística elementos yuxtapuestos.} 
 \begin{algorithmic}[1]
-\Function {verbalizar}{ElementosYuxtapuestos $elem$}
-\For{\textbf{each} $e$ \textbf{in} $elem.elementos$}
-\State $resultado\gets \text{concat}(resultado, \text{verbalizar}(e))$
+\Function {verbalizar}{ElementosYuxtapuestos elem}
+\For{\textbf{each} e \textbf{in} elem.elementos}
+\State resultado $\gets$ \Call{concat}{resultado, \Call{verbalizar}{e}}
 \EndFor
-\State \textbf{return} $resultado$
+\State \textbf{return} resultado
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
@@ -272,45 +274,60 @@ En base a los aspectos mencionados anteriormente analizaremos la tarea de realiz
 \begin{algorithm}[H]
 \caption{Realización lingüística elementos yuxtapuestos.}
 \begin{algorithmic}[1]
-\Function {verbalizar}{ElementosCoordinados $elem$}
-\For{\textbf{each} $e$ \textbf{in} $elem.elementos$}
-\If{esPrimerElemento($e$, $elem$)}
-\State $resultado\gets \text{verbalizar}(e)$
-\ElsIf{esUltimoElemento($e$, $elem$)}
-\State $resultado\gets \text{concat}(resultado, \text{\emph{``y''}}, \text{verbalizar}(e))$
+\Function {verbalizar}{ElementosCoordinados elem}
+\For{\textbf{each} e \textbf{in} elem.elementos}
+\If{\Call{es\_primer\_elemento}{e, elem}}
+\State resultado $\gets$ \Call{verbalizar}{e}
+\ElsIf{\Call{es\_ultimo\_elemento}{e, elem}}
+\State resultado $\gets$ \Call{concat}{resultado, \emph{``y''}, \Call{verbalizar}{e}}
 \Else
-\State $resultado\gets \text{concat}(resultado, \text{\emph{``,''}}, \text{verbalizar}(e))$
+\State resultado $\gets$ \Call{concat}{resultado, \emph{``,''}, \Call{verbalizar}{e}}
 \EndIf
 \EndFor
-\State \textbf{return} $resultado$
-\EndFunction
+\State \textbf{return} resultado
+\EndFunction`
 \end{algorithmic}
 \end{algorithm}
 
 \medskip
 \noindent
-\textbf{\emph{FraseNominal.}} Para verbalizar una frase nominal, deberemos unir en orden: \emph{determinante} (de ser requerido), \emph{nucleo} y la verbalización del \emph{complemento}, agregando los espacios correspondientes entre medio.
+\textbf{\emph{FraseNominal.}} Para verbalizar una frase nominal, deberemos unir en orden: \emph{determinante} (de ser requerido), \emph{nucleo} y verbalizando recursivamente su \emph{complemento}, agregando los espacios correspondientes entre medio.
 
 \begin{algorithm}[H]
 \caption{Realización lingüística FraseNominal.}
 \begin{algorithmic}[1]
-\Function {verbalizar}{FraseNominal $frase$}
-\State $nucleo\gets frase.nucleo$
-\State $complemento\gets \text{verbalizar}(frase.complemento)$
-\If{esNombre($nucleo$)}
-\State $determinante\gets \text{determinar\_articulo}(frase)$
-\State $resultado\gets \text{concat}(determinante, nucleo, complemento)$
+\Function {verbalizar}{FraseNominal frase}
+\State nucleo $\gets$ frase.nucleo
+\State complemento $\gets$ \Call{verbalizar}{frase.complemento}
+\If{\Call{es\_nombre}{nucleo}}
+\State determinante $\gets$ \Call{determinar\_articulo}{frase}
+\State resultado $\gets$ \Call{concat}{determinante, nucleo, complemento}
 \Else
-\State $resultado\gets \text{concat}(nucleo, complemento)$
+\State resultado $\gets$ \Call{concat}{nucleo, complemento}
 \EndIf
 \Statex
-\State \textbf{return} $resultado$
+\State \textbf{return} resultado
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
 \noindent
-La función \emph{determinar\_articulo} deberá recuperar el determinante apropiado para la frase, en el caso de encontrarse ya establecido de antemano devolverá el mismo, en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, en este orden.
+Observemos que se deberá verbalizar recursivamente el complemento de la frase (éste probablemente sea una frase enlatada o una yuxtaposición de éstas). Finalmente se construye un texto con el \emph{determinante}, \emph{núcleo} y la verbalización del \emph{complemento}, respetando el orden antes mencionado.
+
+La función \textbf{determinar\_articulo} deberá recuperar el determinante apropiado para la frase, en el caso de encontrarse ya establecido de antemano tendrá que devolver el mismo y en caso contrario (de ser necesario) deberá determinar el artículo indicado según número y género del núcleo de la frase. Es razonable suponer que el sustantivo utilizado en el texto de una designación, identifica algo conocido y por lo tanto deberá ser un artículo definido el que lo preceda. Los artículos definidos son aquellos que hablan de algo conocido y que se puede identificar, en particular son artículos definidos: el/lo/las/los. Nuestro sistema podrá entonces tener este conjunto de artículos previamente indexado por número y género de la siguiente manera:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\textbf{Masculino}} & \multicolumn{2}{c|}{\textbf{Femenino}} \\ \hline
+\textbf{Singular}    & \textbf{Plural}   & \textbf{Singular}   & \textbf{Plural}  \\ \hline
+el                   & los               & la                  & las              \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+y de esta forma determinar según el número y género del sujeto presente en el texto de la designación el artículo apropiado para la misma.
 
 \medskip
 \noindent
@@ -319,28 +336,68 @@ La función \emph{determinar\_articulo} deberá recuperar el determinante apropi
 
 \medskip
 \noindent
-\textbf{\emph{Oracion.}} Este es el caso mas interesante para nuestro verbalizador, deberemos generar una oración correcta en base a las reglas antes vistas. 
+\textbf{\emph{Oracion.}} Este es el caso mas interesante para nuestro verbalizador, deberemos generar una oración correcta en base a las reglas de concordancia gramatical antes mencionadas. 
 
 \begin{algorithm}[H]
 \caption{Realización lingüística Oracion.}
 \begin{algorithmic}[1]
-\Function {verbalizar}{Oracion $oracion$}
-\State $sujeto\gets \text{verbalizar}(oracion.sujeto)$
-\State $verbo\gets \text{determinar\_verbo}(oracion)$
-\State $atributo\gets \text{determinar\_atributo}(oracion)$
-\State $complemento\gets \text{verbalizar}(oracion.predicado.complemento)$
-\State $estaNegada\gets oracion.predicado.negada$
+\Function {verbalizar}{Oracion oracion}
+\State sujeto $\gets$ \Call{verbalizar}{oracion.sujeto}
+\State fverbal $\gets$ oracion.predicado
+\State verbo $\gets$ \Call{determinar\_verbo}{fverbal.verbo, oracion.sujeto}
+\State atributo $\gets$ \Call{determinar\_atributo}{fverbal.atributo, oracion.sujeto}
+\State complemento $\gets$ \Call{verbalizar}{fverbal.complemento}
 \Statex
-\If{$estaNegada$}
-\State $resultado\gets \text{concat}(sujeto, \text{negacion}(verbo), atributo, complemento)$
-\Else
-\State $resultado\gets \text{concat}(sujeto, verbo, atributo, complemento)$
-\EndIf
+\State resultado $\gets$ \Call{concat}{sujeto, verbo, atributo, complemento}
 \Statex
-\State \textbf{return} $resultado$
+\State \textbf{return} resultado
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
 
+%TODO ampliar esto
+%ejemplificar aca y el determinar_articulo de arriba?
 \noindent
-A fin de contemplar las reglas de concordancia introducidas anteriormente, le prestaremos especial atención al verbo y al atributo de la frase verbal corresponde predicado de la oración, verbalizando individualmente tanto el sujeto (que probablemente sea una frase nominal) como el complemento de la frase verbal. La función \emph{determinar\_verbo} será la encargada de conjugar el verbo de manera que concuerde en número y persona con el sujeto, mientras que la función \emph{determinar\_atributo} será la encargada de determinar el atributo de forma que concuerde en número y género también con el sujeto. Si se trata de una negación (por ejemplo \emph{``... no pertenece a ...''}) deberemos negar el verbo en cuestión en la oración final. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
+A fin de contemplar estas reglas, le prestaremos especial atención al verbo y al atributo de la frase verbal correspondiente al predicado de la oración, verbalizando recursivamente tanto el sujeto (generalmente una frase nominal producto de una designación) como el complemento de la frase verbal. Veremos en el capítulo \ref{cap:implementacion} como nuestro sistema se encargará de agregar información morfológica a las especificaciones, esta será necesaria en esta etapa para, por ejemplo, conocer el numero y genero del núcleo del sujeto con el fin de poder determinar el la conjugación apropiada para el verbo y el atributo a utilizar.
+
+La función \textbf{determinar\_verbo} será la encargada de conjugar el verbo (que en la especificación de frase se encuentra en su forma canónica, es decir, el infinitivo del verbo) de manera que concuerde en número y persona con el sujeto, mientras que la función \textbf{determinar\_atributo} tendrá la tarea de determinar el atributo de forma que concuerde en número y género también con el sujeto. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
+
+Tanto para determinar la conjugación del verbo como el atributo a utilizar deberemos contar con un léxico en el que cada palabra se encuentre indexada por: forma canónica, número y género que nos permita obtener el verbo o atributo correctamente conjugado en base a las características anteriores. En nuestro caso, sabemos de antemano los verbos y atributos utilizados por el sistema, por lo que podremos construir esta relación para los casos necesarios. De esta forma, para la conjugación de los verbos utilizados en las oraciones de nuestro sistema tendremos:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Verbo}} & \multicolumn{1}{c|}{\textbf{Singular}} & \multicolumn{1}{c|}{\textbf{Plural}} \\ \hline
+\textbf{Estar}                       & \textit{está}                                   & \textit{están}                                \\ \hline
+\textbf{Pertenecer}                  & \textit{pertenece}                              & \textit{pertenecen}                           \\ \hline
+\textbf{Ser}                         & \textit{es}                                     & \textit{son}                                  \\ \hline
+\end{tabular}
+\end{table}
+
+\noindent
+Por otro lado, usaremos las siguientes relaciones para decidir que atributo debemos utilizar:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|l|l|l|l|}
+\cline{2-5}
+                                 & \multicolumn{2}{c|}{\textbf{Masculino}}                                       & \multicolumn{2}{c|}{\textbf{Femenino}}                                        \\ \hline
+\multicolumn{1}{|c|}{\textbf{Atributo}} & \multicolumn{1}{c|}{\textbf{Singular}} & \multicolumn{1}{c|}{\textbf{Plural}} & \multicolumn{1}{c|}{\textbf{Singular}} & \multicolumn{1}{c|}{\textbf{Plural}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Igual}}    & \textit{igual}                                  & \textit{iguales}                              & \textit{igual}                                  & \textit{iguales}                              \\ \hline
+\multicolumn{1}{|l|}{\textbf{Incluido}} & \textit{incluido}                               & \textit{incluidos}                            & \textit{incluida}                               & \textit{incluidas}                            \\ \hline
+\end{tabular}
+\end{table}
+
+Por ejemplo, para la realización lingüística de la oración presentada en la figura \ref{fig:phase_spec_ej} del capítulo anterior, de la cual sabremos que el núcleo del sujeto es singular, y el género del mismo es masculino, nuestro realizador deberá determinar el verbo adecuado de la siguiente manera:
+
+\begin{figure}[H]
+\centering
+\textbf{determinar\_verbo}(\emph{``pertenecer''}, \emph{``símbolo''}) $\rightarrow$ \emph{``pertenece''}
+\end{figure}
+
+\noindent
+De forma similar deberá comportarse la determinación de atributo en caso de ser de ser necesaria. 
+
+\bigskip
+En este capítulo vimos como finalmente, a partir de una especificación del documento, nuestro sistema podrá producir el documento final, el texto de superficie. En el próximo capítulo nos concentraremos en estudiar los aspectos mas relevantes de la implementación realizada para este trabajo.
