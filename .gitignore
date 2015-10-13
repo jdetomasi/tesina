@@ -30,3 +30,5 @@
 borrar/*
 _minted-tesina/
 *.backup
+*.bak
+.directory
