@@ -32,3 +32,4 @@ _minted-tesina/
 *.backup
 *.bak
 .directory
+sec/*.tex.bak

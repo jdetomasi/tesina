@@ -63,7 +63,7 @@ En los sistemas de NLG el texto generado se utiliza principalmente para transmit
 En esta sección definiremos los \emph{mensajes} que manipulará nuestro sistema. Llamamos \emph{mensajes}~\cite{reiter_dale} a los elementos informativos que conceptualizan la información que queremos comunicar; son paquetes de información que debe estar presente en el texto final. Estos a su vez estarán compuestos por elementos del dominio de aplicación.
 
 
-El \emph{corpus de descripciones} (apéndice~\ref{ape:corpus}) resulta una buena fuente para estudiar el modelado del dominio y los tipos de \emph{mensajes} que necesitamos comunicar. Anteriormente, observamos en el \emph{corpus} la relación entre las frases pertenecientes a la información a comunicar y las expresiones Z de las clases de prueba generadas por \textit{Fastest}. Observamos que estas clases de prueba están compuestas por una conjunción de predicados atómicos y que cada uno de estos predicados se corresponde con una oración en lenguaje natural dentro de la descripción de la clase de prueba. Podemos ver esta correspondencia en la figura \ref{fig:ej_test_desc} (pág. \pageref{fig:ej_test_desc}), donde las siguientes expresiones:
+El \emph{corpus de descripciones} (apéndice~\ref{ape:corpus}) resulta una buena fuente para estudiar el modelado del dominio y los tipos de \emph{mensajes} que necesitamos comunicar. Anteriormente, observamos en el corpus la relación entre las frases pertenecientes a la información a comunicar y las expresiones Z de las clases de prueba generadas por \textit{Fastest}. Observamos que estas clases de prueba están compuestas por una conjunción de predicados atómicos y que cada uno de estos predicados se corresponde con una oración en lenguaje natural dentro de la descripción de la clase de prueba. Podemos ver esta correspondencia en la figura \ref{fig:ej_test_desc} (pág. \pageref{fig:ej_test_desc}), donde las siguientes expresiones:
 
 \medskip
 \begin{enumerate}
@@ -119,7 +119,7 @@ Para el caso de nuestro trabajo esta tarea se resumirá a la búsqueda y filtrad
 Ya seleccionadas las clases de prueba con las que debemos trabajar, veremos como podemos mejorar las descripciones de nuestro sistema realizando algunos procesamientos sobre la información seleccionada previo a la construcción del \textit{document plan}. En particular veremos dos tareas que podríamos enmarcar dentro del razonamiento con los datos, la \emph{eliminación de tautologías} y la \emph{reducción de expresiones}. 
 
 \subsection*{Eliminación de tautologías}
-Como mencionamos anteriormente, todas las clases de prueba incluidas en el \emph{corpus} fueron generadas utilizando \emph{Fastest 1.6}. Hemos observado que en ciertos casos, esta herramienta genera clases de prueba como la que podemos ver a continuación:
+Como mencionamos anteriormente, todas las clases de prueba incluidas en el corpus fueron generadas utilizando \emph{Fastest 1.6}. Hemos observado que en ciertos casos, esta herramienta genera clases de prueba como la que podemos ver a continuación:
 
 \begin{figure}[H]
   \centering
@@ -177,7 +177,7 @@ En la figura \ref{fig:ej_elim_tauto} podemos ver ilustrado el comportamiento esp
 Será tarea de nuestro \textit{document planner}, entonces, filtrar tautologías presentes en las clases de prueba para asegurarnos de este modo de que no sean  incluidas dentro del \emph{document plan}.
 
 \subsection*{Reducción de expresiones}
-Podemos observar en el \emph{corpus} que hay algunas expresiones que podríamos simplificar y de esta forma lograr descripciones mas claras y concisas. Veamos por ejemplo la figura \ref{fig:ej_update_sp_4}.
+Podemos observar en el corpus que hay algunas expresiones que podríamos simplificar y de esta forma lograr descripciones mas claras y concisas. Veamos por ejemplo la figura \ref{fig:ej_update_sp_4}.
 
 \begin{figure}[H]
   \centering
@@ -246,8 +246,8 @@ Será tarea de nuestro \textit{document planner}, entonces, trabajar también es
 
 Como mencionamos anteriormente, el texto generado no podrá ser una colección de frases y palabras al azar. Deberá tener coherencia y poseer una estructura que le permita al lector interpretar con facilidad el contenido del mismo. Para esto, necesitaremos considerar como organizaremos y estructuraremos la información que debemos comunicar a fin de producir un texto razonablemente fácil de leer y comprender.
 
-%~\footnote{Las decisiones sobre como debe estar ordenado y agrupado el documento final son resultado del análisis del \emph{corpus} de descripciones.}
-Esta tarea se concentrará en construir una estructura que contenga la información seleccionada y procesada en la etapa de \emph{determinación de contenido}; estableciendo el agrupamiento y ordenamiento de la misma. Esta estructura deberá caracterizar la disposición de los elementos pertenecientes a los textos recopilados en el \emph{corpus}. De este, podemos observar que los documentos a generar poseen una estructura bastante simple y rígida a la vez. Estos están formados por una secuencia de descripciones para las clases de prueba seleccionadas en la etapa de \emph{determinación de contenido}, a su vez, cada una de estas descripciones agrupa los \emph{mensajes} que modelan la verbalización de las expresiones pertenecientes a cada clase, ordenados de la misma forma en la que aparecen en el esquema de la clase de prueba en cuestión. 
+%~\footnote{Las decisiones sobre como debe estar ordenado y agrupado el documento final son resultado del análisis del corpus de descripciones.}
+Esta tarea se concentrará en construir una estructura que contenga la información seleccionada y procesada en la etapa de \emph{determinación de contenido}; estableciendo el agrupamiento y ordenamiento de la misma. Esta estructura deberá caracterizar la disposición de los elementos pertenecientes a los textos recopilados en el corpus. De este, podemos observar que los documentos a generar poseen una estructura bastante simple y rígida a la vez. Estos están formados por una secuencia de descripciones para las clases de prueba seleccionadas en la etapa de \emph{determinación de contenido}, a su vez, cada una de estas descripciones agrupa los \emph{mensajes} que modelan la verbalización de las expresiones pertenecientes a cada clase, ordenados de la misma forma en la que aparecen en el esquema de la clase de prueba en cuestión. 
 
 Para modelar nuestro \emph{document plan}, utilizaremos un elemento al que llamaremos \emph{DocumentoDP}, este elemento modelará el documento completo (será la raíz de nuestro \emph{document plan}), éste elemento estará contendrá el título para el documento a generar y un conjunto de elementos que modelarán las descripciones de las distintas clases de prueba. Llamaremos \emph{DescripcionClasePrueba} a estos últimos utilizado para modelar las descripciones de las distintas clases de prueba. Estos estarán formado por información general de la clase de prueba a describir (como el nombre de la misma y una pequeña descripción de la operación a testear) y un conjunto de los \emph{mensajes} introducidos anteriormente: \emph{VerbalizacionExpresion} que modelaran las verbalizaciones de las expresiones Z contenidas dentro de las clases de prueba. En la figura~\ref{fig:png_document_plan} podemos observar una representación abstracta de la estructura que tendrá nuestro \emph{document plan}.
 
