@@ -336,7 +336,7 @@ y de esta forma determinar según el número y género del sujeto presente en el
 
 \medskip
 \noindent
-\textbf{\emph{Oracion.}} Este es el caso mas interesante para nuestro verbalizador, deberemos generar una oración correcta en base a las reglas de concordancia gramatical antes mencionadas. 
+\textbf{\emph{Oracion.}} Este es el caso más interesante para nuestro verbalizador, deberemos generar una oración correcta en base a las reglas de concordancia gramatical antes mencionadas. 
 
 \begin{algorithm}[H]
 \caption{Realización lingüística Oracion.}
@@ -358,7 +358,7 @@ y de esta forma determinar según el número y género del sujeto presente en el
 %TODO ampliar esto
 %ejemplificar aca y el determinar_articulo de arriba?
 \noindent
-A fin de contemplar estas reglas, le prestaremos especial atención al verbo y al atributo de la frase verbal correspondiente al predicado de la oración, verbalizando recursivamente tanto el sujeto (generalmente una frase nominal producto de una designación) como el complemento de la frase verbal. Veremos en el capítulo \ref{cap:implementacion} como nuestro sistema se encargará de agregar información morfológica a las especificaciones, esta será necesaria en esta etapa para, por ejemplo, conocer el numero y genero del núcleo del sujeto con el fin de poder determinar el la conjugación apropiada para el verbo y el atributo a utilizar.
+A fin de contemplar estas reglas, le prestaremos especial atención al verbo y al atributo de la frase verbal correspondiente al predicado de la oración, verbalizando recursivamente tanto el sujeto (generalmente una frase nominal producto de una designación) como el complemento de la frase verbal. Veremos en el capítulo \ref{cap:implementacion} cómo nuestro sistema se encargará de agregar información morfológica a las especificaciones, esta será necesaria en esta etapa para, por ejemplo, conocer el numero y genero del núcleo del sujeto con el fin de poder determinar el la conjugación apropiada para el verbo y el atributo a utilizar.
 
 La función \textbf{determinar\_verbo} será la encargada de conjugar el verbo (que en la especificación de frase se encuentra en su forma canónica, es decir, el infinitivo del verbo) de manera que concuerde en número y persona con el sujeto, mientras que la función \textbf{determinar\_atributo} tendrá la tarea de determinar el atributo de forma que concuerde en número y género también con el sujeto. Finalmente se unirán los constituyentes en el orden mencionado previamente: \emph{sujeto - verbo - predicado}.
 
@@ -389,7 +389,7 @@ Por otro lado, usaremos las siguientes relaciones para decidir que atributo debe
 \end{tabular}
 \end{table}
 
-Por ejemplo, para la realización lingüística de la oración presentada en la figura \ref{fig:phase_spec_ej} del capítulo anterior, de la cual sabremos que el núcleo del sujeto es singular, y el género del mismo es masculino, nuestro realizador deberá determinar el verbo adecuado de la siguiente manera:
+Por ejemplo, para la realización lingüística de la oración presentada en la figura \ref{fig:phase_spec_ej} del capítulo anterior, de la cual sabremos que el núcleo del sujeto es singular, y el género del mismo es másculino, nuestro realizador deberá determinar el verbo adecuado de la siguiente manera:
 
 \begin{figure}[H]
 \centering
@@ -400,4 +400,4 @@ Por ejemplo, para la realización lingüística de la oración presentada en la 
 De forma similar deberá comportarse la determinación de atributo en caso de ser de ser necesaria. 
 
 \bigskip
-En este capítulo vimos como finalmente, a partir de una especificación del documento, nuestro sistema podrá producir el documento final, el texto de superficie. En el próximo capítulo nos concentraremos en estudiar los aspectos mas relevantes de la implementación realizada para este trabajo.
+En este capítulo vimos cómo finalmente, a partir de una especificación del documento, nuestro sistema podrá producir el documento final, el texto de superficie. En el próximo capítulo nos concentraremos en estudiar los aspectos más relevantes de la implementación realizada para este trabajo.

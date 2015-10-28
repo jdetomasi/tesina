@@ -1,4 +1,9 @@
-\chapter{\textit{Testing} basado en modelos}
+\chapter{Fundamentos del \textit{testing} basado en modelos}
+\label{cap:fundamentos}
+
+En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo como derivar casos y clases de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
+
+\section{\textit{Testing} basado en modelos}
 
 La hipótesis fundamental detrás del \textit{testing} basado en modelos (MBT) es que un programa es correcto si verifica su especificación, entonces, la especificación resulta una excelente fuente para obtener casos de prueba. Las técnicas de MBT utilizan la especificación, en primer instancia, para derivar casos de pruebas abstractos (al nivel del modelo). Estos luego deben ser refinados al nivel del lenguaje de implementación y ejecutados por el programa que supuestamente implementa la especificación. Finalmente la salida del programa será abstraída al nivel de la especificación y la misma será utilizada (nuevamente) para verificar si el caso de prueba ha detectado un error. En el esquema de la figura~\ref{fig:proc_mbt} podemos ver el proceso recién mencionado.
 
@@ -11,11 +16,11 @@ La hipótesis fundamental detrás del \textit{testing} basado en modelos (MBT) e
 \end{figure}
 
 
-El \textit{Test Template Framework} (TTF) descrito por Stocks y Carrington~\cite{stocks} es un método de MBT que permite efectuar un \textit{testing} muy completo de un sistema del cual se posee una especificación Z~\cite{spivey}, utilizando la misma como entrada y estableciendo como generar casos de prueba para testear las distintas operaciones incluidas en el modelo.
+El \textit{Test Template Framework} (TTF) descrito por Stocks y Carrington~\cite{stocks} es un método de MBT que permite efectuar un \textit{testing} muy completo de un sistema del cual se posee una especificación Z~\cite{spivey}, utilizando la misma como entrada y estableciendo cómo generar casos de prueba para testear las distintas operaciones incluidas en el modelo.
 
-A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z \footnote{Introducción a la notación Z: http://www.fceia.unr.edu.ar/asist/z-a.pdf}.
+A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z\footnote{Introducción a la notación Z: http://www.fceia.unr.edu.ar/asist/z-a.pdf}.
 
-\section{Ejemplo: \emph{Symbol Table}}
+\subsection{Ejemplo: \emph{Symbol Table}}
 \label{sec:ej-symbolTable}
 
 Una tabla de símbolos es una estructura de datos utilizada por un compilador o interprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. 
@@ -91,7 +96,7 @@ Finalmente, la operación total (que es la que se debe programar) queda definida
 \bigskip
 $LookUp == LookUpOk \lor LookUpE$
 
-\section{\emph{Test Template Framework}}
+\subsection{\emph{Test Template Framework}}
 
 La propuesta de Stocks y Carrington~\cite{stocks} es utilizar la especificación Z de una operación como fuente de la cual obtener casos de prueba para testear el programa que supuestamente la implementa. La idea se basa en que la especificación del programa contiene todas las alternativas funcionales que el ingeniero consideró imprescindible describir para que el programador implemente el programa correcto. Por lo tanto, para saber si el programa funciona correctamente es necesario probarlo para cada una de estas alternativas funcionales. 
 
@@ -122,7 +127,7 @@ Finalmente, estamos en condiciones de definir un \emph{caso de prueba} correspon
 $LookUp_{TC}^{1} == [LookUp_{1}^{FND}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
 \end{figure}
 
-\subsection{Tácticas de \textit{testing} y generación de clases de prueba}
+\subsection{Generación de clases de prueba}
 \label{sec:tacticas-testing}
 
 En esta sección introduciremos brevemente, por medio de un ejemplo, el proceso del TTF. Continuaremos trabajando sobre el ejemplo introducido anteriormente e intentaremos generar algunos casos de prueba para testear la operación \emph{LookUp}. En particular nos concentraremos en la generación de clases de prueba, que resultarán de vital interés para nuestro trabajo de NLG.
@@ -202,9 +207,9 @@ El siguiente paso será reemplazar los parámetros formales que aparecen en la d
   LookUp_{7}^{SP} == [LookUp_{1}^{DNF} | \{b, c\} \subset \dom st \land s? \notin \dom st] \\
 \end{zed}
 
-Luego podríamos continuar aplicando nuevas tácticas y particionando aún mas el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y consideramos que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
+Luego podríamos continuar aplicando nuevas tácticas y particionando aún más el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y consideramos que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
 
-\section{Fastest}
+\subsection{Fastest}
 \label{sec:fastest}
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
@@ -258,7 +263,65 @@ En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue util
 
 
 Como mencionamos anteriormente, uno de los objetivos de este trabajo será el de extender la implementación de \emph{Fastest} para permitir al usuario generar traducciones o descripciones, independientes del dominio de aplicación y de la cantidad de operaciones de las clases de prueba generadas con la herramienta.
-El sistema de NLG a desarrollar en este trabajo será íntegramente implementado en Java e integrado como una extensión de \emph{Fastest} (trabajando para esto con la versión 1.6 de \emph{Fastest}).
+El sistema de NLG a desarrollar en este trabajo será íntegramente implementado en Java e integrado como una extensión de \emph{Fastest} (trabajando para esto con la versión 1.6 de \emph{Fastest}). En el capítulo \ref{cap:implementacion} veremos algunos de los detalles más relevantes de esta implementación.
+
+\section{Designaciones}
+\label{cap:designaciones}
+
+Un modelo formal, como una especificación Z en este caso, es una abstracción de la realidad. Sin embargo, se realiza una especificación para escribir un programa que finalmente es usado en el mundo real. En consecuencia, existe una relación entre el modelo y la realidad.
+Normalmente en estos casos, cuando especificamos un sistema formalmente, es una practica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
+Sin esta documentación el modelo sería nada más que una teoría axiomática más sin conexión con la realidad. 
+
+Para documentar las designaciones usaremos la sintaxis propuesta por Jackson~\cite{jackson}:
+
+\begin{figure}[H]
+  \centering
+  \emph{texto informal} $\approx$ \textbf{término\_formal}
+\end{figure}
+
+El símbolo $\approx$ demarca la frontera entre el mundo real (a la izquierda) y el mundo formal o lógico (a la derecha). Del lado derecho estará el término formal a designar, este será un elemento de la especificación, mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
+
+Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{sec:ej-symbolTable}), podríamos contar (entre otras) con las siguientes designaciones:
+
+\begin{figure}[H]
+  \begin{align*} 
+    &\text{Símbolo a buscar} && \approx &&&s? \\
+    &\text{Información asociada a $x$} && \approx &&&st~x
+  \end{align*}
+  \caption{Algunas designaciones para \emph{SymbolTable}.}
+  \label{fig:ej_designacion}
+\end{figure}
 
 
-En el Apéndice X desarrollaremos algunos de los detalles mas importantes de esta implementación.
+Para Jackson, las designaciones sirven en primer instancia para cuando se empieza a escribir la especificación, para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Jackson propone construir un \emph{``puente angosto''} entre la especificación y los elementos del dominio, escribiendo la menor cantidad de designaciones posibles y definiendo otros términos en base a las anteriores.
+
+
+La función que cumplirán las designaciones en éste trabajo difiere un poco de la propuesta por Jackson. Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
+
+Veamos, por ejemplo, las siguientes expresiones pertenecientes a dos clases de prueba de dos especificaciones distintas:
+
+\begin{figure}[H]
+\begin{enumerate}
+\item $\dom st = \{ s? \}$
+\item $\dom cajas = \{ num? \}$
+\end{enumerate}
+\end{figure}
+
+La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación que forma parte de la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarle un significado distinto (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para estas, las descripciones podrían ser las siguientes:
+
+\begin{figure}[H]
+\begin{enumerate}
+\item \emph{``El símbolo a buscar es el único cargado en la tabla de símbolos.''}
+\item \emph{``El número de caja de ahorro ingresado es el único cargado en el banco.''}
+\end{enumerate}
+\end{figure}
+
+Los sistemas de generación de lenguaje natural generalmente utilizan un repositorio de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro sistema de NLG.
+
+Por otro lado, en algunas situaciones, contar con una mayor cantidad de designaciones nos permitirá generar mejores descripciones. Designaciones que podrían resultar redundantes para una persona que lea la especificación podrían, por ejemplo, permitirle a nuestro sistema de NLG generar textos más naturales. En el apéndice \ref{ape:designaciones} podemos encontrar una pequeña guía sobre qué designar a fin de proveerle la información necesaria a nuestro sistema de NLG para que pueda producir textos más fluidos y naturales.
+
+Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la Figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y marcaremos esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En el capítulo~\ref{sec:verbalizacion_designaciones} desarrollaremos más en detalle esta particularidad. 
+
+
+\bigskip
+En este capítulo introdujimos conceptos fundamentales para el desarrollo de este trabajo. Presentamos el \textit{test template framework}, definimos la noción de clase y caso de prueba con las que trabajaremos a lo largo de todo el trabajo. Finalmente profundizamos sobre el rol que cumplirán las designaciones en este trabajo, resultando fundamentales para la generación de descripciones independientes del dominio de aplicación. En el próximo capítulo introduciremos las tareas que deberán ser llevadas a cabo por nuestro sistema de NLG para generar descripciones para las clases de prueba generadas por Fastest.

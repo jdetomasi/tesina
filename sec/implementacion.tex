@@ -1,7 +1,7 @@
 \chapter{Implementación}
 \label{cap:implementacion}
 
-En éste capítulo introduciremos los detalles mas relevantes del desarrollo realizado para este trabajo. Comenzaremos mostrando la integración de nuestro sistema de NLG con \textit{Fastest}, viendo el modo de uso y los nuevos comandos introducidos para la generación de descripciones en lenguaje natural. Luego presentaremos los aspectos mas destacados de nuestra implementación presentes en cada una de las etapas del \emph{pipeline}.
+En éste capítulo introduciremos los detalles más relevantes del desarrollo realizado para este trabajo. Comenzaremos mostrando la integración de nuestro sistema de NLG con \textit{Fastest}, viendo el modo de uso y los nuevos comandos introducidos para la generación de descripciones en lenguaje natural. Luego presentaremos los aspectos más destacados de nuestra implementación presentes en cada una de las etapas del \emph{pipeline}.
 
 \section{Integración con \emph{Fastest}}
 
@@ -9,19 +9,19 @@ La implementación realizada para este trabajo se encuentra incluida en la últi
 
 \subsection*{Requisitos}
 
-%TODO referenciar tutorial / notas a algun sitio mas lindo
+%TODO referenciar tutorial / notas a algun sitio más lindo
 Para garantizar el correcto funcionamiento de Fastest y nuestro sistema de NLG, deberemos cumplir con los siguientes requerimientos:
 
 \begin{itemize}
  \item  \emph{Fastest 1.7 o superior}: La distribución de este incluye un pequeño manual de uso.
  \item  \emph{Java SE Runtime Environment 1.6 o superior}: requerido para el correcto funcionamiento de \emph{Fastest}.
- \item  \emph{SWI\_Prolog \footnote{http://http://www.swi\_prolog.org/}}: también requerido para el correcto funcionamiento de Fastest.
- \item  \emph{FreeLing 3.1 \footnote{http://nlp.lsi.upc.edu/freeling/}\footnote{Tutorial para instalación de \emph{FreeLing} en \emph{Ubuntu}: https://gist.github.com/juliandt/}}: suite de análisis de lenguajes, necesaria para el módulo de NLG de \emph{Fastest}
+ \item  \emph{SWI\_Prolog\footnote{http://http://www.swi\_prolog.org/}}: también requerido para el correcto funcionamiento de Fastest.
+ \item  \emph{FreeLing 3.1\footnote{http://nlp.lsi.upc.edu/freeling/}\footnote{Tutorial para instalación de \emph{FreeLing} en \emph{Ubuntu}: https://gist.github.com/juliandt/}}: suite de análisis de lenguajes, necesaria para el módulo de NLG de \emph{Fastest}
 \end{itemize}
 
 \subsection{Modo de uso}
 
-Como resultado de este trabajo introdujimos un nuevo comando en \textit{Fastest}, el comando \textbf{showdesc}. Podremos usar el mismo para generar la descripción de una o mas clases de prueba pasándole al anterior el titulo deseado para el documento junto con el o los nombres de las clases de prueba a describir, también es posible pasarle como argumento el nombre de una operación de la especificación y nuestro sistema buscará todas las clases de prueba generadas para esa operación produciendo luego las descripciones para las mismas. En la figura \ref{ej:showdesc_fastest} podemos ver la ayuda de \textit{Fastest} para el comando anterior.
+Como resultado de este trabajo introdujimos un nuevo comando en \textit{Fastest}, el comando \textbf{showdesc}. Podremos usar el mismo para generar la descripción de una o más clases de prueba pasándole al anterior el titulo deseado para el documento junto con el o los nombres de las clases de prueba a describir, también es posible pasarle como argumento el nombre de una operación de la especificación y nuestro sistema buscará todas las clases de prueba generadas para esa operación produciendo luego las descripciones para las mismas. En la figura \ref{ej:showdesc_fastest} podemos ver la ayuda de \textit{Fastest} para el comando anterior.
 
 \begin{figure}[H]
 \begin{Verbatim}[frame=single,fontsize=\scriptsize]
@@ -69,13 +69,13 @@ Cuando:
 
 \section{Documentación implementación}
 
-En esta sección detallaremos los aspectos mas importantes de la implementación realizada. Para la misma respetamos la arquitectura y desarrollo realizado a lo largo de este trabajo, sin embargo podremos observar algunas diferencias menores, como por ejemplo: necesitamos modificar los nombres de las entidades intermedias utilizadas entre las distintas etapas del \textit{pipeline} para respetar las convenciones de estilo utilizadas en Fastest.
+En esta sección detallaremos los aspectos más importantes de la implementación realizada. Para la misma respetamos la arquitectura y desarrollo realizado a lo largo de este trabajo, sin embargo podremos observar algunas diferencias menores, como por ejemplo: necesitamos modificar los nombres de las entidades intermedias utilizadas entre las distintas etapas del \textit{pipeline} para respetar las convenciones de estilo utilizadas en Fastest.
 
-A continuación describiremos la función de los componentes mas importantes usados en cada etapa de nuestro sistema.
+A continuación describiremos la función de los componentes más importantes usados en cada etapa de nuestro sistema.
 
 \subsection{\textit{Document Planner}}
 
-El módulo \emph{DocumentPlanner} será el encargado de llevar a cabo las tareas de determinación de contenido y estructuración del documento detalladas en el capítulo \ref{cap:document_planning}. En la figura \ref{fig:imp_documentplanner} podemos observar los componentes mas importantes involucrados en esta etapa, cuya función describiremos a continuación. 
+El módulo \emph{DocumentPlanner} será el encargado de llevar a cabo las tareas de determinación de contenido y estructuración del documento detalladas en el capítulo \ref{cap:document_planning}. En la figura \ref{fig:imp_documentplanner} podemos observar los componentes más importantes involucrados en esta etapa, cuya función describiremos a continuación. 
 
 \begin{figure}[H]
   	\centering
@@ -90,7 +90,7 @@ El módulo \emph{DocumentPlanner} será el encargado de llevar a cabo las tareas
 
 \bigskip
 \noindent
-\textbf{SchFinder.} La tarea de selección detallada en el capítulo \ref{cap:determinacion_contenido} será desarrollada por este módulo. Este será el encargado de recuperar el conjunto de clases de prueba indicadas. El mismo posee una referencia al \emph{Controller} \footnote{Es el módulo encargado de mantener las referencias a elementos de la especificación, arboles de prueba, etc.} de Fastest que le permitirá identificar y recuperar las clases de prueba necesarias. 
+\textbf{SchFinder.} La tarea de selección detallada en el capítulo \ref{cap:determinacion_contenido} será desarrollada por este módulo. Este será el encargado de recuperar el conjunto de clases de prueba indicadas. El mismo posee una referencia al \emph{Controller}\footnote{Es el módulo encargado de mantener las referencias a elementos de la especificación, arboles de prueba, etc.} de Fastest que le permitirá identificar y recuperar las clases de prueba necesarias. 
 
 
 \bigskip
@@ -98,7 +98,7 @@ El módulo \emph{DocumentPlanner} será el encargado de llevar a cabo las tareas
 \textbf{ExprRefiner.} Es la \textit{fachada} \cite{gof} encargada de delegar los distintos procesamientos a realizar sobre las expresiones a fin de desarrollar las tareas de eliminación de tautologías y reducción de expresiones estudiadas en el capítulo \ref{cap:determinacion_contenido}. Podemos observar que utilizamos la clase \emph{Optimal} de Java 8 para modelar el hecho de que el método \textbf{refine()} podría no devolver un valor, por ejemplo en el caso que la expresión procesada sea una tautología y no deba ser incluida en el \textit{document plan}.
 
 \bigskip
-Fastest utiliza el \textit{framework} CZT \footnote{http://czt.sourceforge.net/} que integra un conjunto de herramientas para trabajar con el lenguaje de especificación Z. La forma en la que CZT modela las expresiones de Z nos resultó compleja para este trabajo, por lo que decidimos transformar las expresiones contempladas dentro del alcance de este trabajo a un modelo más simple (los que nos simplificó la implementación del algoritmo de lexicalización, por ejemplo). En la figura \ref{fig:imp_exprz} podemos observar la jerarquía de clases de las expresiones utilizadas en este trabajo para modelar las expresiones Z. 
+Fastest utiliza el \textit{framework} CZT\footnote{http://czt.sourceforge.net/} que integra un conjunto de herramientas para trabajar con el lenguaje de especificación Z. La forma en la que CZT modela las expresiones de Z nos resultó compleja para este trabajo, por lo que decidimos transformar las expresiones contempladas dentro del alcance de este trabajo a un modelo más simple (los que nos simplificó la implementación del algoritmo de lexicalización, por ejemplo). En la figura \ref{fig:imp_exprz} podemos observar la jerarquía de clases de las expresiones utilizadas en este trabajo para modelar las expresiones Z. 
 
 \begin{figure}[H]
   	\centering
@@ -145,7 +145,7 @@ En esta sección presentaremos los componentes encargados de la tarea de \textit
 
 \bigskip
 \noindent
-\textbf{FreeLingUtils.} Contiene algunos métodos útiles para el trabajo con \textit{FreeLing}. Por ejemplo, \textit{FreeLing} genera una estructura en la que etiqueta cada palabra con anotaciones morfosintácticas, el método \textit{getInfoMorfologica()} procesa estas anotaciones produciendo una estructura mas sencilla con la que trabajará nuestro sistema.
+\textbf{FreeLingUtils.} Contiene algunos métodos útiles para el trabajo con \textit{FreeLing}. Por ejemplo, \textit{FreeLing} genera una estructura en la que etiqueta cada palabra con anotaciones morfosintácticas, el método \textit{getInfoMorfologica()} procesa estas anotaciones produciendo una estructura más sencilla con la que trabajará nuestro sistema.
 
 \bigskip
 \noindent
@@ -154,7 +154,7 @@ En esta sección presentaremos los componentes encargados de la tarea de \textit
 %TODO cambiar nombres a español
 \subsection{\textit{Surface Realizer}}
 
-Finalmente, el módulo \emph{SurfaceRealizer} será el encargado de generar el texto de superficie para el documento final en base a una especificación del mismo. En esta etapa se realizan las tareas de realización estructural y lingüística presentadas en el capítulo \ref{cap:realization}. En la figura \ref{fig:imp_surfrealizer} podemos ver los componentes mas relevantes involucrados en esta etapa, cuya función describiremos a continuación. 
+Finalmente, el módulo \emph{SurfaceRealizer} será el encargado de generar el texto de superficie para el documento final en base a una especificación del mismo. En esta etapa se realizan las tareas de realización estructural y lingüística presentadas en el capítulo \ref{cap:realization}. En la figura \ref{fig:imp_surfrealizer} podemos ver los componentes más relevantes involucrados en esta etapa, cuya función describiremos a continuación. 
 
 \begin{figure}[H]
   	\centering
@@ -174,7 +174,7 @@ Finalmente, el módulo \emph{SurfaceRealizer} será el encargado de generar el t
 
 \bigskip
 \noindent
-\textbf{PhraseSpecVisitor.} Utilizamos el patrón \textit{visitor} \cite{gof} para iterar sobre la estructura de las especificaciones de frase. A continuación veremos la función de las tres implementaciones mas importantes de esta interfaz. 
+\textbf{PhraseSpecVisitor.} Utilizamos el patrón \textit{visitor} \cite{gof} para iterar sobre la estructura de las especificaciones de frase. A continuación veremos la función de las tres implementaciones más importantes de esta interfaz. 
 
 \bigskip
 \noindent

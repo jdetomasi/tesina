@@ -1,15 +1,15 @@
 \chapter{Microplanning}
 \label{cap:microplanning}
 
-La etapa de \textit{microplanning} será la encargada de, a partir del \textit{document plan} producido por la etapa anterior, producir una especificación mas detallada para el texto a generar. 
+La etapa de \textit{microplanning} será la encargada de, a partir del \textit{document plan} producido por la etapa anterior, producir una especificación más detallada para el texto a generar. 
 
 En éste capítulo presentaremos las tres tareas que, según Reiter y Dale~\cite{reiter_dale}, deberían llevarse a cabo en esta etapa: lexicalización, agregación y generación de expresiones de referencia. Luego definiremos en detalle la entrada y salida del \textit{microplanner}. Finalmente profundizaremos particularmente sobre la tarea de lexicalización que debemos llevar a cabo para este trabajo.
 
-A lo lago de este capítulo continuaremos con el ejemplo utilizado en la etapa anterior, ilustrando como a partir del \textit{document plan} presentado en la la figura \ref{fig:png_document_plan_ej} construiremos una especificación mas detallada del documento a generar.
+A lo lago de este capítulo continuaremos con el ejemplo utilizado en la etapa anterior, ilustrando cómo a partir del \textit{document plan} presentado en la la figura \ref{fig:png_document_plan_ej} construiremos una especificación más detallada del documento a generar.
 
 \section{Tareas del \textit{Microplanner}}
 
-Como mencionamos previamente, el \textit{microplanner} será el encargado de transformar el \textit{document plan} generado en la etapa anterior en una especificación mas refinada del texto a generar. Cabe aclarar que el resultado de esta etapa no será todavía el texto final ya que quedarán por tomar decisiones acerca de la sintaxis, morfología y cuestiones de presentación, de las cuales se encargará el realizador de superficie.
+Como mencionamos previamente, el \textit{microplanner} será el encargado de transformar el \textit{document plan} generado en la etapa anterior en una especificación más refinada del texto a generar. Cabe aclarar que el resultado de esta etapa no será todavía el texto final ya que quedarán por tomar decisiones acerca de la sintaxis, morfología y cuestiones de presentación, de las cuales se encargará el realizador de superficie.
 
 Como mencionamos en el capítulo~\ref{cap:nlg_intro}, dentro de las tareas generalmente realizadas por el \emph{microplanner} podemos destacar las siguientes:
 
@@ -20,7 +20,7 @@ Como mencionamos en el capítulo~\ref{cap:nlg_intro}, dentro de las tareas gener
 
 \medskip
 \noindent
-\textbf{Agregación.} La función de esta tarea es la de combinar los elementos informativos del \emph{document plan} con el fin de conseguir un texto más fluido y legible. La agregación decide que elementos se pueden agrupar para generar oraciones mas complejas sin modificar el significado de las mismas. Por ejemplo, consideremos las siguientes dos descripciones posibles para describir una clase de prueba perteneciente a la especificación de un \emph{scheduler}:
+\textbf{Agregación.} La función de esta tarea es la de combinar los elementos informativos del \emph{document plan} con el fin de conseguir un texto más fluido y legible. La agregación decide que elementos se pueden agrupar para generar oraciones más complejas sin modificar el significado de las mismas. Por ejemplo, consideremos las siguientes dos descripciones posibles para describir una clase de prueba perteneciente a la especificación de un \emph{scheduler}:
 
 \begin{center}
 \begin{enumerate}
@@ -46,24 +46,24 @@ Para este trabajo, decidimos expresar nuestras descripciones siguiendo el estilo
 \smallskip
 La generación de expresiones de referencia se encuentra fuera del alcance de este trabajo, por lo que nuestro \textit{microplanner} no realizará tareas este tipo de tareas, pero de la misma forma que la tarea de agregación, podría considerarse para un trabajo futuro. Además, como podemos observar en el corpus nuestras descripciones de clases de prueba están formadas por una serie de oraciones individuales, donde cada una de estas describe una restricción de la clase de prueba dada; estas oraciones provienen de la verbalización de predicados atómicos quedando como resultado oraciones relativamente concisas y es extraño que hagan referencia en más de una oportunidad a un mismo elemento en la misma oración, por lo tanto creemos que no resulta necesario que nuestro \textit{microplanner} cuente con un generador de expresiones de referencia en nuestro trabajo.
 
-%TODO en trabajo futuro se puede relacionar la agregacion con generacion de expresiones de referencia. Diciendo que la inclusion de tareas de agregacion probablemente requieran tareas de generacion de expresiones de referencia para la generacion de textos mas fluidos.
+%TODO en trabajo futuro se puede relacionar la agregacion con generacion de expresiones de referencia. Diciendo que la inclusion de tareas de agregacion probablemente requieran tareas de generacion de expresiones de referencia para la generacion de textos más fluidos.
 
 
 \section{Entrada y salida del \textit{microplanner}}
-La entrada del \textit{microplanner} será un \textit{document plan} producido por la etapa anterior. Observemos por ejemplo el \textit{document plan} presentado en la figura \ref{fig:png_document_plan_ej} del capítulo anterior, utilizado para modelar la descripción de la clase de prueba \emph{LookUp\_SP\_1}. Esta abstracción no especifica las frases que nuestro sistema debe generar, ni si deben estar enumeradas en una lista de ítems o agrupadas en secciones por ejemplo. Necesitaremos una especificación mas concreta, un modelo mas detallado del documento y de las frases a generar. Será entonces responsabilidad del \textit{microplanner}  construir a partir del \textit{document plan} una especificación mas concreta del texto a generar.
+La entrada del \textit{microplanner} será un \textit{document plan} producido por la etapa anterior. Observemos por ejemplo el \textit{document plan} presentado en la figura \ref{fig:png_document_plan_ej} del capítulo anterior, utilizado para modelar la descripción de la clase de prueba \emph{LookUp\_SP\_1}. Esta abstracción no especifica las frases que nuestro sistema debe generar, ni si deben estar enumeradas en una lista de ítems o agrupadas en secciones por ejemplo. Necesitaremos una especificación más concreta, un modelo más detallado del documento y de las frases a generar. Será entonces responsabilidad del \textit{microplanner}  construir a partir del \textit{document plan} una especificación más concreta del texto a generar.
 
 Llamaremos \emph{text specification} (o especificación del texto) a la especificación resultado de esta etapa. Ésta se encargará de modelar los distintos elementos que compondrán el documento final (como párrafos, lista de ítems, etc.). Esta especificación estará compuesta en base a \textit{phrase specification} (o especificaciones de frase) encargadas de modelar las distintas oraciones que serán incluidas en el texto final (veremos que cada una de estas se construirán a partir de los mensajes contenidos en el \textit{document plan}). Será luego tarea de la siguiente etapa convertir los nodos internos de la especificación del texto en anotaciones especificas para el sistema de presentación (realización de estructura) y transformar las \emph{phrase specification} en oraciones o frases sintáctica, morfológica y ortográficamente correctas (realización lingüística). 
 
 %para que luego, en la etapa de realización de superficie podamos generar el texto final en base a los requerimientos analizados en el capítulo \ref{cap:corpus}. 
 
-En lo que queda de esta sección estudiaremos como se encuentra constituida nuestra especificación del texto, describiendo también como están formadas nuestras especificaciones de frase.
+En lo que queda de esta sección estudiaremos cómo se encuentra constituida nuestra especificación del texto, describiendo también cómo están formadas nuestras especificaciones de frase.
 
 \subsection{Especificación del texto}
 
-%TODO faltaría explayar un poco mas y hablar sobre conceptos de phrase y text specification
+%TODO faltaría explayar un poco más y hablar sobre conceptos de phrase y text specification
 %Como vimos en el capítulo anterior, la salida del  \textit{document planner} es una estructura donde se encuentran agrupados los elementos informativos que deseamos comunicar. Estos elementos o \emph{mensajes} contenidos en el \emph{document plan} especifican de una manera abstracta la información que debemos comunicar en el texto final, pero no especifican, por ejemplo, que palabras debemos usar para hacerlo. 
 
-%Será el \textit{microplanner} el encargado de tomar este tipo de decisiones. Éste tomará como entrada un \textit{document plan} y deberá producir una especificación mas refinada del texto que deseamos generar, la cual será utilizada luego por el \emph{realizador de superficie} para producir el texto final.
+%Será el \textit{microplanner} el encargado de tomar este tipo de decisiones. Éste tomará como entrada un \textit{document plan} y deberá producir una especificación más refinada del texto que deseamos generar, la cual será utilizada luego por el \emph{realizador de superficie} para producir el texto final.
 
 La especificación de texto para nuestro sistema, deberá caracterizar la estructura del documento final que nuestro sistema debe producir. Es por esto que modelaremos los mismos utilizando un árbol, donde los hojas especificarán las frases u oraciones a generar (las \emph{phrase specification}), y los nodos internos establecerán cómo estas frases tendrán que ser agrupadas en elementos del documento (como párrafos, secciones, lista de ítems, etc). 
 
@@ -84,20 +84,20 @@ La estructura de los documentos que debemos generar en este trabajo resulta rela
   	\label{fig:text_spec}
 \end{figure}
 
-En la figura anterior podemos observar la estructura abstracta que tendrán nuestras \emph{text specification} y por ejemplo, sin meternos en detalle todavía sobre la estructura de las especificaciones de frase, en la figura \ref{fig:text_spec} podemos ver una especificación de frase para el ejemplo introducido anteriormente (pág. \pageref{fig:ej_corpus}).
+En la figura anterior podemos observar la estructura abstracta que tendrán nuestras \emph{text specification} y por ejemplo, sin meternos en detalle todavía sobre la estructura de las especificaciones de frase, en la figura \ref{fig:text_spec_ej} podemos ver una especificación de frase para el ejemplo introducido anteriormente (pág. \pageref{fig:ej_corpus}).
 
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.35]{img/ej_text_spec.png}
 	\caption{Ejemplo \emph{Text Specification}.}
-  	\label{fig:text_spec}
+  \label{fig:text_spec_ej}
 \end{figure}
 
-Veremos en el próximo capítulo como, en la etapa de realización estructural, transformaremos estos elementos en anotaciones para el sistema de presentación.
+Veremos en el próximo capítulo cómo, en la etapa de realización estructural, transformaremos estos elementos en anotaciones para el sistema de presentación.
 
 \subsection{Especificación de frase}
 
-En la literatura sobre NLG Podemos encontrar muchas alternativas en lo que respecta a la especificación de frases. Todas estas varían en el nivel de abstracción que poseen las mismas. Las representaciones mas abstractas le darán mas flexibilidad a las etapas de \textit{document planning} y \textit{microplanning}, pero al mismo tiempo nos obligarán a tener un realizador de superficie mas sofisticado. Por otro lado, las especificaciones menos abstractas, requieren que el \textit{document planner} y el \textit{microplanner} realicen un mayor trabajo, pero también tendrán mas control sobre el texto a producir. Uno de los objetivos que tuvimos a la hora de idear una estructura para nuestra especificación de frases fue que ésta sea independiente de nuestro problema, pretendemos que hable en términos de la lengua (castellano en nuestro caso) que queremos generar y no en términos específicos de Z. De esta forma podremos implementar un realizador de superficie que sea independiente de este problema y que pueda ser reutilizado. %TODO nota sobra la falta de un realizador en español al momento de desarrollar el trabajo
+En la literatura sobre NLG Podemos encontrar muchas alternativas en lo que respecta a la especificación de frases. Todas estas varían en el nivel de abstracción que poseen las mismas. Las representaciones más abstractas le darán más flexibilidad a las etapas de \textit{document planning} y \textit{microplanning}, pero al mismo tiempo nos obligarán a tener un realizador de superficie más sofisticado. Por otro lado, las especificaciones menos abstractas, requieren que el \textit{document planner} y el \textit{microplanner} realicen un mayor trabajo, pero también tendrán más control sobre el texto a producir. Uno de los objetivos que tuvimos a la hora de idear una estructura para nuestra especificación de frases fue que ésta sea independiente de nuestro problema, pretendemos que hable en términos de la lengua (castellano en nuestro caso) que queremos generar y no en términos específicos de Z. De esta forma podremos implementar un realizador de superficie que sea independiente de este problema y que pueda ser reutilizado. %TODO nota sobra la falta de un realizador en español al momento de desarrollar el trabajo
 
 %\footnote{Grupo de palabras que ejercen una función sintáctica dentro de una oración}
 Es por esto que decidimos especificar las oraciones a generar mediante árboles sintácticos, donde los constituyentes de éstos son los sintagmas de la oración que deseamos generar. Esto le dará la posibilidad al realizador lingüístico de poder identificar la función de cada uno de los constituyentes de la oración. Por ejemplo, como detallamos en los requerimientos de la sección \ref{sec:corpus_gramatica}, el \emph{realizador de superficie} necesitará identificar el núcleo de un sintagma nominal (núcleo del sujeto) para poder producir una oración en la que haya concordancia de número y persona entre el verbo y el sujeto. Como consecuencia del ejemplo anterior, nuestro realizador lingüístico deberá tener identificar también el sujeto, predicado y verbo de una oración. Creemos que con los elementos presentes en la figura~\ref{fig:phase_spec} podremos modelar la frases incluidas en el corpus.
@@ -124,7 +124,7 @@ A continuación describiremos brevemente cada uno de estos elementos, profundiza
 \item{\emph{\textbf{ElementosYuxtapuestos}}: Representa una lista ordenada de elementos que deberán ser realizados y \emph{concatenados} en la oración final. Nos vimos obligados a introducir este tipo de elementos para salvaguardar la falta de algunos constituyentes sintácticos como sintagmas adjetivales, preposicionales, etc.}
 \end{itemize}
 
-En la siguiente sección veremos como, la tarea de lexicalización, construirá estas especificaciones de frase en base a la información contenida en los mensajes del \textit{document plan}.
+En la siguiente sección veremos cómo, la tarea de lexicalización, construirá estas especificaciones de frase en base a la información contenida en los mensajes del \textit{document plan}.
 %\section{Arquitectura}
 
 \section{Lexicalización}
@@ -164,7 +164,7 @@ Como analizamos en el capítulo \ref{cap:corpus}, nuestro sistema deberá produc
 
 La función \emph{designacion} deberá ser capaz de construir una especificación de frase a partir de una expresión designada. Analizaremos este caso con mayor profundidad en la siguiente sección. Por otro lado, notemos que en el caso que la expresión a lexicalizar no se encuentre designada, se deberá analizar recursivamente la expresión para generar el texto adecuado. 
 
-A continuación, retomaremos el ejemplo de la figura \ref{fig:text_spec} y veremos como deberá nuestro sistema generar la especificación de frase para uno de los mensajes incluido en el \textit{document plan}. En la figura \ref{fig:phase_spec_ej} podemos observar este mensaje y el resultado de la lexicalización del mismo. Veremos a continuación los pasos que deberá realizar nuestro sistema durante la tarea de lexicalización para lograr el resultado ilustrado en la imagen.
+A continuación, retomaremos el ejemplo de la figura \ref{fig:text_spec} y veremos cómo deberá nuestro sistema generar la especificación de frase para uno de los mensajes incluido en el \textit{document plan}. En la figura \ref{fig:phase_spec_ej} podemos observar este mensaje y el resultado de la lexicalización del mismo. Veremos a continuación los pasos que deberá realizar nuestro sistema durante la tarea de lexicalización para lograr el resultado ilustrado en la imagen.
 
 %A continuación detallaremos los pasos realizados por nuestra tarea de lexicalización para obtener dicho resultado.
 
@@ -224,7 +224,7 @@ Para que nuestro sistema sea capaz de esto deberá analizar sintácticamente las
    \textbf{Sintagma Nominal} = [\textbf{Determinante}] + \textbf{Núcleo} + [\textbf{Complemento}]
 \end{figure}
 
-En el capítulo \ref{TODO} veremos mas en detalle cómo utilizamos un analizador morfológico para ayudarnos con la especificación de las frases incluidas en las designaciones.
+En el capítulo \ref{cap:implementacion} veremos más en detalle cómo utilizamos un analizador morfológico para ayudarnos con la especificación de las frases incluidas en las designaciones.
 
 Por otro lado, las frases incluidas en las designaciones parametrizadas no poseen la misma estructura. La tarea de modelar minuciosamente estos textos resulta más compleja que para el caso anterior, por ejemplo, podríamos tener uno o más parámetros presentes dentro del texto, para los cuales deberíamos identificar el rol que cumple cada uno de los anteriores dentro de la oración. Por otro lado nuestro realizador lingüístico sólo soportará oraciones de la forma SVO (sujeto, verbo, objeto) lo cual podría no respetarse en una designación introducida por el usuario. Es por esto que nuestro sistema proveerá solo soporte parcial para las designaciones parametrizadas, aceptando sólo designaciones con un único parámetro y para describir una expresión parametrizada requeriremos también que el argumento de la misma también se encuentre designado. De esta forma podríamos describir una designación parametrizada de la misma forma que vimos en el capítulo \ref{cap:corpus} reemplazando el parámetro presente en el texto de la designación por el texto incluido en la designación del argumento.
 
@@ -249,5 +249,5 @@ Donde para describir la expresión $s? \in \dom smax$ bastará con reemplazar el
 Como podemos observar en el ejemplo anterior, al desconocer la estructura de las oraciones introducidas por el usuario para las designaciones parametrizadas, deberemos modelar el texto producido por la composición de ambas designaciones utilizando una \emph{FraseEnlatada}. Este texto texto contenido en estas será luego realizado sin ningún procesamiento previo, por lo que será responsabilidad del usuario que el mismo sea sintáctica y ortográficamente correcto.
 
 \bigskip
-En este capítulo vimos las tareas necesarias para, partiendo de la salida producida por el \textit{document planner}, constituir una especificación mas refinada del texto final. En el próximo capítulo veremos finalmente las tareas que deberán llevarse a cabo para transformar esta especificación del texto en el documento final que contendrá todas las descripciones requeridas por el usuario.
+En este capítulo vimos las tareas necesarias para, partiendo de la salida producida por el \textit{document planner}, constituir una especificación más refinada del texto final. En el próximo capítulo veremos finalmente las tareas que deberán llevarse a cabo para transformar esta especificación del texto en el documento final que contendrá todas las descripciones requeridas por el usuario.
 
