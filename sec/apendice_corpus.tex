@@ -1,4 +1,1083 @@
 \chapter{Corpus de descripciones}
 \label{ape:corpus}
 
-\ldots
+\section*{Ejemplo: \textit{Symbol Table}}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[SYM, VAL] \also
+REPORT ::= ok | symbolNotPresent
+\end{zed}
+
+\begin{schema}{ST}
+st: SYM \pfun VAL
+\end{schema}
+
+\begin{itemize}
+  \item tabla de símbolos $\approx st$ \\
+  \item símbolos cargados en la tabla $\approx dom~st$ \\
+  \item valor de $x$ $\approx st~x$ \\
+\end{itemize}
+
+\begin{schema}{Update}
+\Delta ST \\
+s?: SYM \\
+v?: VAL \\
+rep!: REPORT
+\where
+st' = st \oplus \{s? \mapsto v?\} \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item intenta actualizar el valor de un símbolo $\approx Update?$ \\
+  \item símbolo a actualizar $\approx s?$ \\
+  \item valor a actualizar  $\approx v?$ \\
+\end{itemize}
+
+\begin{schema}{LookUpOk}
+\Xi ST \\
+s?: SYM \\
+v!: VAL \\
+rep!: REPORT
+\where
+s? \in \dom st \\
+v! = st~s? \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item símbolo a buscar $\approx s?$ \\
+  \item valor del símbolo buscado  $\approx v?$ \\
+\end{itemize}
+
+\begin{schema}{LookUpE}
+\Xi ST \\
+s?: SYM \\
+rep!: REPORT
+\where
+s? \notin \dom st \\
+rep! = symbolNotPresent
+\end{schema}
+
+\begin{zed}
+LookUp == LookUpOk \lor LookUpE
+\end{zed}
+
+\begin{itemize}
+  \item intenta buscar el valor de un símbolo $\approx LookUp?$ \\
+\end{itemize}
+
+\begin{schema}{DeleteOk}
+\Delta ST \\
+s?: SYM \\
+rep!: REPORT
+\where
+s? \in \dom st \\
+st' = \{s?\} \ndres st \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item símbolo a eliminar $\approx s?$ \\
+\end{itemize}
+
+\begin{zed}
+DeleteE == LookUpE \also
+Delete == DeleteOk \lor DeleteE
+\end{zed}
+
+\begin{itemize}
+  \item intenta eliminar un símbolo de la tabla $\approx LookUp?$ \\
+\end{itemize}
+
+\subsection*{Clases de prueba y descripciones}
+
+\begin{schema}{LookUp\_ SP\_ 1}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ \dom st = \{ s? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=LookUp\_ SP\_ 1]
+  Se intenta buscar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{El símbolo a buscar es el único elemento de los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+%TODO aca se podria eliminar la primera restriccion
+
+\begin{schema}{LookUp\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ \dom st \neq \{ s? \} \\
+ s? \in \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=LookUp\_ SP\_ 4]
+  Se intenta buscar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a buscar no pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Los símbolos cargados en la tabla no son iguales al conjunto formado por el símbolo a buscar.}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{Update\_ SP\_ 1}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st = \{ \} \\
+ \{ s? \mapsto v? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 1]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{No hay ningún elemento en la tabla de símbolos.}
+        \item[--]{No hay elementos en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+      \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st = \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 2]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{No hay ningún elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 3}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 3]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{No hay elementos en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ \dom st = \dom \{ s? \mapsto v? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 4]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{El símbolo a actualizar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{Update\_ SP\_ 5}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ \dom \{ s? \mapsto v? \} \subset \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 5]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 6}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ ( \dom st \cap \dom \{ s? \mapsto v? \} ) = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 6]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{Los símbolos cargados en la tabla están incluidos en el conjunto formado por el símbolo a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 2]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{No hay ningún elemento en el conjunto formado por: el símbolo a eliminar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 3}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} = \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 3]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El símbolo a eliminar es el único elemento de los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \subset \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 4]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 5}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \cap \dom st = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 5]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla no tienen ningún elemento en común.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 7}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \cap \dom st \neq \{ \} \\
+ \lnot \dom st \subseteq \{ s? \} \\
+ \lnot \{ s? \} \subseteq \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 7]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla tienen tienen al menos un elemento en común.}
+        \item[--]{Existe al menos un elemento en los símbolos cargados en la tabla que no pertenece al conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El símbolo a eliminar no pertenece al los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 12}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \cap \dom st = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 12]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar no pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla no tienen ningún elemento en común.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 13}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \cap \dom st \neq \{ \} \\
+ \dom st \subset \{ s? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 13]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar no pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla tienen tienen al menos un elemento en común.}
+        \item[--]{Los símbolos cargados en la tabla están incluidos en el conjunto formado por: el símbolo a eliminar.}
+     \end{itemize}
+\end{tcolorbox}
+
+\section*{Ejemplo: Banco}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[NCTA] \also
+
+SALDO == \nat \also
+
+MENSAJES ::= ok | numeroClienteEnUso | noPoseeSaldoSuficiente | saldoNoNulo
+\end{zed}
+
+\begin{schema}{Banco}
+cajas: NCTA \pfun SALDO
+\end{schema}
+
+\begin{schema}{DepositarOk}
+\Delta Banco \\
+num?: NCTA; m?: \num
+\where
+num? \in \dom cajas \\
+m? > 0 \\
+cajas' = cajas \oplus \{num? \mapsto cajas~num? + m?\}
+\end{schema}
+
+\begin{zed}
+DepositarE1 == [\Xi Banco; num?:NCTA | num? \notin \dom cajas]
+\end{zed}
+
+\begin{zed}
+DepositarE2 == [\Xi Banco; m?: \num | m? \leq 0]
+\end{zed}
+
+\begin{zed}
+Depositar == DepositarOk \lor DepositarE1 \lor DepositarE2
+\end{zed}
+
+\begin{schema}{NuevoClienteOk}
+\Delta Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \notin \dom cajas \\
+cajas' = cajas \cup \{num? \mapsto 0\} \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{NuevoClienteE}
+
+\Xi Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+rep! = numeroClienteEnUso
+\end{schema}
+
+\begin{zed}
+NuevoCliente == NuevoClienteOk \lor NuevoClienteE
+\end{zed}
+
+\begin{schema}{ExtraerOk}
+\Delta Banco \\
+num?:NCTA \\
+m?:SALDO \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+0 < m? \\
+m? \leq cajas~num? \\
+cajas' = cajas \oplus \{num? \mapsto (cajas~num?) - m?\} \\
+rep! = ok
+\end{schema}
+
+\begin{zed}
+ExtraerE1 == DepositarE1 \also
+
+ExtraerE2 == DepositarE2
+\end{zed}
+
+\begin{schema}{ExtraerE3}
+\Xi Banco \\
+num?:NCTA \\
+m?:SALDO \\
+rep!:MENSAJES
+\where
+m? > cajas~num? \\
+num? \in \dom cajas \\
+rep! = noPoseeSaldoSuficiente
+\end{schema}
+
+\begin{zed}
+ExtraerE == ExtraerE1 \lor ExtraerE2 \lor ExtraerE3 \also
+
+Extraer == ExtraerOk \lor ExtraerE
+\end{zed}
+
+\begin{schema}{PedirSaldoOk}
+\Xi Banco \\
+num?:NCTA \\
+saldo!:SALDO \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+saldo! = cajas~num? \\
+rep! = ok
+\end{schema}
+
+\begin{zed}
+PedirSaldoE == DepositarE1 \also
+
+PedirSaldo == PedirSaldoOk \lor PedirSaldoE
+\end{zed}
+
+\begin{schema}{CerrarCajaOk}
+\Delta Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+cajas~num? = 0 \\
+cajas' = \{num?\} \ndres cajas \\
+rep! = ok
+\end{schema}
+
+\begin{zed}
+CerrarCajaE1 == DepositarE1
+\end{zed}
+
+\begin{schema}{CerrarCajaE2}
+\Xi Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+cajas~num? \neq 0 \\
+rep! = saldoNoNulo
+\end{schema} 
+
+\begin{zed}
+CerrarCajaE == CerrarCajaE1 \lor CerrarCajaE2 \also
+
+CerrarCaja == CerrarCajaOk \lor CerrarCajaE \\
+\end{zed}
+
+
+\subsection*{Clases de prueba y descripciones}
+
+\section*{Ejemplo: Sistema de sensores}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[SENSOR]
+\end{zed}
+
+\begin{itemize}
+  \item $x$ es un identificador de sensor válido $\approx x \in SENSOR$
+\end{itemize}
+
+\begin{zed}
+MaxReadings == [smax: SENSOR \pfun \num]
+\end{zed}
+
+\begin{itemize}
+  \item conjunto de identificadores válidos $\approx dom~smax$ \\
+  \item $x$ es un identificador válido $\approx x \in dom~smax$ \\
+  \item valor máximo registrado para $x$ $\approx smax~x$ \\
+\end{itemize}
+
+\begin{schema}{KeepMaxReadingOk}
+\Delta MaxReadings \\
+s?:SENSOR; r?:\num \\
+\where
+s? \in \dom smax \\
+smax~s? < r?\\
+smax' = smax \oplus \{s? \mapsto r?\}
+%smax' = (\dom \{s? \mapsto r?\} \ndres smax) \oplus \{s? \mapsto r?\}
+\end{schema}
+
+\begin{itemize}
+  \item identificador del sensor leído $\approx s?$ \\
+  \item valor de medición leído $\approx r?$ \\
+\end{itemize}
+
+\begin{zed}
+KeepMaxReadingE1 == \\
+  \t1 [\Xi MaxReadings; s?:SENSOR | \\
+  \t1 s? \notin \dom smax]
+\end{zed}
+
+\begin{schema}{KeepMaxReadingE2}
+\Xi MaxReadings \\
+s?:SENSOR; r?:\num
+\where
+s? \in \dom smax\\
+r? \leq smax~s? 
+\end{schema}
+
+\begin{zed}
+KeepMaxReading == \\
+  \t1 KeepMaxReadingOk \\
+  \t1 \lor KeepMaxReadingE1 \\
+  \t1 \lor KeepMaxReadingE2
+\end{zed}
+
+\begin{itemize}
+  \item Intenta actualizar un valor máximo sensado $\approx KeepMaxReading$
+\end{itemize}
+
+\subsection*{Clases de prueba y descripciones}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 3}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  smax~s? < r? \\
+  smax~s? < 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_3]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+  	    \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.}
+  	    \item[--]{El valor máximo registrado para el identificador del sensor leído es menor a el valor de medición leído.}
+	      \item[--]{El valor máximo registrado para el identificador del sensor leído es negativo.}
+	      \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 4}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  smax~s? < r? \\
+  smax~s? = 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_4]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es menor a el valor de medición leído.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es igual a cero.}
+        \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{KeepMaxReading\_ SP\_ 7}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \notin \dom smax \\
+  smax~s? < 0 \\
+  r? = 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_7]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído no pertenece al conjunto de identificadores válidos.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es negativo.}
+        \item[--]{El valor de medición leído es igual a cero.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 14}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  r? \leq smax~s? \\
+  smax~s? = 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_14]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.} 
+        \item[--]{El valor de medición leído es menor o igual a el valor máximo registrado para el identificador del sensor leído.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es positivo.}
+        \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}
+
+\section*{Ejemplo: Clases de seguridad}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[CATEGORY] \also
+
+SCREPORT ::= scCatFull | scOk | scError
+\end{zed}
+
+\begin{schema}{SecClass}
+level: \num \\
+categs: \power CATEGORY
+\end{schema}
+
+\begin{schema}{SCInit}
+SecClass
+\where
+level = 0 \\
+categs = \emptyset
+\end{schema}
+
+\begin{schema}{SCGetSize}
+\Xi SecClass \\
+size!: \nat \\
+rep!: SCREPORT
+\where
+size! = \# categs \\
+rep! = scOk
+\end{schema}
+
+\begin{schema}{SCGetCat}
+\Xi SecClass \\
+lcategs!: \seq CATEGORY \\
+rep!: SCREPORT
+\where
+\ran lcategs! = categs \\
+rep! = scOk
+\end{schema}
+
+\begin{schema}{SCGetLevel}
+\Xi SecClass \\
+l!: \num \\
+rep!: SCREPORT
+\where
+l! = level \\
+rep! = scOk
+\end{schema}
+
+\begin{schema}{SCAddCatOk}
+\Delta SecClass \\
+MAXNCAT: \nat \\
+c?: CATEGORY \\
+rep!: SCREPORT
+\where
+c? \notin categs \\
+\# categs < MAXNCAT \\
+categs' = categs \cup \{c?\} \\
+level' = level \\
+rep! = scOk
+\end{schema}
+
+\begin{schema}{SCAddCatE1}
+\Xi SecClass \\
+c?:CATEGORY \\
+rep!:SCREPORT
+\where
+c? \in categs \\
+rep! = scError
+\end{schema}
+
+\begin{schema}{SCAddCatE2}
+\Xi SecClass \\
+MAXNCAT: \nat \\
+rep!:SCREPORT
+\where
+\# categs = MAXNCAT \\
+rep! = scCatFull
+\end{schema}
+
+\begin{zed}
+SCAddCatE == SCAddCatE1 \lor SCAddCatE2 \also
+
+SCAddCat == SCAddCatOk \lor SCAddCatE
+\end{zed}
+
+\begin{schema}{SCSetLevelOk}
+\Delta SecClass \\
+MAXLEVEL: \nat \\
+l?: \num \\
+rep!: SCREPORT
+\where
+0 \leq l? \leq MAXLEVEL \\
+level' = l? \\
+categs' = categs \\
+rep! = scOk
+\end{schema}
+
+\begin{schema}{SCSetLevelE}
+\Xi SecClass \\
+MAXLEVEL: \nat \\
+l?: \num \\
+rep!: SCREPORT
+\where
+l? < 0 \lor MAXLEVEL < l? \\
+rep! = scError
+\end{schema}
+
+\begin{zed}
+SCSetLevel == SCSetLevelOk \lor SCSetLevelE
+\end{zed}
+
+\begin{schema}{SCSetSCOk}
+\Delta SecClass \\
+MAXLEVEL, MAXNCAT: \nat \\
+l?: \num \\
+C?: \power CATEGORY \\
+rep!: SCREPORT
+\where
+0 \leq l? \leq MAXLEVEL \\
+\# C? \leq MAXNCAT \\
+level' = l? \\
+categs' = C?
+\end{schema}
+
+\begin{zed}
+SCSetSCE1 == SCSetLevelE
+\end{zed}
+
+\begin{schema}{SCSetSCE2}
+\Xi SecClass \\
+MAXNCAT: \nat \\
+C?: \power CATEGORY \\ 
+rep!:SCREPORT
+\where
+\# C? > MAXNCAT \\
+rep! = scError
+\end{schema}
+
+\begin{zed}
+SCSetSCE == SCSetSCE1 \lor SCSetSCE2 \also
+
+SCSetSC == SCSetSCOk \lor SCSetSCE
+\end{zed}
+
+\begin{zed}
+SCInterface == \\
+  \t1 SCGetLevel \\
+  \t1 \lor SCGetSize \\
+  \t1 \lor SCGetCat \\
+  \t1 \lor SCSetLevel \\
+  \t1 \lor SCAddCat \\
+  \t1 \lor SCSetSC
+\end{zed}
+
+\subsection*{Clases de prueba y descripciones}
+
+\section*{Ejemplo: \textit{Scheduler}}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[PID]
+\end{zed}
+
+\begin{zed}
+PSTATUS ::= waiting | ready
+\end{zed}
+
+\begin{zed}
+EXCEPTION ::= \\
+  \t1 ok | memoryFull | alreadyExists | busyProcess | unknownProcess | noActiveProcess
+\end{zed}
+
+\begin{zed}
+BIN ::= yes | no
+\end{zed}
+
+
+\begin{schema}{Scheduler}
+procs: PID \pfun PSTATUS \\
+current: PID \\
+idle: BIN
+\end{schema}
+
+
+\begin{schema}{SchedulerInit}
+Scheduler
+\where
+procs = \emptyset \\
+idle = yes
+\end{schema}
+
+\begin{schema}{NewOk}
+\Delta Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \notin \dom procs \\
+procs' = procs \cup \{p? \mapsto waiting\} \\
+current' = current \\
+idle' = idle \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{NewE1}
+\Xi Scheduler \\
+p?:PID \\
+maxProcs: \nat \\
+rep!:EXCEPTION
+\where
+p? \in \dom procs \\
+\# (\dom procs) < maxProcs \\
+maxProcs = 6 \\
+rep! = alreadyExists
+\end{schema}
+
+\begin{schema}{NewE2}
+\Xi Scheduler \\
+maxProcs: \nat \\
+rep!:EXCEPTION
+\where
+\# (\dom procs) = maxProcs \\
+maxProcs = 6 \\
+rep! = memoryFull
+\end{schema}
+
+\begin{zed}
+New == NewOk \lor NewE1 \lor NewE2
+\end{zed}
+
+\begin{schema}{DelOk}
+\Delta Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \in \dom (procs \nrres \{waiting\}) \\
+procs' = \{p?\} \ndres procs \\
+current' = current \\
+idle' = idle \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{DelE1}
+\Xi Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \notin \dom procs \\
+rep! = unknownProcess
+\end{schema}
+
+\begin{schema}{DelE2}
+\Xi Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \in \dom procs \\
+procs~p? = waiting \\
+rep! = busyProcess
+\end{schema}
+
+\begin{zed}
+Del == DelOk \lor DelE1 \lor DelE2
+\end{zed}
+
+\begin{schema}{ReadyOk1}
+\Delta Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+idle = no \\
+p? \in \dom procs \\
+procs~p? = waiting \\
+procs' = procs \oplus \{p? \mapsto ready\}\\
+current' = current \\
+idle' = idle \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{ReadyOk2}
+\Delta Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+idle = yes \\
+p? \in \dom procs \\
+procs~p? = waiting \\
+procs' = \{p?\} \ndres procs \\
+current' = p? \\
+idle' = no \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{ReadyE1}
+\Xi Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \notin \dom procs \\
+rep! = unknownProcess
+\end{schema}
+
+\begin{schema}{ReadyE2}
+\Xi Scheduler \\
+p?:PID \\
+rep!:EXCEPTION
+\where
+p? \in \dom procs \\
+procs~p? \neq waiting \\
+rep! = busyProcess
+\end{schema}
+
+\begin{zed}
+Ready == ReadyOk1 \lor ReadyOk2 \lor ReadyE1 \lor ReadyE2
+\end{zed}
+
+\begin{schema}{SwapOk1}
+\Delta Scheduler \\
+chose: \power PID \fun PID \\
+rep!:EXCEPTION
+\where
+idle = no \\
+ready \in \ran procs \\
+procs' = 
+  \{chose(\dom(procs \rres \{ready\}))\} \ndres procs 
+  \cup \{current \mapsto waiting\}\\
+current' = chose(\dom(procs \rres \{ready\})) \\
+idle' = idle \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{SwapOk2}
+\Delta Scheduler \\
+rep!:EXCEPTION
+\where
+idle = no \\
+ready \notin \ran procs \\
+procs' = procs \cup \{current \mapsto waiting\}\\
+idle' = yes \\
+current' = current \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{SwapOk3}
+\Xi Scheduler \\
+rep!:EXCEPTION
+\where
+idle = yes \\
+rep! = ok
+\end{schema}
+
+\begin{zed}
+Swap == SwapOk1 \lor SwapOk2 \lor SwapOk3
+\end{zed}
+
+\begin{schema}{DisplayOk1}
+\Xi Scheduler \\
+ap!, wp!, rp!: \power PID 
+\where
+idle = no \\
+ap! = \{current\} \\
+wp! = \dom (procs \rres \{waiting\}) \\
+rp! = \dom (procs \rres \{ready\})
+\end{schema}
+
+\begin{schema}{DisplayOk2}
+\Xi Scheduler \\
+ap!, wp!, rp!: \power PID 
+\where
+idle = yes \\
+ap! = \emptyset \\
+wp! = \dom (procs \rres \{waiting\}) \\
+rp! = \dom (procs \rres \{ready\})
+\end{schema}
+
+\begin{zed}
+Display == DisplayOk1 \lor DisplayOk2
+\end{zed}
+
+\subsection*{Clases de prueba y descripciones}
