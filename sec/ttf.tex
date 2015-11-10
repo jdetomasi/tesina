@@ -1,7 +1,7 @@
-\chapter{Fundamentos del \textit{testing} basado en modelos}
+\chapter[\textit{Testing} Basado en Modelos]{Fundamentos del \textit{testing} basado en modelos}
 \label{cap:fundamentos}
 
-En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo como derivar casos y clases de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
+En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo como derivar clases y casos de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
 
 \section{\textit{Testing} basado en modelos}
 
@@ -23,8 +23,8 @@ A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo 
 \subsection{Ejemplo: \emph{Symbol Table}}
 \label{sec:ej-symbolTable}
 
-Una tabla de símbolos es una estructura de datos utilizada por un compilador o interprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. 
-En general en una tabla de símbolos se realizan dos operaciones: inserción y búsqueda. La primera para agregar un símbolo a la tabla y la segunda operación nos permitirá recuperar la información correspondiente a un símbolo ya cargado en la misma.
+Una tabla de símbolos es una estructura de datos utilizada por un compilador o intérprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. 
+En general, en una tabla de símbolos se realizan dos operaciones: inserción y búsqueda; la primera para agregar un símbolo a la tabla y la segunda operación nos permitirá recuperar la información correspondiente a un símbolo ya cargado en la misma.
 
 
 \bigskip
@@ -50,7 +50,9 @@ st: SYM \pfun VAL
 \textbf{Operaciones.} Como mencionamos anteriormente, dos operaciones se realizarán sobre la tabla de símbolos: inserción y búsqueda.
 
 \bigskip
-Comenzaremos por modelar la operación de inserción o actualización. Esta operación modificará el estado de la tabla de símbolos; para esto será necesario brindarle a la operación: el símbolo y la información correspondiente al mismo.
+Comenzaremos por modelar la operación de inserción o actualización. Esta operación modificará el estado de la tabla de símbolos; para esto, será necesario brindarle a la operación el símbolo y la información correspondiente al mismo.
+
+Para actualizar la información de un símbolo en la tabla, simplemente actualizaremos la relación funcional con un par ordenado construido a partir del símbolo y la información dada. 
 
 \begin{schema}{Update}
   \Delta ST \\
@@ -61,9 +63,6 @@ Comenzaremos por modelar la operación de inserción o actualización. Esta oper
   st' = st \oplus \{s? \mapsto v?\} \\
   rep! = ok
 \end{schema}
-
-
-Para actualizar la información de un símbolo en la tabla, simplemente actualizaremos la relación funcional con un par ordenado construido a partir del símbolo y la información dada. 
 
 Por último, deberemos especificar la operación encargada de recuperar la información vinculada a un símbolo. Se trata de una operación relativamente simple que no modifica el estado de la tabla de símbolos. Ésta requerirá de un símbolo a buscar y retornará la información vinculada al mismo. A continuación especificaremos el caso exitoso para esta operación:
 
@@ -138,7 +137,7 @@ El primer paso del TTF será definir el espacio de entrada (\emph{IS}, por \emph
   IS == [st: SYM \pfun VAL; s?: SYM]
 \end{zed}
 
-En los casos en los que las operaciones son parciales, no tendrá sentido probar el sistema con casos de prueba para los cuales no está definida la operación, es por esto que, a partir del \emph{IS}, el TTF definirá luego el espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). Este será un subconjunto del anterior, definido de la siguiente manera:
+En los casos en los que las operaciones son parciales, no tendrá sentido probar el sistema con casos de prueba para los cuales no está definida la operación, es por esto que, a partir del \emph{IS}, el TTF definirá luego el espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). Este será un subconjunto del anterior, formado por los elementos pertenecientes al \emph{IS} que cumplan con la precondición de la operación en cuestión, es decir:
 
 \begin{zed}
   VIS_{Op} == [IS | pre~Op]
@@ -148,7 +147,7 @@ El \emph{VIS} será un subconjunto del \emph{IS} para los cuales tiene sentido t
 
 \begin{zed}
   IS == [st: SYM \pfun VAL; s?: SYM] \\
-  VIS_{LookUp'} == [IS | s? \in \dom st]
+  VIS_{LookUpOk} == [IS | s? \in \dom st]
 \end{zed}
 
 Luego de determinar el \emph{VIS}, el TTF propone dividir el mismo, de modo tal que cada una de estas particiones represente una alternativa funcional distinta de la operación a testear. Estas particiones serán las \emph{clases de prueba}, introducidas anteriormente, y serán el resultado de aplicar distintas tácticas de \textit{testing} sobre el \emph{VIS}. Luego, será posible aplicar nuevas tácticas sobre estas particiones generadas a fin de dividir nuevamente las mismas, obteniendo como resultado nuevas clases de prueba; este proceso se podrá repetir hasta que el ingeniero de \textit{testing} considere que todas las alternativas funcionales importantes de la operación están representadas (cada una de estas alternativas corresponderá a una única clase de prueba). El último paso del proceso será la selección de al menos un \emph{caso de prueba} para cada clase de prueba, que, como vimos anteriormente, consistirá en buscar valores para las variables de la misma que reduzcan su restricción a verdadero. 
@@ -184,17 +183,17 @@ De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple
     2. $A = \{a\}$ & 4. $A = \{a, b\}$ & 6. $\{a, b\} \subset A$ &   \\ 
   \end{tabular}
   \end{framed}
-  \caption{Partición estándar para a \textbackslash in A; se asume que $a, b \text{ y } c$ son tres elementos diferentes.}
+  \caption{Partición estándar para a $\protect\in$ A; se asume que $a, b \text{ y } c$ son tres elementos diferentes.}
   \label{ej:partition_in}
 \end{figure}
 
 Para aplicar esta táctica primero hay que seleccionar un operador de un predicado incluido en el esquema de la operación a testear.
 
 Siguiendo con el ejemplo anterior, aplicaremos la técnica de partición estándar a la clase de prueba \emph{LookUp\_DNF\_1}. En primer lugar, deberemos seleccionar una aparición de un operador en el esquema de la operación \emph{LookUp}. 
-Nosotros eligiéremos el operador $\in$ de la expresión ``$s? \in \dom st$''
+Nosotros elegiremos el operador $\in$ de la expresión ``$s? \in \dom st$''.
 
 
-El siguiente paso será reemplazar los parámetros formales que aparecen en la descripción de la partición por las expresiones usadas en la especificación.  En particular, para nuestro ejemplo, deberemos reemplazar los parámetros de las expresiones que aparecen en la figura~\ref{ej:partition_in} con las expresiones ``$s?$'' y ``$\dom st$''. Finalmente a partir de la clase de prueba sobre la cual se quiere aplicar la táctica tendremos que generar las nuevas particiones para cada uno de los sub-dominios definidos en la partición estándar. En consecuencia, obtendremos las siguientes clases:
+El siguiente paso será reemplazar los parámetros formales que aparecen en la descripción de la partición por las expresiones usadas en la especificación.  En particular, para nuestro ejemplo, deberemos reemplazar los parámetros de las expresiones que aparecen en la figura~\ref{ej:partition_in} con las expresiones ``$s?$'' y ``$\dom st$''. Finalmente, a partir de la clase de prueba sobre la cual se quiere aplicar la táctica, tendremos que generar las nuevas particiones para cada uno de los sub-dominios definidos en la partición estándar. En consecuencia, obtendremos las siguientes clases:
 
 
 \begin{zed}
@@ -214,7 +213,7 @@ Luego podríamos continuar aplicando nuevas tácticas y particionando aún más 
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-A continuación, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba de la sección anterior\footnote{Puede ser necesario modificar la partición estándar para el operador $\in$ utilizada por \emph{Fastest} para obtener los mismos resultados ya que la versión 1.6 de \emph{Fastest} utiliza una partición Standard diferente para el operador $\in$}.
+A continuación, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba de la sección anterior\footnote{Puede ser necesario modificar la partición estándar para el operador $\in$ utilizada por \emph{Fastest} para obtener los mismos resultados ya que la versión 1.6 de \emph{Fastest} utiliza una Partición Estándar diferente para el operador $\in$.}.
 
 
 \begin{figure}[H]
@@ -262,8 +261,8 @@ Fastest> showsch -tcl
 En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en \textit{templates} para traducir los casos de prueba obtenidos \cite{cristia_pluss}. La situación propuesta en el trabajo recién mencionado fue una solución ad-hoc, dependiente del dominio de aplicación y de la cantidad de operaciones.
 
 
-Como mencionamos anteriormente, uno de los objetivos de este trabajo será el de extender la implementación de \emph{Fastest} para permitir al usuario generar traducciones o descripciones, independientes del dominio de aplicación y de la cantidad de operaciones de las clases de prueba generadas con la herramienta.
-El sistema de NLG a desarrollar en este trabajo será íntegramente implementado en Java e integrado como una extensión de \emph{Fastest} (trabajando para esto con la versión 1.6 de \emph{Fastest}). En el capítulo \ref{cap:implementacion} veremos algunos de los detalles más relevantes de esta implementación.
+Como mencionamos anteriormente, uno de los objetivos de este trabajo será el de extender la implementación de \emph{Fastest} para permitir al usuario generar descripciones, independientes del dominio de aplicación y de la cantidad de operaciones de las clases de prueba generadas con la herramienta.
+El sistema de NLG a desarrollar en este trabajo será íntegramente implementado en Java e integrado como una extensión de \emph{Fastest} (trabajando para esto con la versión 1.6 de la herramienta). En el capítulo \ref{cap:implementacion} veremos algunos de los detalles más relevantes de esta implementación.
 
 \section{Designaciones}
 \label{cap:designaciones}
@@ -281,7 +280,7 @@ Para documentar las designaciones usaremos la sintaxis propuesta por Jackson~\ci
 
 El símbolo $\approx$ demarca la frontera entre el mundo real (a la izquierda) y el mundo formal o lógico (a la derecha). Del lado derecho estará el término formal a designar, este será un elemento de la especificación, mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
 
-Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{sec:ej-symbolTable}), podríamos contar (entre otras) con las siguientes designaciones:
+Continuando con el ejemplo de la tabla de símbolos (sección ~\ref{sec:ej-symbolTable}), podríamos contar (entre otras) con las siguientes designaciones:
 
 \begin{figure}[H]
   \begin{align*} 
@@ -293,7 +292,7 @@ Continuando con el ejemplo de la tabla de símbolos (Figura ~\ref{sec:ej-symbolT
 \end{figure}
 
 
-Para Jackson, las designaciones sirven en primer instancia para cuando se empieza a escribir la especificación, para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Jackson propone construir un \emph{``puente angosto''} entre la especificación y los elementos del dominio, escribiendo la menor cantidad de designaciones posibles y definiendo otros términos en base a las anteriores.
+Para Jackson, las designaciones sirven en primera instancia cuando se empieza a escribir la especificación para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Jackson propone construir un \emph{``puente angosto''} entre la especificación y los elementos del dominio, escribiendo la menor cantidad de designaciones posibles y definiendo otros términos en base a las anteriores.
 
 
 La función que cumplirán las designaciones en éste trabajo difiere un poco de la propuesta por Jackson. Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
@@ -307,7 +306,7 @@ Veamos, por ejemplo, las siguientes expresiones pertenecientes a dos clases de p
 \end{enumerate}
 \end{figure}
 
-La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación que forma parte de la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarle un significado distinto (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para estas, las descripciones podrían ser las siguientes:
+La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación perteneciente a la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarles una descripción en lenguaje natural (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para estas, las descripciones podrían ser las siguientes:
 
 \begin{figure}[H]
 \begin{enumerate}
@@ -316,12 +315,12 @@ La primera expresión pertenece a una clase de prueba generada para la operació
 \end{enumerate}
 \end{figure}
 
-Los sistemas de generación de lenguaje natural generalmente utilizan un repositorio de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro sistema de NLG.
+Los sistemas de generación de lenguaje natural generalmente utilizan un diccionario de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro sistema de NLG.
 
 Por otro lado, en algunas situaciones, contar con una mayor cantidad de designaciones nos permitirá generar mejores descripciones. Designaciones que podrían resultar redundantes para una persona que lea la especificación podrían, por ejemplo, permitirle a nuestro sistema de NLG generar textos más naturales. En el apéndice \ref{ape:designaciones} podemos encontrar una pequeña guía sobre qué designar a fin de proveerle la información necesaria a nuestro sistema de NLG para que pueda producir textos más fluidos y naturales.
 
-Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la Figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y marcaremos esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En el capítulo~\ref{sec:verbalizacion_designaciones} desarrollaremos más en detalle esta particularidad. 
+Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y marcaremos esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En el capítulo~\ref{sec:verbalizacion_designaciones} desarrollaremos más en detalle esta particularidad. 
 
 
-\bigskip
-En este capítulo introdujimos conceptos fundamentales para el desarrollo de este trabajo. Presentamos el \textit{test template framework}, definimos la noción de clase y caso de prueba con las que trabajaremos a lo largo de todo el trabajo. Finalmente profundizamos sobre el rol que cumplirán las designaciones en este trabajo, resultando fundamentales para la generación de descripciones independientes del dominio de aplicación. En el próximo capítulo introduciremos las tareas que deberán ser llevadas a cabo por nuestro sistema de NLG para generar descripciones para las clases de prueba generadas por Fastest.
+\subsection{Resumen del capítulo}
+En este capítulo introdujimos conceptos fundamentales para el desarrollo de este trabajo. Presentamos el \textit{test template framework}, definimos las nociones de clase y caso de prueba con las que trabajaremos a lo largo de todo el trabajo. Finalmente profundizamos sobre el rol que cumplirán las designaciones en este trabajo, resultando fundamentales para la generación de descripciones independientes del dominio de aplicación. En el próximo capítulo introduciremos las tareas que deberán ser llevadas a cabo por nuestro sistema de NLG para generar descripciones para las clases de prueba generadas por Fastest.

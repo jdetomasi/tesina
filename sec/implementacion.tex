@@ -13,7 +13,7 @@ La implementación realizada para este trabajo se encuentra incluida en la últi
 Para garantizar el correcto funcionamiento de Fastest y nuestro sistema de NLG, deberemos cumplir con los siguientes requerimientos:
 
 \begin{itemize}
- \item  \emph{Fastest 1.7 o superior}: La distribución de este incluye un pequeño manual de uso.
+ \item  \emph{Fastest 1. o superior}: La distribución de este incluye un pequeño manual de uso.
  \item  \emph{Java SE Runtime Environment 1.6 o superior}: requerido para el correcto funcionamiento de \emph{Fastest}.
  \item  \emph{SWI\_Prolog\footnote{http://http://www.swi\_prolog.org/}}: también requerido para el correcto funcionamiento de Fastest.
  \item  \emph{FreeLing 3.1\footnote{http://nlp.lsi.upc.edu/freeling/}\footnote{Tutorial para instalación de \emph{FreeLing} en \emph{Ubuntu}: https://gist.github.com/juliandt/}}: suite de análisis de lenguajes, necesaria para el módulo de NLG de \emph{Fastest}
@@ -21,7 +21,7 @@ Para garantizar el correcto funcionamiento de Fastest y nuestro sistema de NLG, 
 
 \subsection{Modo de uso}
 
-Como resultado de este trabajo introdujimos un nuevo comando en \textit{Fastest}, el comando \textbf{showdesc}. Podremos usar el mismo para generar la descripción de una o más clases de prueba pasándole al anterior el titulo deseado para el documento junto con el o los nombres de las clases de prueba a describir, también es posible pasarle como argumento el nombre de una operación de la especificación y nuestro sistema buscará todas las clases de prueba generadas para esa operación produciendo luego las descripciones para las mismas. En la figura \ref{ej:showdesc_fastest} podemos ver la ayuda de \textit{Fastest} para el comando anterior.
+Como resultado de este trabajo introdujimos un nuevo comando en \textit{Fastest}, el comando \textbf{showdesc}. Podremos usar el mismo para generar la descripción de una o más clases de prueba pasándole al anterior el título deseado para el documento junto con el o los nombres de las clases de prueba a traducir, también es posible pasarle como argumento el nombre de una operación de la especificación y nuestro sistema buscará todas las clases de prueba generadas para esa operación produciendo luego las descripciones para las mismas. En la figura \ref{ej:showdesc_fastest} podemos ver la ayuda de \textit{Fastest} para el comando anterior.
 
 \begin{figure}[H]
 \begin{Verbatim}[frame=single,fontsize=\scriptsize]
@@ -67,7 +67,7 @@ Cuando:
 \label{ej:comandos_fastest_nlg}
 \end{figure}
 
-\section{Documentación implementación}
+\section{Documentación de la implementación}
 
 En esta sección detallaremos los aspectos más importantes de la implementación realizada. Para la misma respetamos la arquitectura y desarrollo realizado a lo largo de este trabajo, sin embargo podremos observar algunas diferencias menores, como por ejemplo: necesitamos modificar los nombres de las entidades intermedias utilizadas entre las distintas etapas del \textit{pipeline} para respetar las convenciones de estilo utilizadas en Fastest.
 
@@ -98,7 +98,7 @@ El módulo \emph{DocumentPlanner} será el encargado de llevar a cabo las tareas
 \textbf{ExprRefiner.} Es la \textit{fachada} \cite{gof} encargada de delegar los distintos procesamientos a realizar sobre las expresiones a fin de desarrollar las tareas de eliminación de tautologías y reducción de expresiones estudiadas en el capítulo \ref{cap:determinacion_contenido}. Podemos observar que utilizamos la clase \emph{Optimal} de Java 8 para modelar el hecho de que el método \textbf{refine()} podría no devolver un valor, por ejemplo en el caso que la expresión procesada sea una tautología y no deba ser incluida en el \textit{document plan}.
 
 \bigskip
-Fastest utiliza el \textit{framework} CZT\footnote{http://czt.sourceforge.net/} que integra un conjunto de herramientas para trabajar con el lenguaje de especificación Z. La forma en la que CZT modela las expresiones de Z nos resultó compleja para este trabajo, por lo que decidimos transformar las expresiones contempladas dentro del alcance de este trabajo a un modelo más simple (los que nos simplificó la implementación del algoritmo de lexicalización, por ejemplo). En la figura \ref{fig:imp_exprz} podemos observar la jerarquía de clases de las expresiones utilizadas en este trabajo para modelar las expresiones Z. 
+Fastest utiliza el \textit{framework} CZT\footnote{http://czt.sourceforge.net/} que integra un conjunto de herramientas para trabajar con el lenguaje de especificación Z. La forma en la que CZT modela las expresiones de Z nos resultó compleja para este trabajo, por lo que decidimos transformar las expresiones contempladas dentro del alcance de este trabajo a un modelo más simple (lo que nos simplificó la implementación del algoritmo de lexicalización, por ejemplo). En la figura \ref{fig:imp_exprz} podemos observar la jerarquía de clases de las expresiones utilizadas en este trabajo para modelar las expresiones Z. 
 
 \begin{figure}[H]
   	\centering
@@ -129,15 +129,15 @@ En esta sección presentaremos los componentes encargados de la tarea de \textit
 
 \bigskip
 \noindent
-\textbf{PhraseBuilder.} Este módulo implementa la tarea de lexicalización detallada en el capítulo \ref{cap:microplanning}, la función del mismos será construir una especificación de frase a partir de una expresión Z. Para realizar esta tarea necesitaremos recorrer el modelo utilizado para las expresiones Z. Encapsulamos este trabajo en el módulo \textit{ExprZToPSVisitor}, encargado del análisis de casos para las distintas expresiones y sus posibles combinaciones de acuerdo a la definición presentada en el capítulo \ref{sec:microplanning_lexicalization}.
+\textbf{PhraseBuilder.} Este módulo implementa la tarea de lexicalización detallada en el capítulo \ref{cap:microplanning}, la función del mismo será construir una especificación de frase a partir de una expresión Z. Para realizar esta tarea necesitaremos recorrer el modelo utilizado para las expresiones Z. Encapsulamos este trabajo en el módulo \textit{ExprZToPSVisitor}, encargado del análisis de casos para las distintas expresiones y sus posibles combinaciones de acuerdo a la definición presentada en el capítulo \ref{sec:microplanning_lexicalization}.
 
 \bigskip
 \noindent
-\textbf{ExprZToPSVisitor.} Encapsula las reglas de lexicalización para todas las posibles expresiones y combinaciones de las mismas. Implementa la función auxiliar \textit{lexicalización'()} utilizada en el bosquejo de la figura \ref{fig:algoritmo_lexicalizacion}.
+\textbf{ExprZToPSVisitor.} Encapsula las reglas de lexicalización para todas las posibles expresiones y combinaciones de las mismas. Implementa la función auxiliar \textsc{lexicalización'()} utilizada en el bosquejo de la figura \ref{fig:algoritmo_lexicalizacion}.
 
 \bigskip
 \noindent
-\textbf{PhraseSpecFactory.} Construir y componer las especificaciones de frase de nuestro sistema resulta una tarea relativamente compleja, es por esto que encapsulamos esta funcionalidad en el módulo \textit{PhraseSpecFactory} encargado de construir apropiadamente las distintas especificaciones de frase de nuestro sistema. Por ejemplo: \textit{createPSElemUnico()} tomará dos especificaciones de frase y compondrá para generar una nueva especificación para la frase \textit{``... es el único elemento de ...''}, siendo las dos especificaciones mencionadas anteriormente las encargadas de modelar el texto que precede y antecede respectivamente a la anterior.
+\textbf{PhraseSpecFactory.} Construir y componer las especificaciones de frase de nuestro sistema resulta una tarea relativamente compleja. Es por esto que encapsulamos esta funcionalidad en el módulo \textit{PhraseSpecFactory} encargado de construir apropiadamente las distintas especificaciones de frase de nuestro sistema. Por ejemplo: \textit{createPSElemUnico()} tomará dos especificaciones de frase y las compondrá para generar una nueva especificación para la frase \textit{``... es el único elemento de ...''}, siendo las dos especificaciones mencionadas anteriormente las encargadas de modelar el texto que precede y antecede respectivamente a la anterior.
 
 \bigskip
 \noindent
@@ -145,11 +145,11 @@ En esta sección presentaremos los componentes encargados de la tarea de \textit
 
 \bigskip
 \noindent
-\textbf{FreeLingUtils.} Contiene algunos métodos útiles para el trabajo con \textit{FreeLing}. Por ejemplo, \textit{FreeLing} genera una estructura en la que etiqueta cada palabra con anotaciones morfosintácticas, el método \textit{getInfoMorfologica()} procesa estas anotaciones produciendo una estructura más sencilla con la que trabajará nuestro sistema.
+\textbf{FreeLingUtils.} Contiene algunos métodos útiles para el trabajo con \textit{FreeLing}. Por ejemplo, \textit{FreeLing} genera una estructura en la que etiqueta cada palabra con anotaciones morfosintácticas. El método \textit{getInfoMorfologica()} procesa estas anotaciones produciendo una estructura más sencilla con la que trabajará nuestro sistema.
 
 \bigskip
 \noindent
-\textbf{DesignationsRepo.} Es necesario para el algoritmo de lexicalización saber si una expresión se encuentra designada y cual es su designación en el caso de estarlo. Será a través de este módulo que podrá acceder a las designaciones presentes en la especificación. El mismo se inicializa al cargar la especificación en Fastest. 
+\textbf{DesignationsRepo.} Es necesario para el algoritmo de lexicalización saber si una expresión se encuentra designada y cúal es su designación en el caso de estarlo. Será a través de este módulo que podrá acceder a las designaciones presentes en la especificación. El mismo se inicializa al cargar la especificación en Fastest. 
 
 %TODO cambiar nombres a español
 \subsection{\textit{Surface Realizer}}
@@ -170,7 +170,7 @@ Finalmente, el módulo \emph{SurfaceRealizer} será el encargado de generar el t
 
 \bigskip
 \noindent
-\textbf{LinguisticRealizer.} Es el módulo encargado de la realización lingüística. Es responsabilidad de este modulo asegurarse de que las frases del texto generado respeten las reglas gramaticales introducidas en el capítulo \ref{cap:linguistic_realization}. Éste hace uso de los módulos \textit{ArticleRealizer} y \textit{VerbRealizer} para resolver las cuestiones de concordancia gramatical, delegando la generación del texto final en el módulo \textit{PhraseRealizer}. 
+\textbf{LinguisticRealizer.} Es el módulo encargado de la realización lingüística. Es responsabilidad de este módulo asegurarse de que las frases del texto generado respeten las reglas gramaticales introducidas en el capítulo \ref{cap:linguistic_realization}. Éste hace uso de los módulos \textit{ArticleRealizer} y \textit{VerbRealizer} para resolver las cuestiones de concordancia gramatical, delegando la generación del texto final en el módulo \textit{PhraseRealizer}. 
 
 \bigskip
 \noindent
@@ -186,4 +186,4 @@ Finalmente, el módulo \emph{SurfaceRealizer} será el encargado de generar el t
 
 \bigskip
 \noindent
-\textbf{PhraseRealizer.} Será el módulo finalmente encargado de recorrer la estructura de una especificación de frase y generar el texto final para la misma. En esta etapa casi todo el trabajo fue realizado, la función del mismo será extraer el texto contenido en la especificación de frase con el fin de generar la frase final respetando el orden establecido e introduciendo los espacios y signos de puntuación necesarios. Es importante aclarar, que resulta necesario que ejecutemos en primer instancia las tareas realizadas por \textit{PhraseSpecVisitor} y \textit{VerbRealizer} ya que este módulo asumirá que ya fueron resueltos previamente todos los aspectos gramaticales.
+\textbf{PhraseRealizer.} Será el módulo finalmente encargado de recorrer la estructura de una especificación de frase y generar el texto final para la misma. En esta etapa casi todo el trabajo fue realizado, la función del mismo será extraer el texto contenido en la especificación de frase con el fin de generar la frase final respetando el orden establecido e introduciendo los espacios y signos de puntuación necesarios. Es importante aclarar que resulta necesario que ejecutemos en primer instancia las tareas realizadas por \textit{PhraseSpecVisitor} y \textit{VerbRealizer} ya que este módulo asumirá que ya fueron resueltos previamente todos los aspectos gramaticales.
