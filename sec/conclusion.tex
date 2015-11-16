@@ -1,2 +1,14 @@
-\chapter{Conclusiones y trabajo a futuro}
+\chapter{Conclusiones y trabajo futuro}
 \label{cap:conclusion}
+
+\section*{Conclusión}
+En este trabajo hemos presentado y desarrollado una solución para la generación automática de descripciones en lenguaje natural para clases de prueba generadas por el TTF. Para esto, fue necesario utilizar técnicas de generación de lenguaje natural. En particular, seguimos la metodología propuesta por Reiter y Dale \cite{reiter_dale}.
+
+En primer instancia recolectamos y analizamos un corpus de ejemplo. A partir de éste extrajimos los requerimientos más importantes para el desarrollo de nuestro sistema. Luego, estudiamos en detalle las tareas mas importantes que debían ser llevadas a cabo por nuestro sistema. En el capítulo \ref{cap:document_planning} hicimos especial incapie en la determinación de contenido y cómo el razonamiento con los datos puede mejorar notablemente la calidad de las descripciones generadas por nuestro sistema. En el capítulo \ref{cap:microplanning} utilizamos el conjunto de reglas de traducción obtenido como resultado del análisis del corpus para definir la tarea de lexicalización de expresiones Z, encargada de escoger que palabras y constructores sintácticos utilizar para comunicar la información. Estudiamos además el importante rol que cumplirán las designaciones para este trabajo y como nuestra tarea de lexicalización hace uso de la información contenida en las mismas. Por último, en el capítulo \ref{cap:realization} nos encargamos fundamentalmente de estudiar algunos aspectos necesarios para finalmente generar texto sintáctica, ortográfica y gramaticalmente correcto.
+
+Como resultado de este trabajo, hemos implementado un prototipo en base al desarrollo realizado. Utilizando para esto diseño flexible capaz de admitir futuras posibilidades de evolución. 
+
+El sistema desarrollado trabaja principalmente con la información contenida en las clases de prueba, haciendo un especial uso de las designaciones que acompañan a la especificación. Estas designaciones resultan una fuente fundamental de información que le permite a nuestro sistema generar las porciones de texto dependientes del dominio de aplicación y de esta forma lograr una generación de descripciones en lenguaje natural independiente del dominio de aplicación y de la cantidad de clases y casos de pruebas.
+
+\section*{Trabajo futuro}
+
