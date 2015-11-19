@@ -926,9 +926,7 @@ smax' = smax \oplus \{s? \mapsto r?\}
 \end{schema}
 
 \begin{zed}
-KeepMaxReadingE1 == \\
-  \t1 [\Xi MaxReadings; s?:SENSOR | \\
-  \t1 s? \notin \dom smax]
+KeepMaxReadingE1 == [\Xi MaxReadings; s?:SENSOR | s? \notin \dom smax]
 \end{zed}
 
 \begin{schema}{KeepMaxReadingE2}
@@ -944,10 +942,7 @@ r? \leq smax~s?
 \end{itemize}
 
 \begin{zed}
-KeepMaxReading == \\
-  \t1 KeepMaxReadingOk \\
-  \t1 \lor KeepMaxReadingE1 \\
-  \t1 \lor KeepMaxReadingE2
+KeepMaxReading == KeepMaxReadingOk \lor KeepMaxReadingE1 \lor KeepMaxReadingE2
 \end{zed}
 
 \subsection*{Clases de prueba y descripciones}
