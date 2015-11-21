@@ -1,7 +1,9 @@
 \chapter{Corpus de descripciones}
 \label{ape:corpus}
 
-A continuación presentaremos tres ejemplos recolectados que forman parte del corpus utilizado para este trabajo. Estos ejemplos están compuestos por un subconjunto de clases de prueba generadas por Fastest que creímos interesantes para estudiar. En estos se incluimos tanto la especificación utilizada para generar las clases de prueba a traducir, como también las designaciones necesarias para poder describir las clases de prueba seleccionadas.
+Para construir el corpus utilizado para este trabajo utilizamos 5 especificaciones de distintos dominios de aplicación con sus respectivos casos y clases de prueba generados por Fastest. De estas clases de prueba escogimos las más interesantes para traducir acabando con un total de 98 clases de prueba.
+
+A continuación presentaremos 3 de los ejemplos recolectados que forman parte del corpus utilizado y resultan representativos del total de ejemplos recolectados. En éstos incluimos tanto la especificación utilizada para generar las clases de prueba a traducir, como también las designaciones necesarias para poder describir las clases de prueba seleccionadas y las descripciones de las mismas.
 
 \section*{Ejemplo: \textit{Symbol Table}}
 
@@ -15,7 +17,7 @@ REPORT ::= ok | symbolNotPresent
 \begin{itemize}
   \item Tabla de símbolos $\approx st$ \\
   \item Símbolos cargados en la tabla $\approx dom~st$ \\
-  \item Valor de $x$ $\approx st~x$ \\
+  \item Valor de $x$ $\approx st~x$ 
 \end{itemize}
 
 \begin{schema}{ST}
@@ -25,7 +27,7 @@ st: SYM \pfun VAL
 \begin{itemize}
   \item Intenta actualizar el valor de un símbolo $\approx Update?$ \\
   \item Símbolo a actualizar $\approx s?$ \\
-  \item Valor a actualizar  $\approx v?$ \\
+  \item Valor a actualizar  $\approx v?$ 
 \end{itemize}
 
 \begin{schema}{Update}
@@ -40,7 +42,7 @@ rep! = ok
 
 \begin{itemize}
   \item Símbolo a buscar $\approx s?$ \\
-  \item Valor del símbolo buscado  $\approx v?$ \\
+  \item Valor del símbolo buscado  $\approx v?$ 
 \end{itemize}
 
 \begin{schema}{LookUpOk}
@@ -64,7 +66,7 @@ rep! = symbolNotPresent
 \end{schema}
 
 \begin{itemize}
-  \item Intenta buscar el valor de un símbolo $\approx LookUp?$ \\
+  \item Intenta buscar el valor de un símbolo $\approx LookUp?$ 
 \end{itemize}
 
 \begin{zed}
@@ -72,7 +74,7 @@ LookUp == LookUpOk \lor LookUpE
 \end{zed}
 
 \begin{itemize}
-  \item Símbolo a eliminar $\approx s?$ \\
+  \item Símbolo a eliminar $\approx s?$ 
 \end{itemize}
 
 \begin{schema}{DeleteOk}
@@ -86,7 +88,7 @@ rep! = ok
 \end{schema}
 
 \begin{itemize}
-  \item Intenta eliminar un símbolo de la tabla $\approx Delete?$ \\
+  \item Intenta eliminar un símbolo de la tabla $\approx Delete?$ 
 \end{itemize}
 
 \begin{zed}
@@ -418,7 +420,7 @@ MENSAJES ::= ok | numeroClienteEnUso | noPoseeSaldoSuficiente | saldoNoNulo
 \begin{itemize}
   \item Cajas de ahorro existentes en el banco $\approx cajas$ \\
   \item Números de cuenta cargados en el banco $\approx dom~cajas$ \\
-  \item Dinero depositado en la caja de ahorro de $x$ $\approx caja~x$ \\
+  \item Dinero depositado en la caja de ahorro de $x$ $\approx caja~x$ 
 \end{itemize}
 
 \begin{schema}{Banco}
@@ -426,7 +428,7 @@ cajas: NCTA \pfun SALDO
 \end{schema}
 
 \begin{itemize}
-  \item Número de cuenta del cliente $\approx num$ \\
+  \item Número de cuenta del cliente $\approx num$ 
 \end{itemize}
 
 \begin{schema}{DepositarOk}
@@ -447,7 +449,7 @@ DepositarE2 == [\Xi Banco; m?: \num | m? \leq 0]
 \end{zed}
 
 \begin{itemize}
-  \item Intenta depositar dinero en una cuenta $\approx Depositar$ \\
+  \item Intenta depositar dinero en una cuenta $\approx Depositar$ 
 \end{itemize}
 
 \begin{zed}
@@ -455,7 +457,7 @@ Depositar == DepositarOk \lor DepositarE1 \lor DepositarE2
 \end{zed}
 
 \begin{itemize}
-  \item Número de cuenta del nuevo cliente $\approx num$ \\
+  \item Número de cuenta del nuevo cliente $\approx num$ 
 \end{itemize}
 
 \begin{schema}{NuevoClienteOk}
@@ -479,7 +481,7 @@ rep! = numeroClienteEnUso
 \end{schema}
 
 \begin{itemize}
-  \item Intenta cargar un nuevo cliente $\approx NuevoCliente$ \\
+  \item Intenta cargar un nuevo cliente $\approx NuevoCliente$ 
 \end{itemize}
 
 \begin{zed}
@@ -487,7 +489,7 @@ NuevoCliente == NuevoClienteOk \lor NuevoClienteE
 \end{zed}
 
 \begin{itemize}
-  \item Número de cuenta del cliente $\approx num$ \\
+  \item Número de cuenta del cliente $\approx num$ 
 \end{itemize}
 
 \begin{schema}{ExtraerOk}
@@ -521,7 +523,7 @@ rep! = noPoseeSaldoSuficiente
 \end{schema}
 
 \begin{itemize}
-  \item Intenta realizar una extracción de dinero $\approx Extraer$ \\
+  \item Intenta realizar una extracción de dinero $\approx Extraer$ 
 \end{itemize}
 
 \begin{zed}
@@ -531,7 +533,7 @@ Extraer == ExtraerOk \lor ExtraerE
 \end{zed}
 
 \begin{itemize}
-  \item Número de cuenta del cliente $\approx num$ \\
+  \item Número de cuenta del cliente $\approx num$ 
 \end{itemize}
 
 \begin{schema}{PedirSaldoOk}
@@ -546,7 +548,7 @@ rep! = ok
 \end{schema}
 
 \begin{itemize}
-  \item Intenta consultar el saldo de un cliente $\approx PedirSaldo$ \\
+  \item Intenta consultar el saldo de un cliente $\approx PedirSaldo$ 
 \end{itemize}
 
 \begin{zed}
@@ -903,7 +905,7 @@ PedirSaldo == PedirSaldoOk \lor PedirSaldoE
 \begin{itemize}
   \item Conjunto de identificadores válidos $\approx dom~smax$ \\
   \item $x$ es un identificador válido $\approx x \in dom~smax$ \\
-  \item Valor máximo registrado para $x$ $\approx smax~x$ \\
+  \item Valor máximo registrado para $x$ $\approx smax~x$ 
 \end{itemize}
 
 \begin{zed}
@@ -912,7 +914,7 @@ MaxReadings == [smax: SENSOR \pfun \num]
 
 \begin{itemize}
   \item Identificador del sensor leído $\approx s?$ \\
-  \item Valor de medición leído $\approx r?$ \\
+  \item Valor de medición leído $\approx r?$ 
 \end{itemize}
 
 \begin{schema}{KeepMaxReadingOk}
