@@ -1,6 +1,1037 @@
-\appendix
-
 \chapter{Corpus de descripciones}
 \label{ape:corpus}
 
-\ldots
+Para construir el corpus utilizado para este trabajo utilizamos 5 especificaciones de distintos dominios de aplicación con sus respectivos casos y clases de prueba generados por Fastest. De estas clases de prueba escogimos las más interesantes para traducir acabando con un total de 98 clases de prueba.
+
+A continuación presentaremos 3 de los ejemplos recolectados que forman parte del corpus utilizado y resultan representativos del total de ejemplos recolectados. En éstos incluimos tanto la especificación utilizada para generar las clases de prueba a traducir, como también las designaciones necesarias para poder describir las clases de prueba seleccionadas y las descripciones de las mismas.
+
+\section*{Ejemplo: \textit{Symbol Table}}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[SYM, VAL] \also
+REPORT ::= ok | symbolNotPresent
+\end{zed}
+
+\begin{itemize}
+  \item Tabla de símbolos $\approx st$ \\
+  \item Símbolos cargados en la tabla $\approx dom~st$ \\
+  \item Valor de $x$ $\approx st~x$ 
+\end{itemize}
+
+\begin{schema}{ST}
+st: SYM \pfun VAL
+\end{schema}
+
+\begin{itemize}
+  \item Intenta actualizar el valor de un símbolo $\approx Update?$ \\
+  \item Símbolo a actualizar $\approx s?$ \\
+  \item Valor a actualizar  $\approx v?$ 
+\end{itemize}
+
+\begin{schema}{Update}
+\Delta ST \\
+s?: SYM \\
+v?: VAL \\
+rep!: REPORT
+\where
+st' = st \oplus \{s? \mapsto v?\} \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item Símbolo a buscar $\approx s?$ \\
+  \item Valor del símbolo buscado  $\approx v?$ 
+\end{itemize}
+
+\begin{schema}{LookUpOk}
+\Xi ST \\
+s?: SYM \\
+v!: VAL \\
+rep!: REPORT
+\where
+s? \in \dom st \\
+v! = st~s? \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{LookUpE}
+\Xi ST \\
+s?: SYM \\
+rep!: REPORT
+\where
+s? \notin \dom st \\
+rep! = symbolNotPresent
+\end{schema}
+
+\begin{itemize}
+  \item Intenta buscar el valor de un símbolo $\approx LookUp?$ 
+\end{itemize}
+
+\begin{zed}
+LookUp == LookUpOk \lor LookUpE
+\end{zed}
+
+\begin{itemize}
+  \item Símbolo a eliminar $\approx s?$ 
+\end{itemize}
+
+\begin{schema}{DeleteOk}
+\Delta ST \\
+s?: SYM \\
+rep!: REPORT
+\where
+s? \in \dom st \\
+st' = \{s?\} \ndres st \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item Intenta eliminar un símbolo de la tabla $\approx Delete?$ 
+\end{itemize}
+
+\begin{zed}
+DeleteE == LookUpE \also
+Delete == DeleteOk \lor DeleteE
+\end{zed}
+
+\subsection*{Clases de prueba y descripciones}
+
+\begin{schema}{LookUp\_ SP\_ 1}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ \dom st = \{ s? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=LookUp\_ SP\_ 1]
+  Se intenta buscar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{El símbolo a buscar es el único elemento de los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+%TODO aca se podria eliminar la primera restriccion
+
+\begin{schema}{LookUp\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ \dom st \neq \{ s? \} \\
+ s? \in \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=LookUp\_ SP\_ 4]
+  Se intenta buscar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a buscar no pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Los símbolos cargados en la tabla no son iguales al conjunto formado por el símbolo a buscar.}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{Update\_ SP\_ 1}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st = \{ \} \\
+ \{ s? \mapsto v? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 1]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{No hay ningún elemento en la tabla de símbolos.}
+        \item[--]{No hay elementos en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+      \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st = \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 2]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{No hay ningún elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 3}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 3]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{No hay elementos en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ \dom st = \dom \{ s? \mapsto v? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 4]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{El símbolo a actualizar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{Update\_ SP\_ 5}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ \dom \{ s? \mapsto v? \} \subset \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 5]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Update\_ SP\_ 6}\\
+ st : SYM \pfun VAL \\
+ s? : SYM \\
+ v? : VAL 
+\where
+ st \neq \{ \} \\
+ \{ s? \mapsto v? \} \neq \{ \} \\
+ ( \dom st \cap \dom \{ s? \mapsto v? \} ) = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Update\_ SP\_ 6]
+  Se intenta actualizar el valor de un símbolo, cuando:
+     \begin{itemize}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
+        \item[--]{Los símbolos cargados en la tabla están incluidos en el conjunto formado por el símbolo a actualizar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 2]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{No hay ningún elemento en el conjunto formado por: el símbolo a eliminar.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 3}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} = \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 3]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El símbolo a eliminar es el único elemento de los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 4}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \subset \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 4]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 5}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \cap \dom st = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 5]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla no tienen ningún elemento en común.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 7}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \cap \dom st \neq \{ \} \\
+ \lnot \dom st \subseteq \{ s? \} \\
+ \lnot \{ s? \} \subseteq \dom st
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 7]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla tienen tienen al menos un elemento en común.}
+        \item[--]{Existe al menos un elemento en los símbolos cargados en la tabla que no pertenece al conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El símbolo a eliminar no pertenece al los símbolos cargados en la tabla.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 12}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \neq \{ \} \\
+ \{ s? \} \cap \dom st = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 12]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar no pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por: el símbolo a eliminar.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla no tienen ningún elemento en común.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Delete\_ SP\_ 13}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st \\
+ st \neq \{ \} \\
+ \{ s? \} \cap \dom st \neq \{ \} \\
+ \dom st \subset \{ s? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Delete\_ SP\_ 13]
+  Se intenta eliminar un símbolo de la tabla, cuando:
+     \begin{itemize}
+        \item[--]{El símbolo a eliminar no pertenece los símbolos cargados en la tabla.}
+        \item[--]{Existe al menos un elemento en la tabla de símbolos.}
+        \item[--]{El conjunto formado por el símbolo a eliminar y los símbolos cargados en la tabla tienen tienen al menos un elemento en común.}
+        \item[--]{Los símbolos cargados en la tabla están incluidos en el conjunto formado por: el símbolo a eliminar.}
+     \end{itemize}
+\end{tcolorbox}
+
+\section*{Ejemplo: Banco}
+
+\subsection*{Especificación y designaciones}
+
+\begin{zed}
+[NCTA] \also
+
+SALDO == \nat \also
+
+MENSAJES ::= ok | numeroClienteEnUso | noPoseeSaldoSuficiente | saldoNoNulo
+\end{zed}
+
+\begin{itemize}
+  \item Cajas de ahorro existentes en el banco $\approx cajas$ \\
+  \item Números de cuenta cargados en el banco $\approx dom~cajas$ \\
+  \item Dinero depositado en la caja de ahorro de $x$ $\approx caja~x$ 
+\end{itemize}
+
+\begin{schema}{Banco}
+cajas: NCTA \pfun SALDO
+\end{schema}
+
+\begin{itemize}
+  \item Número de cuenta del cliente $\approx num$ 
+\end{itemize}
+
+\begin{schema}{DepositarOk}
+\Delta Banco \\
+num?: NCTA; m?: \num
+\where
+num? \in \dom cajas \\
+m? > 0 \\
+cajas' = cajas \oplus \{num? \mapsto cajas~num? + m?\}
+\end{schema}
+
+\begin{zed}
+DepositarE1 == [\Xi Banco; num?:NCTA | num? \notin \dom cajas]
+\end{zed}
+
+\begin{zed}
+DepositarE2 == [\Xi Banco; m?: \num | m? \leq 0]
+\end{zed}
+
+\begin{itemize}
+  \item Intenta depositar dinero en una cuenta $\approx Depositar$ 
+\end{itemize}
+
+\begin{zed}
+Depositar == DepositarOk \lor DepositarE1 \lor DepositarE2
+\end{zed}
+
+\begin{itemize}
+  \item Número de cuenta del nuevo cliente $\approx num$ 
+\end{itemize}
+
+\begin{schema}{NuevoClienteOk}
+\Delta Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \notin \dom cajas \\
+cajas' = cajas \cup \{num? \mapsto 0\} \\
+rep! = ok
+\end{schema}
+
+\begin{schema}{NuevoClienteE}
+
+\Xi Banco \\
+num?:NCTA \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+rep! = numeroClienteEnUso
+\end{schema}
+
+\begin{itemize}
+  \item Intenta cargar un nuevo cliente $\approx NuevoCliente$ 
+\end{itemize}
+
+\begin{zed}
+NuevoCliente == NuevoClienteOk \lor NuevoClienteE
+\end{zed}
+
+\begin{itemize}
+  \item Número de cuenta del cliente $\approx num$ 
+\end{itemize}
+
+\begin{schema}{ExtraerOk}
+\Delta Banco \\
+num?:NCTA \\
+m?:SALDO \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+0 < m? \\
+m? \leq cajas~num? \\
+cajas' = cajas \oplus \{num? \mapsto (cajas~num?) - m?\} \\
+rep! = ok
+\end{schema}
+
+\begin{zed}
+ExtraerE1 == DepositarE1 \also
+
+ExtraerE2 == DepositarE2
+\end{zed}
+
+\begin{schema}{ExtraerE3}
+\Xi Banco \\
+num?:NCTA \\
+m?:SALDO \\
+rep!:MENSAJES
+\where
+m? > cajas~num? \\
+num? \in \dom cajas \\
+rep! = noPoseeSaldoSuficiente
+\end{schema}
+
+\begin{itemize}
+  \item Intenta realizar una extracción de dinero $\approx Extraer$ 
+\end{itemize}
+
+\begin{zed}
+ExtraerE == ExtraerE1 \lor ExtraerE2 \lor ExtraerE3 \also
+
+Extraer == ExtraerOk \lor ExtraerE
+\end{zed}
+
+\begin{itemize}
+  \item Número de cuenta del cliente $\approx num$ 
+\end{itemize}
+
+\begin{schema}{PedirSaldoOk}
+\Xi Banco \\
+num?:NCTA \\
+saldo!:SALDO \\
+rep!:MENSAJES
+\where
+num? \in \dom cajas \\
+saldo! = cajas~num? \\
+rep! = ok
+\end{schema}
+
+\begin{itemize}
+  \item Intenta consultar el saldo de un cliente $\approx PedirSaldo$ 
+\end{itemize}
+
+\begin{zed}
+PedirSaldoE == DepositarE1 \also
+
+PedirSaldo == PedirSaldoOk \lor PedirSaldoE
+\end{zed}
+
+\subsection*{Clases de prueba y descripciones}
+
+\begin{schema}{NuevoCliente\_ SP\_ 2}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas = \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_2]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{No hay ningún elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par: número de cuenta y 0.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 4}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ \dom cajas = \dom \{ num? \mapsto 0 \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_4]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado pope el par: número de cuenta y 0.}
+        \item[--]{El número de cuenta del nuevo cliente es el único elemento de los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 5}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ \dom \{ num? \mapsto 0 \} \subset \dom cajas
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_5]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado pone el par: número de cuenta y 0.}
+        \item[--]{El número de cuenta del nuevo cliente pertenece a los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 6}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ ( \dom cajas \cap \dom \{ num? \mapsto 0 \} ) = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_6]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado pode el par: número de cuenta y 0.}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 7}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ \dom cajas \subset \dom \{ num? \mapsto 0 \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_7]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Los números de cuenta cargados en el banco están incluidos en el conjunto formado por el número de cuenta del nuevo cliente.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 8}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \notin \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ ( \dom cajas \cap \dom \{ num? \mapsto 0 \} ) \neq \{ \} \\
+ \lnot \dom \{ num? \mapsto 0 \} \subseteq \dom cajas \\
+ \lnot \dom cajas \subseteq \dom \{ num? \mapsto 0 \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_8]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par: número de cuenta y 0.}
+        \item[--]{El número de cuenta del nuevo cliente no pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en los números de cuenta cargados en el banco que no está en el conjunto formado por el número de cuenta del nuevo cliente.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{NuevoCliente\_ SP\_ 12}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \in \dom cajas \\
+ cajas \neq \{ \} \\
+ \{ num? \mapsto 0 \} \neq \{ \} \\
+ \dom cajas = \dom \{ num? \mapsto 0 \}
+\end{schema}
+
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=NuevoCliente\_SP\_12]
+  Se intenta cargar un nuevo cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta del nuevo cliente pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Existe al menos un elemento en el conjunto formado por el par: número de cuenta y 0.}
+        \item[--]{El número de cuenta del nuevo cliente es el único elemento de los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{PedirSaldo\_ SP\_ 1}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \in \dom cajas \\
+ \dom cajas = \{ num? \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=PedirSaldo\_SP\_1]
+  Se intenta consultar el saldo de un cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El número de cuenta indicado es el único elemento de los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{PedirSaldo\_ SP\_ 2}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA 
+\where
+ num? \in \dom cajas \\
+ \dom cajas \neq \{ num? \} \\
+ num? \in \dom cajas
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=PedirSaldo\_SP\_2]
+  Se intenta consultar el saldo de un cliente, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{Los números de cuenta cargados en el banco no son iguales al conjunto formado por el número de cuenta indicado.}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 3}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_3]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 4}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+ \dom cajas = \dom \{ num? \mapsto ( cajas~num? + m? ) \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_4]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{El número de cuenta indicado es el único elemento de los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 5}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+ \dom \{ num? \mapsto ( cajas~num? + m? ) \} \subset \dom cajas
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_5]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 6}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+ ( \dom cajas \cap \dom \{ num? \mapsto ( cajas~num? + m? ) \} ) = \{ \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_6]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{El número de cuenta indicado no pertenece a los números de cuenta cargados en el banco.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 7}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+ \dom cajas \subset \dom \{ num? \mapsto ( cajas~num? + m? ) \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_7]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{Los números de cuenta cargados en el banco están incluidos en el conjunto formado por el número de cuenta indicado.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{Depositar\_ SP\_ 8}\\
+ cajas : NCTA \pfun SALDO \\
+ num? : NCTA \\
+ m? : \num 
+\where
+ num? \in \dom cajas \\
+ m? > 0 \\
+ cajas \neq \{ \} \\
+ ( \dom cajas \cap \dom \{ num? \mapsto ( cajas~num? + m? ) \} ) \neq \{ \} \\
+ \lnot \dom \{ num? \mapsto ( cajas~num? + m? ) \} \subseteq \dom cajas \\
+ \lnot \dom cajas \subseteq \dom \{ num? \mapsto ( cajas~num? + m? ) \}
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=Depositar\_SP\_8]
+  Se intenta depositar dinero en una cuenta, cuando:
+     \begin{itemize}
+        \item[--]{El número de cuenta indicado pertenece a los números de cuenta cargados en el banco.}
+        \item[--]{El monto a depositar es positivo.}
+        \item[--]{Existe al menos un elemento en las cajas de ahorro existentes en el banco.}
+        \item[--]{El número de cuenta indicado no pertenece a los números de cuenta cargados en el banco}
+        \item[--]{Existe al menos un elemento en los números de cuenta cargados en el banco que no está en el conjunto formado por el número de cuenta indicado.}
+     \end{itemize}
+\end{tcolorbox}
+
+\section*{Ejemplo: Sistema de sensores}
+
+\subsection*{Especificación y designaciones}
+
+\begin{itemize}
+  \item $x$ es un identificador de sensor válido $\approx x \in SENSOR$
+\end{itemize}B
+
+\begin{zed}
+[SENSOR]
+\end{zed}
+
+\begin{itemize}
+  \item Conjunto de identificadores válidos $\approx dom~smax$ \\
+  \item $x$ es un identificador válido $\approx x \in dom~smax$ \\
+  \item Valor máximo registrado para $x$ $\approx smax~x$ 
+\end{itemize}
+
+\begin{zed}
+MaxReadings == [smax: SENSOR \pfun \num]
+\end{zed}
+
+\begin{itemize}
+  \item Identificador del sensor leído $\approx s?$ \\
+  \item Valor de medición leído $\approx r?$ 
+\end{itemize}
+
+\begin{schema}{KeepMaxReadingOk}
+\Delta MaxReadings \\
+s?:SENSOR; r?:\num \\
+\where
+s? \in \dom smax \\
+smax~s? < r?\\
+smax' = smax \oplus \{s? \mapsto r?\}
+%smax' = (\dom \{s? \mapsto r?\} \ndres smax) \oplus \{s? \mapsto r?\}
+\end{schema}
+
+\begin{zed}
+KeepMaxReadingE1 == [\Xi MaxReadings; s?:SENSOR | s? \notin \dom smax]
+\end{zed}
+
+\begin{schema}{KeepMaxReadingE2}
+\Xi MaxReadings \\
+s?:SENSOR; r?:\num
+\where
+s? \in \dom smax\\
+r? \leq smax~s? 
+\end{schema}
+
+\begin{itemize}
+  \item Intenta actualizar un valor máximo sensado $\approx KeepMaxReading$
+\end{itemize}
+
+\begin{zed}
+KeepMaxReading == KeepMaxReadingOk \lor KeepMaxReadingE1 \lor KeepMaxReadingE2
+\end{zed}
+
+\subsection*{Clases de prueba y descripciones}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 3}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  smax~s? < r? \\
+  smax~s? < 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_3]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+  	    \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.}
+  	    \item[--]{El valor máximo registrado para el identificador del sensor leído es menor a el valor de medición leído.}
+	      \item[--]{El valor máximo registrado para el identificador del sensor leído es negativo.}
+	      \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 4}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  smax~s? < r? \\
+  smax~s? = 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_4]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es menor a el valor de medición leído.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es igual a cero.}
+        \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}
+
+
+\begin{schema}{KeepMaxReading\_ SP\_ 7}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \notin \dom smax \\
+  smax~s? < 0 \\
+  r? = 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_7]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído no pertenece al conjunto de identificadores válidos.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es negativo.}
+        \item[--]{El valor de medición leído es igual a cero.}
+     \end{itemize}
+\end{tcolorbox}
+
+\begin{schema}{KeepMaxReading\_ SP\_ 14}\\
+  smax : SENSOR \pfun \num \\
+  s? : SENSOR \\
+  r? : \num
+\where
+  s? \in \dom smax \\
+  r? \leq smax~s? \\
+  smax~s? = 0 \\
+  r? > 0
+\end{schema}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!50!black,
+  colbacktitle=gray!75!black,title=KeepMaxReading\_SP\_14]
+  Se intenta actualizar un valor máximo sensado, cuando:
+     \begin{itemize}
+        \item[--]{El identificador del sensor leído pertenece al conjunto de identificadores válidos.} 
+        \item[--]{El valor de medición leído es menor o igual a el valor máximo registrado para el identificador del sensor leído.}
+        \item[--]{El valor máximo registrado para el identificador del sensor leído es positivo.}
+        \item[--]{El valor de medición leído es positivo.}
+     \end{itemize}
+\end{tcolorbox}

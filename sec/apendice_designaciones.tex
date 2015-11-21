@@ -1,0 +1,30 @@
+\chapter{Guía de estilo para designaciones}
+\label{ape:designaciones}
+
+Las designaciones son la principal fuente de conocimiento del dominio. Éstas son fundamentales para que nuestro sistema de NLG pueda generar descripciones independientes del dominio de aplicación. A continuación, enumeraremos una serie de pautas que el ingeniero realizando la especificación debe tener en cuenta para que nuestro sistema produzca textos lo más fluidos y naturales posibles.
+
+\bigskip
+A fin de un correcto funcionamiento de nuestro sistema, resulta indispensable designar los siguientes elementos de una especificación:
+
+\bigskip
+\begin{enumerate}
+	\item Nombres de esquemas de operación totales
+	\item Variables de entrada/salida
+	\item Variables de estado
+	\item Tipos básicos
+	\item Nombres de constructores de tipos libres
+\end{enumerate}
+
+\bigskip
+Cuando el objeto a designar sea una función es recomendable designar:
+
+\bigskip
+\begin{enumerate}
+	\item La función (f)
+	\item El dominio de la función (dom f)
+	\item La aplicación de la función (f x)
+	\item El rango de la función (ran f)
+\end{enumerate}
+
+\bigskip
+Esto se debe a que es muy común que aparezcan en las clases de prueba generadas por el TTF el dominio como la aplicación de función y observamos que es posible obtener mejores resultados si se encuentran designadas las tres expresiones enumeradas anteriormente. De lo contrario nuestro sistema describirá los casos anteriores utilizando la terminología de funciones (dominio, aplicación, etc.) y puede hacer la interpretación del texto en término del dominio más compleja.

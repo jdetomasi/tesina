@@ -39,6 +39,10 @@
 % fix para 
 \renewcommand*\Call[2]{\textproc{#1}(#2)}
 
+\usepackage{hyperref}
+\hypersetup{pdftex,colorlinks=true,allcolors=blue}
+\usepackage{hypcap}
+
 \begin{document} 
 
 %%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%
@@ -57,7 +61,7 @@
 ~\vspace{\fill}
 
 {\huge 
-Generación de lenguaje natural a partir de clases de prueba del test template framework
+Generación de lenguaje natural a partir de clases de prueba del \textit{test template framework}
 }\\[0.6em]
 Tesina de Grado\\
 Licenciatura en Ciencias de la Computación
@@ -70,9 +74,8 @@ Julian De Tomasi
 
 \vspace{1.5cm}
 
-{\tiny Director}\\
+{\tiny Directores}\\
 Maximiliano Cristiá\\
-{\tiny Co-Director}\\
 Brian Plüss\\
 
 \vspace{2.5cm}
@@ -84,7 +87,7 @@ Universidad Nacional de Rosario
 
 \vspace{\fill}
 
-XXXX 2015
+Noviembre 2015
 
 %%%
 }%%%
@@ -94,11 +97,13 @@ XXXX 2015
 %%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%---%%%
 
 
-\tableofcontents*
+\tableofcontents
+
+\cleardoublepage
+\listoffigures
 
 \include{sec/introduccion}
 \include{sec/ttf}
-\include{sec/designaciones}
 \include{sec/nlg_intro}
 \include{sec/alcance}
 \include{sec/corpus}
@@ -109,7 +114,9 @@ XXXX 2015
 \include{sec/implementacion}
 \include{sec/evaluacion}
 \include{sec/conclusion}
+\appendix
 \include{sec/apendice_corpus}
+\include{sec/apendice_designaciones}
 
 \bibliographystyle{alpha}
 %\nocite{*}
