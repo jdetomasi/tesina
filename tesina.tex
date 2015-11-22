@@ -3,6 +3,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage[]{algorithm}
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\renewcommand{\listalgorithmname}{Índice de \ALG@name s}
+\makeatother
 \usepackage{algpseudocode}
 \usepackage{czt}
 \usepackage{float}
@@ -101,6 +105,10 @@ Noviembre 2015
 
 \cleardoublepage
 \listoffigures
+
+\cleardoublepage
+\listofalgorithms
+\addcontentsline{toc}{chapter}{Índice de algoritmos}
 
 \include{sec/introduccion}
 \include{sec/ttf}

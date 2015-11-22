@@ -83,7 +83,7 @@ La estructura de los documentos que debemos generar en este trabajo resulta rela
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.3]{img/text_spec.png}
-	\caption{Especificación de texto.}
+	\caption{Especificación de texto}
   	\label{fig:text_spec}
 \end{figure}
 
@@ -92,7 +92,7 @@ En la figura anterior podemos observar la estructura abstracta que tendrán nues
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.35]{img/ej_text_spec.png}
-	\caption{Ejemplo especificación del texto.}
+	\caption{Ejemplo especificación del texto}
   \label{fig:text_spec_ej}
 \end{figure}
 
@@ -105,7 +105,7 @@ En la literatura sobre NLG podemos encontrar muchas alternativas en lo que respe
 \begin{figure}[h]
   	\centering
 	\includegraphics[scale=0.7]{img/phrase_spec.png}
-	\caption{Especificación de frase.}
+	\caption{Especificación de frase}
   	\label{fig:phase_spec}
 \end{figure}
 
@@ -135,9 +135,9 @@ Como mencionamos anteriormente, el proceso de lexicalización será el encargado
 
 Como analizamos en el capítulo \ref{cap:corpus}, nuestro sistema deberá producir una oración en lenguaje natural para cada predicado incluido dentro del cuerpo de cada clase de prueba, a su vez, la verbalización para cada una de estas expresiones se encuentra caracterizada por un mensaje dentro del \textit{document plan}. Es por esto que el módulo encargado de esta tarea deberá ser capaz de generar una \emph{especificación de frase} a partir de la expresión Z contenida en cada uno de estos mensajes. De acuerdo a los requerimientos introducidos en el capítulo \ref{cap:corpus}, nuestro lexicalizador primero deberá verificar si la expresión en cuestión se encuentra designada, en este caso, tendrá que construir una especificación de frase en base a su designación. De lo contrario deberá intentar construirla recursivamente contemplando los casos para los distintos operadores y las posibles combinaciones. En el algoritmo~\ref{fig:algoritmo_lexicalizacion} podemos ver un bosquejo del comportamiento esperado para esta tarea, de acuerdo al análisis realizado en la sección \ref{sec:corpus_reglas}, trabajando esta vez con las especificaciones de frase definidas en la sección anterior. Incluimos sólo un bosquejo ya que ilustrar el comportamiento completo de esta tarea resulta extenso debido a la construcción y composición de elementos que debemos realizar para cada caso; en particular incluimos un caso para la lexicalización del operador $\in$ que utilizaremos posteriormente para desarrollar el ejemplo que presentaremos en la figura \ref{fig:phase_spec_ej}.
 
-%TODO ver como cambiar el caption de esto
 \begin{algorithm}[H]
-\caption{Bosquejo de \textsc{lexicalizacion} para el operador $\protect\in$.}\label{fig:algoritmo_lexicalizacion}
+\caption{Bosquejo de \textsc{lexicalizacion} para el operador $\protect\in$}
+\label{fig:algoritmo_lexicalizacion}
 \begin{algorithmic}[1]
 \Function {lexicalizacion}{exp}
 \If{\Call{esta\_designada}{exp}}
@@ -169,7 +169,7 @@ A continuación, retomaremos el ejemplo de la figura \ref{fig:text_spec} y verem
 \begin{figure}
   	\centering
 	\includegraphics[scale=0.25]{img/phrase_spec_ej.png}
-	\caption{Especificación de frase para $s? \protect\in \protect\dom st$.}
+	\caption{Especificación de frase para $s? \protect\in \protect\dom st$}
   	\label{fig:phase_spec_ej}
 \end{figure}
 
@@ -240,7 +240,7 @@ Donde para describir la expresión $s? \in \dom smax$ bastará con reemplazar el
 \begin{figure}[H]
   	\centering
 	\includegraphics[scale=0.5]{img/ej_lexicalizacion_desig.png}
-	\caption{Lexicalización $s? \protect\in \protect\dom smax$.}
+	\caption{Lexicalización $s? \protect\in \protect\dom smax$}
   	\label{fig:ej_lexicalizacion_desig}
 \end{figure}
 

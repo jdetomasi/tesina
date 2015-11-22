@@ -38,7 +38,7 @@ Será responsabilidad de la tarea de realización lingüística producir frases 
   
   \end{document}
   \end{verbatim}
-  \caption{Texto final en \LaTeX.}
+  \caption{Texto final en \LaTeX}
   \label{fig:ej_latex}
 \end{figure}
 
@@ -71,7 +71,7 @@ Es evidente que esta etapa será dependiente del sistema de presentación escogi
 </body>
 </html>
   \end{verbatim}
-  \caption{Texto final en HTML.}
+  \caption{Texto final en HTML}
   \label{fig:ej_html}
 \end{figure}
 
@@ -243,7 +243,7 @@ A continuación analizaremos la realización lingüística de cada uno de los el
 \textbf{\emph{FraseEnlatada.}} La realización de una frase enlatada resulta trivial, simplemente habrá que extraer el texto contenido en la misma sin necesidad de realizar ningún tipo de procesamiento.
 
 \begin{algorithm}[H]
-\caption{Realización lingüística \textit{FraseEnlatada}.}
+\caption{Realización lingüística \textit{FraseEnlatada}}
 \begin{algorithmic}[1]
 \Function {verbalizar}{FraseEnlatada frase}
 \State \textbf{return} frase.texto
@@ -257,7 +257,7 @@ A continuación analizaremos la realización lingüística de cada uno de los el
 \textbf{\emph{ElementosYuxtapuestos.}} Representa una concatenación de frases. El resultado de la verbalización deberá ser un texto que resulte de la unión de las verbalizaciones individuales de cada uno de los elementos contenidos, agregando los espacios correspondientes entre estos\footnote{Suponemos que la función \textsc{concat} además de concatenar los elementos agrega un espacio entre cada uno de éstos.} y respetando el orden en que se encuentren. 
 
 \begin{algorithm}[H]
-\caption{Realización lingüística \textit{ElementosYuxtapuestos}.} 
+\caption{Realización lingüística \textit{ElementosYuxtapuestos}} 
 \begin{algorithmic}[1]
 \Function {verbalizar}{ElementosYuxtapuestos elem}
 \For{\textbf{each} e \textbf{in} elem.elementos}
@@ -273,7 +273,7 @@ A continuación analizaremos la realización lingüística de cada uno de los el
 \textbf{\emph{ElementosCoordinados.}} Se trata de una serie de elementos que deberán ser verbalizados individualmente y unidos, de una forma similar a la anterior, a fin de obtener una conjunción de frases.
 
 \begin{algorithm}[H]
-\caption{Realización lingüística \textit{ElementosCoordinados}.}
+\caption{Realización lingüística \textit{ElementosCoordinados}}
 \begin{algorithmic}[1]
 \Function {verbalizar}{ElementosCoordinados elem}
 \For{\textbf{each} e \textbf{in} elem.elementos}
@@ -295,7 +295,7 @@ A continuación analizaremos la realización lingüística de cada uno de los el
 \textbf{\emph{FraseNominal.}} Para verbalizar una frase nominal, deberemos unir en orden \textit{determinante}, \textit{nucleo} y verbalizar recursivamente \textit{complemento} agregando los espacios correspondientes entre medio.
 
 \begin{algorithm}[H]
-\caption{Realización lingüística \textit{FraseNominal}.}
+\caption{Realización lingüística \textit{FraseNominal}}
 \begin{algorithmic}[1]
 \Function {verbalizar}{FraseNominal frase}
 \State nucleo $\gets$ frase.nucleo
@@ -341,7 +341,7 @@ La función \textsc{es\_nombre} deberá hacer uso de un analizador morfológico 
 \textbf{\emph{Oracion.}} Este es el caso más interesante para nuestro verbalizador. Deberemos generar una oración correcta en base a las reglas de concordancia gramatical antes mencionadas. 
 
 \begin{algorithm}[H]
-\caption{Realización lingüística Oracion.}
+\caption{Realización lingüística Oracion}
 \begin{algorithmic}[1]
 \Function {verbalizar}{Oracion oracion}
 \State sujeto $\gets$ \Call{verbalizar}{oracion.sujeto}
