@@ -1,0 +1,38 @@
+
+Notas:
+
+* 40 Slides máximo
+
+* Indice:
+  - Introduccion
+  - Requerimientos
+  - Desarrollo
+  - Trabajos futuros
+
+
+* Introducción
+  - Motivación
+  - Ejemplo
+  - Objetivo general
+
+ ---------------------------------------------------------------
+ \Slide 1:
+
+    - Motivacion
+
+    + Las metodologías de \emph{testing} basado en modelos, parten de un modelo formal (o especificación) del software a testear y a partir del mismo son generados los casos de prueba. 
+
+    + El TTF (\emph{Test Template Framework}) es un caso particular del testing basado en modelos. Utiliza como modelo de entrada una especificación formal en notación Z y establece cómo generar \emph{casos de prueba} para las operaciones incluidas en la especificación.
+
+    + Usualmente también se realizan procesos independientes de validación y verificación. Llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
+
+ - Objetivo general:
+
+
+Objetivo:
+Generación de descripciones en lenguaje natural a partir de clases de pruebas producidas por el TTF (\emph{Test Template Framework}).
+
+
+ \Slide 2:
+
+ \Slide 3:
