@@ -13,6 +13,7 @@
 \documentclass{beamer}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{czt}
 
 %\usetheme{Madrid}
 \usetheme{Antibes}
@@ -95,33 +96,63 @@ Directores: & Maximiliano Cristiá\\
   \begin{itemize}
 
   \item {
-    Las metodologías de \emph{testing} basado en modelos, parten de un modelo formal (o especificación) del software a testear y a partir del mismo son generados los casos de prueba. 
+    Las metodologías de \emph{testing} basado en modelos parten de un modelo formal (o especificación) del software a testear y a partir del mismo son generados los casos de prueba. 
   }
 
-  \note{
-    es una de las técnicas de testing más prometedoras para la verificación de software crítico
+  \note[item]{
+    Es una de las técnicas de testing más prometedoras para la verificación de software crítico.\\
   }
 
   \item {
     El TTF (\emph{Test Template Framework}) es un caso particular del testing basado en modelos. Utiliza como modelo de entrada una especificación formal en notación Z y establece cómo generar \emph{casos de prueba} para las operaciones incluidas en la especificación.
 
-  }\note{
-    El TTF propone en primera instancia obtener casos de prueba abstractos a partir de una especificación llamados \emph{clases de prueba} y luego, a partir de los mismos, generar los \emph{casos de prueba concretos}.
+  }
+
+  \note[item]{
+    El TTF propone en primera instancia obtener casos de prueba abstractos a partir de una especificación llamados \emph{clases de prueba} y luego, a partir de los mismos, generar los \emph{casos de prueba concretos}.\\
   }
 
   \item {
     Usualmente también se realizan procesos independientes de validación y verificación. Llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
   }
 
-  \note{
-    En estos casos, una descripción en lenguaje natural de cada caso de prueba debería acompañar a los mismos a fin de hacerlos accesibles para los expertos en el dominio.  
+  \note[item]{
+    En estos casos, una descripción en lenguaje natural de cada caso de prueba debería acompañar a los mismos a fin de hacerlos accesibles para los expertos en el dominio.\\
   }
 
   \end{itemize}
 \end{frame}
 
 
-\begin{frame}{Ejemplo}{}
+\begin{frame}{Ejemplo: SymbolTable}{}
+
+  \begin{itemize}
+  \item{
+  La operación \emph{Update} (parte de la especificación para una tabla de símbolos) modela la actualización de información asociada a un símbolo perteneciente a la tabla.
+  }
+  \end{itemize}
+
+  \note[item]{
+  Una tabla de símbolos es una estructura de datos utilizada por un compilador o intérprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. En general, en una tabla de símbolos se realizan dos operaciones: inserción/actualización y búsqueda.
+  }
+
+  %\begin{example}
+  \begin{schema}{Update}
+    \Delta ST \\
+    s?: SYM \\
+    v?: VAL \\
+    \where
+    st' = st \oplus \{s? \mapsto v?\} \\
+  \end{schema}
+  %\end{example}
+
+  \note[item]{
+  El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo.
+  }
+
+  \note[item]{
+  Finalmente, resulta natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos.
+  }
 
 \end{frame}
 
