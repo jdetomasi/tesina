@@ -113,7 +113,7 @@ Directores: & Maximiliano Cristiá\\
   }
 
   \item {
-    Usualmente también se realizan procesos independientes de validación y verificación. Llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
+    Usualmente también se realizan procesos independientes de validación y verificación, llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
   }
 
   \note[item]{
@@ -124,11 +124,10 @@ Directores: & Maximiliano Cristiá\\
 \end{frame}
 
 
-\begin{frame}{Ejemplo: SymbolTable}{}
+\begin{frame}{Ejemplo: SymbolTable}{Especificación}
 
   \begin{itemize}
-  \item{
-  La operación \emph{Update} (parte de la especificación para una tabla de símbolos) modela la actualización de información asociada a un símbolo perteneciente a la tabla.
+  \item{La operación \emph{Update} (parte de la especificación para una tabla de símbolos) modela la actualización de información asociada a un símbolo perteneciente a la tabla.
   }
   \end{itemize}
 
@@ -136,7 +135,8 @@ Directores: & Maximiliano Cristiá\\
   Una tabla de símbolos es una estructura de datos utilizada por un compilador o intérprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. En general, en una tabla de símbolos se realizan dos operaciones: inserción/actualización y búsqueda.
   }
 
-  %\begin{example}
+  \begin{exampleblock}{Especificación Update}
+  \vspace{-.5cm}
   \begin{schema}{Update}
     \Delta ST \\
     s?: SYM \\
@@ -144,7 +144,7 @@ Directores: & Maximiliano Cristiá\\
     \where
     st' = st \oplus \{s? \mapsto v?\} \\
   \end{schema}
-  %\end{example}
+  \end{exampleblock}
 
   \note[item]{
   El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo.
@@ -154,6 +154,18 @@ Directores: & Maximiliano Cristiá\\
   Finalmente, resulta natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos.
   }
 
+
+
+\end{frame}
+
+\begin{frame}{Ejemplo: SymbolTable}{Designaciones}
+\begin{exampleblock}{Designaciones}
+  \vspace{-.5cm}
+  \begin{align*} 
+    &\text{Símbolo a actualizar} && \approx &&&s? \\
+    &\text{Conjunto de símbolos cargados en la tabla} && \approx &&&\dom st
+  \end{align*}
+\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Objetivo general}{}
