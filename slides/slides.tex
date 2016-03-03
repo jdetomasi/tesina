@@ -60,9 +60,9 @@
 % the beginning of each subsection:
 \AtBeginSubsection[]
 {
-  \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
+    \begin{frame}<beamer>{Outline}
+        \tableofcontents[currentsection,currentsubsection]
+    \end{frame}
 }
 
 % Let's get started
@@ -70,102 +70,152 @@
 
 \title[NLG a partir de clases de prueba del TTF]{Generación de lenguaje natural a partir de clases de prueba del \textit{test template framework}}
 \institute[FCEIA - UNR]{
-Departamento de Ciencias de la Computación\\
-Facultad de Ciencias Exactas, Ingeniería y Agrimensura\\
-Universidad Nacional de Rosario
+    Departamento de Ciencias de la Computación\\
+    Facultad de Ciencias Exactas, Ingeniería y Agrimensura\\
+    Universidad Nacional de Rosario
 }
 \author[Julian De Tomasi]{\begin{tabular}{r@{ }l} 
-Autor:      & Julian De Tomasi \\[1ex]
-Directores: & Maximiliano Cristiá\\
-            & Brian Plüss
+        Autor:      & Julian De Tomasi \\[1ex]
+        Directores: & Maximiliano Cristiá\\
+          & Brian Plüss
 \end{tabular}}
 \date{Marzo, 2016}
 
 \begin{frame}
-  \titlepage
+    \titlepage
 \end{frame}
 
 \begin{frame}{Outline}
-  \tableofcontents
-  % You might wish to add the option [pausesections]
+    \tableofcontents
+    % You might wish to add the option [pausesections]
 \end{frame}
 
 \section{Introducción}
 
 \begin{frame}{Motivación}{}
-  \begin{itemize}
+    \begin{itemize}
 
-  \item {
-    Las metodologías de \emph{testing} basado en modelos parten de un modelo formal (o especificación) del software a testear y a partir del mismo son generados los casos de prueba. 
-  }
+        \item {
+                Las metodologías de \emph{testing} basado en modelos parten de un modelo formal (o especificación) del software a testear y a partir del mismo son generados los casos de prueba. 
+            }
 
-  \note[item]{
-    Es una de las técnicas de testing más prometedoras para la verificación de software crítico.\\
-  }
+            \note[item]{
+                Es una de las técnicas de testing más prometedoras para la verificación de software crítico.\\
+            }
 
-  \item {
-    El TTF (\emph{Test Template Framework}) es un caso particular del testing basado en modelos. Utiliza como modelo de entrada una especificación formal en notación Z y establece cómo generar \emph{casos de prueba} para las operaciones incluidas en la especificación.
+        \item {
+                El TTF (\emph{Test Template Framework}) es un caso particular del testing basado en modelos. Utiliza como modelo de entrada una especificación formal en notación Z y establece cómo generar \emph{casos de prueba} para las operaciones incluidas en la especificación.
 
-  }
+            }
 
-  \note[item]{
-    El TTF propone en primera instancia obtener casos de prueba abstractos a partir de una especificación llamados \emph{clases de prueba} y luego, a partir de los mismos, generar los \emph{casos de prueba concretos}.\\
-  }
+            \note[item]{
+                El TTF propone en primera instancia obtener casos de prueba abstractos a partir de una especificación llamados \emph{clases de prueba} y luego, a partir de los mismos, generar los \emph{casos de prueba concretos}.\\
+            }
 
-  \item {
-    Usualmente también se realizan procesos independientes de validación y verificación, llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
-  }
+        \item {
+                Usualmente también se realizan procesos independientes de validación y verificación, llevados a cabo por expertos en el dominio que generalmente no poseen conocimiento técnico para comprender lo que se esta siendo testeado.
+            }
 
-  \note[item]{
-    En estos casos, una descripción en lenguaje natural de cada caso de prueba debería acompañar a los mismos a fin de hacerlos accesibles para los expertos en el dominio.\\
-  }
+            \note[item]{
+                En estos casos, una descripción en lenguaje natural de cada caso de prueba debería acompañar a los mismos a fin de hacerlos accesibles para los expertos en el dominio.\\
+            }
 
-  \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
 \begin{frame}{Ejemplo: SymbolTable}{Especificación}
+    \begin{itemize}
+        \item{La operación \emph{Update} (parte de la especificación para una tabla de símbolos) modela la actualización de información asociada a un símbolo perteneciente a la tabla.
+            }
+    \end{itemize}
 
-  \begin{itemize}
-  \item{La operación \emph{Update} (parte de la especificación para una tabla de símbolos) modela la actualización de información asociada a un símbolo perteneciente a la tabla.
-  }
-  \end{itemize}
+    \note[item]{
+        Una tabla de símbolos es una estructura de datos utilizada por un compilador o intérprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. En general, en una tabla de símbolos se realizan dos operaciones: inserción/actualización y búsqueda.
+    }
 
-  \note[item]{
-  Una tabla de símbolos es una estructura de datos utilizada por un compilador o intérprete durante el proceso de traducción de un lenguaje de programación donde cada símbolo en el código del programa (variables, constantes, funciones, etc.) se asocia con información como la ubicación, tipo de datos, \textit{scope} de variables, etc. En general, en una tabla de símbolos se realizan dos operaciones: inserción/actualización y búsqueda.
-  }
+    \begin{exampleblock}{}
+        \vspace{-.5cm}
+        \begin{schema}{Update}
+            \Delta ST \\
+            s?: SYM \\
+            v?: VAL \\
+            \where
+            st' = st \oplus \{s? \mapsto v?\} \\
+        \end{schema}
+    \end{exampleblock}
 
-  \begin{exampleblock}{Especificación Update}
-  \vspace{-.5cm}
-  \begin{schema}{Update}
-    \Delta ST \\
-    s?: SYM \\
-    v?: VAL \\
-    \where
-    st' = st \oplus \{s? \mapsto v?\} \\
-  \end{schema}
-  \end{exampleblock}
+    \note[item]{
+        El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo.
+    }
 
-  \note[item]{
-  El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo.
-  }
-
-  \note[item]{
-  Finalmente, resulta natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos.
-  }
+    \note[item]{
+        Finalmente, resulta natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos.
+    }
 
 
 
 \end{frame}
 
 \begin{frame}{Ejemplo: SymbolTable}{Designaciones}
-\begin{exampleblock}{Designaciones}
-  \vspace{-.5cm}
-  \begin{align*} 
-    &\text{Símbolo a actualizar} && \approx &&&s? \\
-    &\text{Conjunto de símbolos cargados en la tabla} && \approx &&&\dom st
-  \end{align*}
-\end{exampleblock}
+
+    \note[item]{
+        Vinculamos los términos del modelo formal a elementos relacionados con el dominio de aplicación mediante las designaciones.
+    }
+
+    \note[item]{
+        Las designaciones sirven en primera instancia cuando se empieza a escribir la especificación para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación.
+    }
+
+    \note[item]{
+        Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
+    }
+
+    \begin{itemize}
+        \item{
+                Utilizaremos a las designaciones de una manera similar a la propuesta por Jackson. Además del proposito habitual de las mismas, resultarán una fuente de conocimiento para nuestro sistema de NLG.
+            }
+
+        \item{
+                Dentro de las designaciones que acompañan a la especificación, podemos tener las siguientes: \\
+                \begin{exampleblock}{}
+                    \vspace{-.5cm}
+                    \begin{align*} 
+                        &\text{Símbolo a actualizar} && \approx &&&s? \\
+      &\text{Conjunto de símbolos cargados en la tabla} && \approx &&&\dom st
+                    \end{align*}
+                \end{exampleblock}
+            }
+    \end{itemize}
+
+    \note[item]{
+        Los sistemas de generación de lenguaje natural generalmente utilizan un diccionario de palabras o frases, las cuales se utilizan para referirse a fenómenos del dominio. En nuestro caso, el dominio de aplicación dependerá de la especificación en cuestión y de lo que se modele con la misma, por lo tanto, las designaciones resultarán nuestra única fuente de textos dependientes del dominio y es por eso que serán un elemento fundamental para nuestro sistema de NLG.
+    }
+
+\end{frame}
+
+\begin{frame}{Ejemplo: SymbolTable}{Clase y caso de prueba para \emph{Update}}
+
+    \begin{itemize}
+        \item{
+                Clase de prueba generada por medio del TTF para \emph{Update}:
+            }
+
+        \item{
+                Caso de prueba para \emph{Update\_SP\_4}
+            }
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Ejemplo: SymbolTable}{Descripción para \emph{Update\_SP\_4}}
+
+    \begin{itemize}
+        \item{
+                Descripción en lenguaje natural para \emph{Update\_SP\_4}:
+            }
+    \end{itemize}
+
 \end{frame}
 
 \begin{frame}{Objetivo general}{}
@@ -193,14 +243,14 @@ Directores: & Maximiliano Cristiá\\
 \subsection{First Subsection}
 
 \begin{frame}{First Slide Title}{Optional Subtitle}
-  \begin{itemize}
-  \item {
-    My first point.
-  }
-  \item {
-    My second point.
-  }
-  \end{itemize}
+    \begin{itemize}
+        \item {
+                My first point.
+            }
+        \item {
+                My second point.
+            }
+    \end{itemize}
 \end{frame}
 
 \subsection{Second Subsection}
@@ -208,28 +258,28 @@ Directores: & Maximiliano Cristiá\\
 % You can reveal the parts of a slide one at a time
 % with the \pause command:
 \begin{frame}{Second Slide Title}
-  \begin{itemize}
-  \item {
-    First item.
-    \pause % The slide will pause after showing the first item
-  }
-  \item {   
-    Second item.
-  }
-  % You can also specify when the content should appear
-  % by using <n->:
-  \item<3-> {
-    Third item.
-  }
-  \item<4-> {
-    Fourth item.
-  }
-  % or you can use the \uncover command to reveal general
-  % content (not just \items):
-  \item<5-> {
-    Fifth item. \uncover<6->{Extra text in the fifth item.}
-  }
-  \end{itemize}
+    \begin{itemize}
+        \item {
+                First item.
+                \pause % The slide will pause after showing the first item
+            }
+        \item {   
+                Second item.
+            }
+            % You can also specify when the content should appear
+            % by using <n->:
+        \item<3-> {
+                Third item.
+            }
+        \item<4-> {
+                Fourth item.
+            }
+            % or you can use the \uncover command to reveal general
+            % content (not just \items):
+        \item<5-> {
+                Fifth item. \uncover<6->{Extra text in the fifth item.}
+            }
+    \end{itemize}
 \end{frame}
 
 \section{Second Main Section}
@@ -237,15 +287,15 @@ Directores: & Maximiliano Cristiá\\
 \subsection{Another Subsection}
 
 \begin{frame}{Blocks}
-\begin{block}{Block Title}
-You can also highlight sections of your presentation in a block, with it's own title
-\end{block}
-\begin{theorem}
-There are separate environments for theorems, examples, definitions and proofs.
-\end{theorem}
-\begin{example}
-Here is an example of an example block.
-\end{example}
+    \begin{block}{Block Title}
+        You can also highlight sections of your presentation in a block, with it's own title
+    \end{block}
+    \begin{theorem}
+        There are separate environments for theorems, examples, definitions and proofs.
+    \end{theorem}
+    \begin{example}
+        Here is an example of an example block.
+    \end{example}
 \end{frame}
 
 % Placing a * after \section means it will not show in the
@@ -253,25 +303,25 @@ Here is an example of an example block.
 \section*{Summary}
 
 \begin{frame}{Summary}
-  \begin{itemize}
-  \item
-    The \alert{first main message} of your talk in one or two lines.
-  \item
-    The \alert{second main message} of your talk in one or two lines.
-  \item
-    Perhaps a \alert{third message}, but not more than that.
-  \end{itemize}
-  
-  \begin{itemize}
-  \item
-    Outlook
     \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
+        \item
+            The \alert{first main message} of your talk in one or two lines.
+        \item
+            The \alert{second main message} of your talk in one or two lines.
+        \item
+            Perhaps a \alert{third message}, but not more than that.
     \end{itemize}
-  \end{itemize}
+
+    \begin{itemize}
+        \item
+            Outlook
+            \begin{itemize}
+                \item
+                    Something you haven't solved.
+                \item
+                    Something else you haven't solved.
+            \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
@@ -282,28 +332,28 @@ Here is an example of an example block.
 \subsection<presentation>*{For Further Reading}
 
 \begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Start with overview books.
+    \frametitle<presentation>{For Further Reading}
 
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
- 
-    
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
+    \begin{thebibliography}{10}
 
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
+            \beamertemplatebookbibitems
+            % Start with overview books.
+
+        \bibitem{Author1990}
+            A.~Author.
+            \newblock {\em Handbook of Everything}.
+            \newblock Some Press, 1990.
+
+
+            \beamertemplatearticlebibitems
+            % Followed by interesting articles. Keep the list short. 
+
+        \bibitem{Someone2000}
+            S.~Someone.
+            \newblock On this and that.
+            \newblock {\em Journal of This and That}, 2(1):50--100,
+            2000.
+    \end{thebibliography}
 \end{frame}
 
 \end{document} 
