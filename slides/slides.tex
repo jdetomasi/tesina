@@ -1,3 +1,12 @@
+% TODO
+% - Arquitectura sistemas NLG (3 slides aprox)
+% - Requerimientos. Aca presentar la clase de prueba generada por Fastest y comentar algunas de las tranformaciones que le tendremos que hacer para generar mejores descripciones.
+% - Desarrollo, ya con todos los requerimientos presentados, deberían ser unas pocas slides (3 o 4) por etapa.
+%
+% 0) Hacer algo con los exampleblock (o usarlos para todos los esquemas Z o no usarlo para ninguno). En caso de usarlos, ver la forma que queden mas "lindos", que no ocupen el 100% de la página en una lista de items por ej.
+% 1) Armar un bosquejo de las slides que faltan y luego pegarle una corregida agregando todas las notas necesarias.
+%
+
 % Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
 %
 % In principle, this file can be redistributed and/or modified under
@@ -53,8 +62,8 @@
 % is a graphic format that can be processed by latex or pdflatex,
 % resp., then you can add a logo as follows:
 
-% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
-% \logo{\pgfuseimage{university-logo}}
+\pgfdeclareimage[height=0.5cm]{university-logo}{../img/unr.png}
+\logo{\pgfuseimage{university-logo}}
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
@@ -194,31 +203,76 @@
 
 \end{frame}
 
-\begin{frame}{Ejemplo: SymbolTable}{Clase y caso de prueba para \emph{Update}}
-
-    \begin{itemize}
+\begin{frame}{Ejemplo: SymbolTable}{Caso de prueba para \emph{Update}}
+	\begin{itemize}
+	\vspace{-.5cm}
         \item{
-                Clase de prueba generada por medio del TTF para \emph{Update}:
-            }
-
-        \item{
-                Caso de prueba para \emph{Update\_SP\_4}
-            }
+                Caso de prueba para \emph{Update\_SP\_4}:\\
+		\vspace{-.5cm}
+		\begin{schema}{Update\_ SP\_ 4\_ TCASE}\\
+			Update\_ SP\_ 4 
+			\where
+			st = \{ ( sym0 , val0 ) \} \\
+			s? = sym0 \\
+			v? = val0
+		\end{schema}
+	}
     \end{itemize}
+\end{frame}
 
+\begin{frame}{Ejemplo: SymbolTable}{Clase de prueba para \emph{Update}}
+	\begin{itemize}
+        \item{
+                Clase de prueba generada por medio del TTF para \emph{Update}:\\
+		\vspace{-.5cm}
+		\begin{schema}{Update\_ SP\_ 4}\\
+			st : SYM \pfun VAL \\
+			s? : SYM \\
+			\where
+			\dom st = \{ s? \}
+		\end{schema}
+        }
+
+	\item{
+		Las \emph{clases de prueba} son las que contienen la información referente a las alternativas funcionales que se intentan testear mediante cada \emph{caso de prueba} generado.
+	}
+	
+	\note[item]{
+		La clase de prueba presentada es una versión simplificada de la generada por Fastest. Más adelante veremos la clase de prueba generada por la herramienta y como nuestro sistema trabajará con ella para obtener una similar a la anterior.
+	}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}{Ejemplo: SymbolTable}{Descripción para \emph{Update\_SP\_4}}
 
     \begin{itemize}
         \item{
-                Descripción en lenguaje natural para \emph{Update\_SP\_4}:
+                Descripción en lenguaje natural para \emph{Update\_SP\_4}:\\
+		\begin{exampleblock}{Se intenta actualizar un símbolo en la tabla, cuando:}
+			%\begin{itemize}[leftmargin=*]
+			$-$ El símbolo a actualizar es el único símbolo cargado en la tabla de símbolos.
+			%\end{itemize}
+		\end{exampleblock}
             }
+	\item{
+		En sistemas en los que hay una gran cantidad de casos de prueba, traducir manualmente los mismos podría introducir errores humanos, reduciendo la calidad de las descripciones además de incrementar el costo del testing.
+	}
     \end{itemize}
 
 \end{frame}
 
 \begin{frame}{Objetivo general}{}
+	\begin{itemize}
+		\item{
+			El objetivo de este trabajo, será entonces, desarrollar una solución para la generación automática de descripciones para los casos de prueba generados por el TTF. Para esto, utilizaremos técnicas de \emph{generación de lenguaje natural}.
+		}
+		\item{
+			Trabajaremos principalmente con las \emph{clases de prueba}, ya que estas son las que contienen la información referente a las alternativas funcionales que se intentan testear mediante cada \emph{caso de prueba}.
+		}
+		\item{
+			Pretendemos una solución independiente del número de operaciones del modelo así como del dominio de aplicación del mismo. Para esto, junto con la utilización de técnicas de NLG, haremos uso de la información contenida en las designaciones.
+		}
+	\end{itemize}
 \end{frame}
 
 \section{Requerimientos}
