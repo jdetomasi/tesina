@@ -111,21 +111,23 @@ Las alternativas funcionales antes mencionadas pueden expresarse como restriccio
 \noindent
 define una clase de prueba para el esquema \emph{LookUp}, introducido anteriormente, donde $st$ y $s?$ son variables de estado y de entrada respectivamente, y $s? \in \dom st$ es la restricción sobre las mismas. 
 
-Por otro lado, necesitaremos buscar valores específicos, o constantes, para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implemente la especificación. Llamaremos \emph{caso de prueba} a una tupla de valores para las variables involucradas en la clase de prueba que cumplan con la restricción de la misma. Nos bastará con escoger un único \emph{caso de prueba} para cada clase de prueba generada (observemos que en algunos casos, como por ejemplo para la clase de prueba antes presentada, podríamos encontrar infinitos valores posibles para las variables de la clase de prueba que cumplan con la restricción).
+Por otro lado, necesitaremos buscar valores específicos, o constantes, para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implemente la especificación. Llamaremos \emph{caso de prueba} a la tupla conformada por los valores correspondientes a cada una de las variables involucradas en la clase de prueba que satisfagan la restricción de ésta. Nos bastará con escoger un único \emph{caso de prueba} para cada clase de prueba generada (observemos que en algunos casos, como por ejemplo para la clase de prueba antes presentada, podríamos encontrar infinitos valores posibles para las variables de la clase de prueba que cumplan con la restricción).
 
-Por otro lado, en muchos casos, necesitaremos definir las constantes necesarias para los tipos involucrados en la \emph{clase de prueba}, por ejemplo, para los tipos $SYM$ y $VAL$ involucrados en la clase de prueba presentada anteriormente, podríamos definir:
+Como mencionamos recientemente, los casos de prueba son tuplas conformadas por constantes correspondientes a cada una de las variables involucradas en las clases de prueba correspondientes. Para los tipos dados por el lenguaje, como por ejemplo $\mathbb Z$, las constantes ya se encuentran definidas en el lenguaje, pero esto no ocurre cuando trabajamos con tipos introducidos por el especificador, como $SYM$ y $VAL$ definidos en el ejemplo que venimos estudiando. En estas circunstancias, será necesario definir constantes para estos tipos de datos a fin de poder luego utilizarlas en nuestros casos de prueba. Continuando con el ejemplo, para $SYM$ y $VAL$ podemos definir:
 
 \begin{axdef}
 sym_{1}: SYM \\
 val_{1}: VAL
 \end{axdef}
 
-Finalmente, estamos en condiciones de definir un \emph{caso de prueba} correspondiente a la clase de prueba $LookUp_{1}^{FND}$ de la siguiente manera:
+Ahora que contamos con estas constantes, estamos en condiciones de definir un caso de prueba para la clase de prueba $LookUp_{1}^{FND}$ de la siguiente manera:
 
 \begin{figure}[H]
 \center
 $LookUp_{TC}^{1} == [LookUp_{1}^{FND}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
 \end{figure}
+
+Podemos observar en el caso de prueba presentado que hemos asignamos una constante a cada una de las variables del $VIS$ de forma tal que satisfaga la restricción de la clase de prueba en cuestión.
 
 \subsection{Generación de clases de prueba}
 \label{sec:tacticas-testing}
