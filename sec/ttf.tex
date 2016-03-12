@@ -32,10 +32,11 @@ En general, en una tabla de símbolos se realizan dos operaciones: inserción y 
 \textbf{Tipos elementales.} Es irrelevante para nuestro modelo especificar en detalle la estructura con la cual representaremos el conjunto de símbolos aceptados por el compilador/interprete, así como la información relativa a los mismos. Para esto, podemos abstraer los conjuntos antes mencionados utilizando los siguientes tipos básicos: 
 
 \begin{zed}
-[SYM, VAL]
+[SYM, VAL] \also
+REPORT ::= ok | symbolNotPresent
 \end{zed}
 
-El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo.
+El tipo básico \emph{SYM} representará el conjunto de todos los símbolos aceptados por el compilador/interprete, mientras que \emph{VAL} abstraerá el conjunto de toda la información que pudiese estar asociada a un símbolo. Por otro lado, \emph{REPORT} será utilizado para modelar la salida de las operaciones incluidas en la especificación. Una operación podrá ser ejecutada exitosamente o fallar (por ejemplo en caso de realizar una búsqueda de un símbolo que no se encuentre presente en la tabla).
  
 \bigskip
 \noindent
