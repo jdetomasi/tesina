@@ -146,7 +146,14 @@ En los casos en los que las operaciones son parciales, no tendrá sentido probar
   VIS_{Op} == [IS | pre~Op]
 \end{zed}
 
-El \emph{VIS} será un subconjunto del \emph{IS} para los cuales tiene sentido testear el programa. En el caso de \emph{LookUp}, su \emph{VIS} es igual a su \emph{IS}, ya que la operación es total. El \emph{IS} y el \emph{VIS} no coincidirían si la operación \emph{LookUp}, por ejemplo, no se hubiera incluido el esquema de error. En ese caso tendríamos:
+El \emph{VIS} será un subconjunto del \emph{IS} para los cuales tiene sentido testear el programa. Para el caso de \emph{LookUp} será:
+
+\begin{zed}
+  VIS_{LookUp} == IS
+\end{zed}
+
+\noindent
+ya que la operación es total. El \emph{IS} y el \emph{VIS} no coincidirían si la operación \emph{LookUp}, por ejemplo, no se hubiera incluido el esquema de error. En ese caso tendríamos:
 
 \begin{zed}
   IS == [st: SYM \pfun VAL; s?: SYM] \\
