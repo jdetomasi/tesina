@@ -185,8 +185,8 @@ Asumimos que contaremos con las siguientes designaciones:
 %TODO ver esto
 \begin{figure}[H]
 \begin{align*} 
-  &s? && \approx \text{el símbolo a buscar} \\
-  &dom~st && \approx \text{símbolos cargados en la tabla de símbolos}
+  &\text{el símbolo a buscar} && \approx &s? \\
+  &\text{símbolos cargados en la tabla de símbolos} && \approx &dom~st 
 \end{align*}
 \end{figure}
 
@@ -210,7 +210,7 @@ Para este trabajo, estudiaremos por separado las designaciones parametrizadas y 
 Comencemos por analizar la lexicalización de una expresión que se encuentra designada por medio de una designación no parametrizada. Por ejemplo, supongamos que queremos construir una especificación de frase para la expresión $s?$ del ejemplo utilizado en la sección anterior. Recordemos que la designación para la misma es:
 
 \begin{center} 
-  $s? \approx \text{el símbolo a buscar}$ 
+  $\text{el símbolo a buscar} \approx s?$ 
 \end{center}
 
 La oración utilizada en la designación anterior, como en los casos observados en el corpus (para designaciones no parametrizadas) resulta un \emph{sintagma nominal}. En este caso ``símbolo'' es el núcleo, ``el'' cumple la función de determinante y ``a buscar'' es el complemento. Será posible entonces, para nuestra tarea de lexicalización, modelar estas frases utilizando una \emph{FraseNominal}. 
@@ -230,8 +230,8 @@ Veamos por ejemplo las siguientes designaciones para una especificación que mod
 
 \begin{figure}[H]
 \begin{align*} 
-  &x \in \dom smax && \approx \text{x es un identificador válido} \\
-  &s? && \approx \text{el identificador del sensor leído}
+  &\text{x es un identificador válido} && \approx &x \in \dom smax \\
+  &\text{el identificador del sensor leído} && \approx &s? 
 \end{align*}
 \end{figure}
 
