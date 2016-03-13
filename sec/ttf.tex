@@ -168,7 +168,7 @@ A continuación, mostraremos la aplicación de algunas tácticas de \textit{test
 \noindent
 \textbf{Forma Normal Disyuntiva.} Suele ser la primer táctica que se aplica. Esta expresará la operación como una disyunción de esquemas en los cuales únicamente habrá conjunciones de literales o de negaciones de literales y luego dividirá el \emph{VIS} con las pre-condiciones de cada esquema. 
 
-Continuando con el ejemplo, \emph{LookUp} ya es una disyunción y cada uno de los esquemas que la forman se encuentra en DNF. Por lo tanto, solo deberemos dividir el \emph{VIS} con la precondición de cada uno de ellos, de la siguiente forma:
+Continuando con el ejemplo, \emph{LookUp} ya es una disyunción y cada uno de los esquemas que la forman se encuentra en DNF (del inglés \emph{Disjunctive Normal Form}). Por lo tanto, solo deberemos dividir el \emph{VIS} con la precondición de cada uno de ellos, de la siguiente forma:
 
 \begin{zed}
   LookUp_{1}^{DNF} == [VIS_{LookUp} | s? \in \dom st] \\
@@ -184,16 +184,16 @@ De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple
 
 \bigskip
 \noindent
-\textbf{Partición Estándar.} Esta táctica trata con los operadores matemáticos de una operación. Una partición estándar es una partición del dominio del operador en conjuntos llamados \emph{sub-dominios}. En la figura~\ref{ej:partition_in} podemos ver una partición estándar para los operadores $\in$ y $\notin$.
+\textbf{Partición Estándar.} Esta táctica trata con los operadores matemáticos de una operación. Una partición estándar es una partición del dominio del operador en conjuntos llamados \emph{sub-dominios}. En la figura~\ref{ej:partition_in} podemos ver la partición estándar utilizada por \emph{Fastest} para el operador $\in$.
 
 \begin{figure}[H]
 \begin{framed}
-  \begin{tabular}{l l l l}
-    1. $A = \{\}$ & 3. $A = \{b\}$ & 5. $A = \{b, c\}$  & 7. $\{b, c\} \subset A, a \notin A$ \\ 
-    2. $A = \{a\}$ & 4. $A = \{a, b\}$ & 6. $\{a, b\} \subset A$ &   \\ 
-  \end{tabular}
+  \begin{enumerate}
+    \item $A = \{a\}$
+    \item $A \neq \{a\}, a \in A$
+  \end{enumerate}
   \end{framed}
-  \caption{Partición estándar para a $\protect\in$ A; se asume que $a, b \text{ y } c$ son tres elementos diferentes}
+  \caption{Partición estándar para a $\protect\in$ A}
   \label{ej:partition_in}
 \end{figure}
 
@@ -207,13 +207,8 @@ El siguiente paso será reemplazar los parámetros formales que aparecen en la d
 
 
 \begin{zed}
-  LookUp_{1}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{\}] \\
-  LookUp_{2}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{s?\}] \\
-  LookUp_{3}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{b\}] \\
-  LookUp_{4}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{s?, b\}] \\
-  LookUp_{5}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{b, c\}] \\
-  LookUp_{6}^{SP} == [LookUp_{1}^{DNF} | \{s?, b\} \subset \dom st] \\
-  LookUp_{7}^{SP} == [LookUp_{1}^{DNF} | \{b, c\} \subset \dom st \land s? \notin \dom st] \\
+  LookUp_{1}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{s?\}] \\
+  LookUp_{2}^{SP} == [LookUp_{1}^{DNF} | \dom st \neq \{s?\} \land s? \in \dom st] \\
 \end{zed}
 
 Luego podríamos continuar aplicando nuevas tácticas y particionando aún más el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y consideramos que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
@@ -276,7 +271,7 @@ Fastest> showsch -tcl -u 2
 \label{ej:comandos_fastest}
 \end{figure}
 
-Como se podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipos sobre la especificación y en caso de encontrar algún error lo informa por pantalla. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
+Como se podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
 
 Observemos que \emph{Fastest} utiliza una notación levemente diferente, pero equivalente, a la introducida en este capítulo para nombrar las clases y casos de prueba. En lo que queda de este trabajo, seguiremos estilo propuesto por \emph{Fastest} cuando hagamos referencia a clases y casos de prueba generados por medio de esta herramienta.
 
