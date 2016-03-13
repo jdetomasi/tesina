@@ -89,7 +89,7 @@ Como vemos, el texto \emph{``\textbf{pertenece a}''} aparece en ambas descripcio
 {
 \begin{figure}[H]
 \center
-$verb' (x \in y) = verb'(x) + \text{\emph{``pertenece a''}} + verb'(y)$\footnotemark
+$\texttt{verb'} (x \in y) = \texttt{verb'}(x) + \text{\emph{``pertenece a''}} + \texttt{verb'}(y)$
 \end{figure}
 }
 
@@ -106,14 +106,14 @@ En este caso, según la verbalización propuesta anteriormente, podríamos verba
 
 \begin{figure}[H]
 \center
-$verb' (s? \in \dom st) \rightarrow verb'(s?) + \text{\emph{``pertenece a''}} + verb'(\dom st)$
+$\texttt{verb'} (s? \in \dom st) \rightarrow \texttt{verb'}(s?) + \text{\emph{``pertenece a''}} + \texttt{verb'}(\dom st)$
 \end{figure}
 
 Teniendo que verbalizar $s?$ y $\dom st$. En este caso, ambas expresiones se encuentran designadas, lo que sería de gran ayuda para nuestra tarea de verbalización ya que en estas situaciones podremos construir la descripción en base al texto presente en la designación y sin intentar verbalizar la expresión en base al término Z que la compone. En el ejemplo anterior, no deberíamos intentar verbalizar $\dom st$ como:
 
 \begin{figure}[H]
 \center
-$verb'(\dom st) \rightarrow \text{\emph{``el dominio''}} + verb(st)$
+$\texttt{verb'}(\dom st) \rightarrow \text{\emph{``el dominio''}} + \texttt{verb}(st)$
 \end{figure}
 
 \noindent
@@ -140,7 +140,7 @@ Tanto para determinar si una expresión se encuentra designada como para generar
 
 \begin{figure}[H]
 \center
-$designacion(s?) \rightarrow \text{\emph{``símbolo a buscar''}}$
+$\texttt{designacion}(s?) \rightarrow \text{\emph{``símbolo a buscar''}}$
 \end{figure}
 
 \noindent
@@ -148,7 +148,7 @@ Por otro lado, si se tratase de un término que concuerda con una designación p
 
 \begin{figure}[H]
 \center
-$designacion(st~s?) \rightarrow \text{\emph{``información asociada a''}} + verb(s?)$
+$\texttt{designacion}(st~s?) \rightarrow \text{\emph{``información asociada a''}} + \texttt{verb}(s?)$
 \end{figure}
 
 %\section{Rol de las designaciones}
