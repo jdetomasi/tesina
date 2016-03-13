@@ -105,7 +105,7 @@ La propuesta de Stocks y Carrington~\cite{stocks} es utilizar la especificación
 Las alternativas funcionales antes mencionadas pueden expresarse como restricciones sobre las variables de entrada y de estado definidas para la especificación. Estas alternativas pueden ser especificadas mediante esquemas Z a los que llamaremos \emph{clases de prueba}. Por ejemplo:
 
 \begin{zed}
-   LookUp_{1}^{FND} == [st: SYM \pfun VAL; s?: SYM  | s? \in \dom st] \\
+   LookUp_{1}^{DNF} == [st: SYM \pfun VAL; s?: SYM  | s? \in \dom st] \\
 \end{zed}
 
 \noindent
@@ -120,11 +120,11 @@ sym_{1}: SYM \\
 val_{1}: VAL
 \end{axdef}
 
-Ahora que contamos con estas constantes, estamos en condiciones de definir un caso de prueba para la clase de prueba $LookUp_{1}^{FND}$ de la siguiente manera:
+Ahora que contamos con estas constantes, estamos en condiciones de definir un caso de prueba para la clase de prueba $LookUp_{1}^{DNF}$ de la siguiente manera:
 
 \begin{figure}[H]
 \center
-$LookUp_{TC}^{1} == [LookUp_{1}^{FND}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
+$LookUp_{TC}^{1} == [LookUp_{1}^{DNF}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
 \end{figure}
 
 Podemos observar en el caso de prueba presentado que hemos asignamos una constante a cada una de las variables del $VIS$ de forma tal que satisfaga la restricción de la clase de prueba en cuestión.
@@ -199,7 +199,7 @@ De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple
 
 Para aplicar esta táctica primero hay que seleccionar un operador de un predicado incluido en el esquema de la operación a testear.
 
-Siguiendo con el ejemplo anterior, aplicaremos la técnica de partición estándar a la clase de prueba \emph{LookUp\_DNF\_1}. En primer lugar, deberemos seleccionar una aparición de un operador en el esquema de la operación \emph{LookUp}. 
+Siguiendo con el ejemplo anterior, aplicaremos la técnica de partición estándar a la clase de prueba $LookUp_{1}^{DNF}$. En primer lugar, deberemos seleccionar una aparición de un operador en el esquema de la operación \emph{LookUp}. 
 Nosotros elegiremos el operador $\in$ de la expresión ``$s? \in \dom st$''.
 
 
@@ -223,7 +223,7 @@ Luego podríamos continuar aplicando nuevas tácticas y particionando aún más 
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-A continuación, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba de la sección anterior\footnote{Puede ser necesario modificar la partición estándar para el operador $\in$ utilizada por \emph{Fastest} para obtener los mismos resultados ya que la versión 1.6 de \emph{Fastest} utiliza una Partición Estándar diferente para el operador $\in$.}.
+A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección.
 
 
 \begin{figure}[H]
@@ -239,34 +239,46 @@ Fastest> genalltt
 Generating test tree for 'LookUp' operation.
 Fastest> addtactic LookUp_DNF_1 SP \in s? \in \dom st
 Fastest> genalltt                                    
-Fastest> showsch -tcl
+Fastest> showsch -tcl -u 2
 
 \begin{schema}{LookUp\_ DNF\_ 1}\\
- LookUp\_ VIS 
+ st : SYM \pfun VAL \\
+ s? : SYM 
 \where
  s? \in \dom st
 \end{schema}
 
-
 \begin{schema}{LookUp\_ SP\_ 1}\\
- LookUp\_ DNF\_ 1 
+ st : SYM \pfun VAL \\
+ s? : SYM 
 \where
- \dom st = \{ \}
-\end{schema}
-
-
-\begin{schema}{LookUp\_ SP\_ 2}\\
- LookUp\_ DNF\_ 1 
-\where
+ s? \in \dom st \\
  \dom st = \{ s? \}
 \end{schema}
 
-...
+\begin{schema}{LookUp\_ SP\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ \dom st \neq \{ s? \} \\
+ s? \in \dom st
+\end{schema}
+
+\begin{schema}{LookUp\_ DNF\_ 2}\\
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \notin \dom st
+\end{schema}
 \end{Verbatim}
 \caption{Comandos para generación de clases de prueba en \emph{Fastest}}
 \label{ej:comandos_fastest}
 \end{figure}
 
+Como se podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipos sobre la especificación y en caso de encontrar algún error lo informa por pantalla. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
+
+Observemos que \emph{Fastest} utiliza una notación levemente diferente, pero equivalente, a la introducida en este capítulo para nombrar las clases y casos de prueba. En lo que queda de este trabajo, seguiremos estilo propuesto por \emph{Fastest} cuando hagamos referencia a clases y casos de prueba generados por medio de esta herramienta.
 
 En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en \textit{templates} para traducir los casos de prueba obtenidos \cite{cristia_pluss}. La situación propuesta en el trabajo recién mencionado fue una solución ad-hoc, dependiente del dominio de aplicación y de la cantidad de operaciones.
 
