@@ -19,10 +19,11 @@ En la figura~\ref{fig:ej_corpus} podemos observar uno de los ejemplos incluidos 
 \begin{itemize}
 \item \emph{Clase de prueba para operación LookUp}\\
 \begin{schema}{LookUp\_ SP\_ 1}\\
-  LookUp\_ VIS 
-  \where
-    s? \in \dom st \\
-    \dom st = \{ s? \}
+ st : SYM \pfun VAL \\
+ s? : SYM 
+\where
+ s? \in \dom st \\
+ \dom st = \{ s? \}
 \end{schema}
 
 \item \emph{Designaciones SymbolTable}\\
