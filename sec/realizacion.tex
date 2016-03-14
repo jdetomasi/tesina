@@ -9,7 +9,7 @@ En las próximas secciones introduciremos las tareas que deberemos llevar a cabo
 
 \section{Tareas del realizador de superficie}
 
-Como mencionamos en el capítulo \ref{cap:nlg_intro}, el realizador de superficie será el encargado de transformar la especificación del texto producida en la etapa de \textit{microplanning} en el documento final. Deberá transformar esta representación abstracta del documento en frases, signos de puntuación y algunas etiquetas de \textit{mark-up} necesarias\footnote{Por ejemplo, para delimitar un nuevo párrafo en \LaTeX deberemos introducir una línea en blanco antes del comienzo del mismo, para hacerlo en un documento HTML tendremos que delimitar el mismo utilizando las etiquetas \textit{<P>} y \textit{</P>}.}. Estas últimas dependerán del sistema de presentación utilizado (un archivo de texto, rtf, word, latex, pdf, etc.).
+Como mencionamos en el capítulo \ref{cap:nlg_intro}, el realizador de superficie será el encargado de transformar la especificación del texto producida en la etapa de \textit{microplanning} en el documento final. Deberá transformar esta representación abstracta del documento en frases, signos de puntuación y algunas etiquetas de \textit{mark-up} necesarias\footnote{Por ejemplo, para delimitar un nuevo párrafo en \LaTeX deberemos introducir una línea en blanco antes del comienzo del mismo, para hacerlo en un documento HTML tendremos que delimitar el mismo utilizando las etiquetas $<P>$ y $</P>$.}. Estas últimas dependerán del sistema de presentación utilizado (un archivo de texto, rtf, word, latex, pdf, etc.).
 
 En el capítulo anterior vimos que la especificación del documento es un árbol, cuyas hojas son especificaciones de frases y sus nodos internos representan cómo las anteriores deberán estar agrupadas en el documento final (en general estos nodos representan secciones, párrafos, listas de ítems, etc). Para transformar esta especificación en texto de superficie, nuestro realizador deberá llevar a cabo dos tareas: \emph{realización estructural} y \emph{realización lingüística}. La primera se encargará de \emph{mapear} los nodos internos antes mencionados en anotaciones para el sistema de presentación a utilizar. Por otro lado, la realización lingüística deberá convertir las especificaciones de frase en oraciones sintáctica, morfológica y ortográficamente correctas.
 
@@ -23,20 +23,21 @@ Será responsabilidad de la tarea de realización lingüística producir frases 
 
 \begin{figure}[H]
   \begin{verbatim}
-  \documentclass{article}
-  \title{Descripción clase de prueba del ejemplo: SymbolTable}
-  
-  \begin{document}
-  \maketitle
+\documentclass{article}
+\title{Descripción clase de prueba del ejemplo: SymbolTable}
 
-  LookUp\_SP\_1: Se busca un símbolo en la tabla.  
-  Cuando:
-  \begin{itemize}
-    \item{El símbolo a buscar pertenece ...}
-    \item{El símbolo a buscar es el único ...}   
-  \end{itemize}
-  
-  \end{document}
+\begin{document}
+\maketitle
+
+LookUp\_SP\_1: Se busca un símbolo en la tabla, cuando:
+\begin{itemize}
+  \item El símbolo a buscar pertenece a los símbolos
+    cargados en la tabla.
+  \item El símbolo a buscar es el único elemento en los
+    símbolos cargados en la tabla.  
+\end{itemize}
+
+\end{document}
   \end{verbatim}
   \caption{Texto final en \LaTeX}
   \label{fig:ej_latex}
@@ -59,13 +60,12 @@ Es evidente que esta etapa será dependiente del sistema de presentación escogi
 <body>
   <h1>Descripción clase de prueba del ejemplo: SymbolTable</h1>
 
-  LookUp_SP_1: Se busca un símbolo en la tabla.  
+  LookUp_SP_1: Se busca un símbolo en la tabla, cuando:
   <ul>
-    <li>Cuando:</li>
-    <ul>
-      <li>El símbolo a buscar pertenece ...</li>
-      <li>El símbolo a buscar es el único ...</li>
-    </ul>
+    <li>El símbolo a buscar pertenece a los símbolos 
+        cargados en la tabla.</li>
+    <li>El símbolo a buscar es el único elemento en los 
+        símbolos cargados en la tabla.</li>
   </ul>
 
 </body>
