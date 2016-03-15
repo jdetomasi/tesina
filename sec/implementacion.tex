@@ -171,11 +171,11 @@ En esta sección presentaremos los componentes encargados de la tarea de \textit
 
 \bigskip
 \noindent
-\textbf{PhraseBuilder.} Este módulo implementa la tarea de lexicalización detallada en el capítulo \ref{cap:microplanning}, la función del mismo será construir una especificación de frase a partir de una expresión Z. Para realizar esta tarea necesitaremos recorrer el modelo utilizado para las expresiones Z. Encapsulamos este trabajo en el módulo \textit{ExprZToPSVisitor}, encargado del análisis de casos para las distintas expresiones y sus posibles combinaciones de acuerdo a la definición presentada en la sección \ref{sec:microplanning_lexicalization}.
+\textbf{PhraseSpecBuilder.} Este módulo implementa la tarea de lexicalización detallada en el capítulo \ref{cap:microplanning}, la función del mismo será construir una especificación de frase a partir de una expresión Z. Para realizar esta tarea necesitaremos recorrer el modelo utilizado para las expresiones Z. Encapsulamos este trabajo en el módulo \textit{ExprZToPSVisitor}, encargado del análisis de casos para las distintas expresiones y sus posibles combinaciones de acuerdo a la definición presentada en la sección \ref{sec:microplanning_lexicalization}.
 
 \bigskip
 \noindent
-\textbf{ExprZToPSVisitor.} Encapsula las reglas de lexicalización para todas las posibles expresiones y combinaciones de las mismas. Implementa la función auxiliar \textsc{lexicalización'()} utilizada en el bosquejo de la figura \ref{fig:algoritmo_lexicalizacion}. Utilizamos el patrón de diseño \textit{visitor} \cite{gof} para iterar sobre la estructura de las distintas expresiones Z modeladas por nuestro sistema.
+\textbf{ExprZToPSVisitor.} Encapsula las reglas de lexicalización para todas las posibles expresiones y combinaciones de las mismas. Implementa la función auxiliar \textsc{lexicalización'()} utilizada en el bosquejo del algoritmo \ref{fig:algoritmo_lexicalizacion}. Utilizamos el patrón de diseño \textit{visitor} \cite{gof} para iterar sobre la estructura de las distintas expresiones Z modeladas por nuestro sistema.
 
 \bigskip
 \noindent
