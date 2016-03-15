@@ -25,7 +25,7 @@ st: SYM \pfun VAL
 \end{schema}
 
 \begin{itemize}
-  \item Intenta actualizar el valor de un símbolo $\approx Update?$ \\
+  \item Intenta actualizar el valor de un símbolo $\approx Update$ \\
   \item Símbolo a actualizar $\approx s?$ \\
   \item Valor a actualizar  $\approx v?$ 
 \end{itemize}
@@ -66,7 +66,7 @@ rep! = symbolNotPresent
 \end{schema}
 
 \begin{itemize}
-  \item Intenta buscar el valor de un símbolo $\approx LookUp?$ 
+  \item Intenta buscar el valor de un símbolo $\approx LookUp$ 
 \end{itemize}
 
 \begin{zed}
@@ -88,7 +88,7 @@ rep! = ok
 \end{schema}
 
 \begin{itemize}
-  \item Intenta eliminar un símbolo de la tabla $\approx Delete?$ 
+  \item Intenta eliminar un símbolo de la tabla $\approx Delete$ 
 \end{itemize}
 
 \begin{zed}
@@ -228,7 +228,7 @@ Delete == DeleteOk \lor DeleteE
      \begin{itemize}
         \item[--]{Existe al menos un elemento en la tabla de símbolos.}
         \item[--]{Existe al menos un elemento en el conjunto formado por el par ordenado por: el símbolo a actualizar y el valor a actualizar.}
-        \item[--]{El símbolo a buscar pertenece a los símbolos cargados en la tabla.}
+        \item[--]{El símbolo a actualizar es el único elemento de los símbolos cargados en la tabla.}
      \end{itemize}
 \end{tcolorbox}
 
@@ -428,7 +428,7 @@ cajas: NCTA \pfun SALDO
 \end{schema}
 
 \begin{itemize}
-  \item Número de cuenta del cliente $\approx num$ 
+  \item Número de cuenta del cliente $\approx num?$ 
 \end{itemize}
 
 \begin{schema}{DepositarOk}
@@ -457,7 +457,7 @@ Depositar == DepositarOk \lor DepositarE1 \lor DepositarE2
 \end{zed}
 
 \begin{itemize}
-  \item Número de cuenta del nuevo cliente $\approx num$ 
+  \item Número de cuenta del nuevo cliente $\approx num?$ 
 \end{itemize}
 
 \begin{schema}{NuevoClienteOk}
@@ -489,7 +489,7 @@ NuevoCliente == NuevoClienteOk \lor NuevoClienteE
 \end{zed}
 
 \begin{itemize}
-  \item Número de cuenta del cliente $\approx num$ 
+  \item Número de cuenta del cliente $\approx num?$ 
 \end{itemize}
 
 \begin{schema}{ExtraerOk}
@@ -896,7 +896,7 @@ PedirSaldo == PedirSaldoOk \lor PedirSaldoE
 
 \begin{itemize}
   \item $x$ es un identificador de sensor válido $\approx x \in SENSOR$
-\end{itemize}B
+\end{itemize}
 
 \begin{zed}
 [SENSOR]
