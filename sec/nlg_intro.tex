@@ -14,6 +14,7 @@ Para el análisis de requerimientos, Reiter y Dale proponen realizar un corpus d
 En el capítulo~\ref{cap:corpus} profundizaremos más sobre este tema, describiendo y analizando el \emph{corpus de descripciones} utilizado para este trabajo.
 
 \section{Tareas de la generación de lenguaje natural}
+\label{sec:tareas_nlg}
 
 La clasificación de Reiter y Dale distingue las siguientes siete tareas que deben ser realizadas a lo largo de todo el proceso de generación de lenguaje natural: 
 
@@ -49,7 +50,7 @@ La clasificación de Reiter y Dale distingue las siguientes siete tareas que deb
 \section{Arquitectura para \textit{NLG}}
 Existen muchas maneras de construir un sistema que realice las tareas antes mencionadas. Una forma podría ser construir un único módulo encargado de llevar a cabo todas las tareas en simultáneo. En el otro extremo, podríamos tener un módulo separado para cada tarea y conectarlos mediante un \emph{pipeline}. En este caso, el sistema primero se encargaría de la determinación de contenido, luego la estructuración del documento, y así sucesivamente. La desventaja de este último modelo es que asume que las tareas deben ser realizadas en un único orden y que las funcionalidades de las mismas no se solapan.
 
-En este trabajo utilizaremos la arquitectura, más comúnmente utilizada para sistemas de NLG, introducida también por Reiter y Dale~\cite{reiter_dale}. Esta consiste de tres módulos conectados mediante un \emph{pipeline}. La misma se encuentra en el medio de los dos extremos antes mencionados. En la figura \ref{fig:png_arquitectura} podemos observar las tres etapas que componen este \emph{pipeline}; a continuación detallaremos brevemente las tareas a realizar en cada una de estas.
+En este trabajo utilizaremos la arquitectura, más comúnmente utilizada para sistemas de NLG, introducida también por Reiter y Dale~\cite{reiter_dale}. Estos proponen una arquitectura que se encuentra en el medio de los dos extremos antes mencionados, donde las tareas antes mencionadas (sección \ref{sec:tareas_nlg}) son agruparas y llevadas a cabo en conjunto en tres grandes etapas: \emph{document planning}, \emph{microplanning} y \emph{surface realization}. La arquitectura propuesta consiste en tres módulos conectados mediante un \emph{pipeline}, donde cada uno de estos se encargará de una de las etapas recién mencionadas. En la figura \ref{fig:png_arquitectura} podemos observar los tres módulos que componen este \emph{pipeline}; a continuación detallaremos brevemente las tareas a realizar en cada una de estos.
 
 \begin{figure}[h]
   	\centering
@@ -58,11 +59,11 @@ En este trabajo utilizaremos la arquitectura, más comúnmente utilizada para si
   	\label{fig:png_arquitectura}
 \end{figure}
 
-El primer módulo de nuestro sistema será el \emph{document planner}\footnote{Por convención en la comunidad \textit{NLG} nos referiremos a los módulos del {pipeline} en inglés.}, encargado de realizar las tareas de determinación de contenido y estructuración del documento. Veremos en el capítulo~\ref{cap:document_planning} que estas tareas se encuentran sumamente relacionadas y son realizadas en simultaneo. La salida de esta etapa y entrada del \emph{microplanner} será un \emph{document plan}, éste será una abstracción del documento final que contendrá los elementos informativos que se desea comunicar.
+El primer módulo de nuestro sistema será el \emph{document planner}, encargado de realizar las tareas de determinación de contenido y estructuración del documento. Veremos en el capítulo~\ref{cap:document_planning} que estas tareas se encuentran sumamente relacionadas y son realizadas en simultaneo. La salida de esta etapa y entrada del \emph{microplanner} será un \emph{document plan}, éste será una abstracción del documento final que contendrá los elementos informativos que se desea comunicar.
 
 El segundo módulo será el encargado de realizar las tareas de lexicalización, generación de expresiones de referencia y agregación. La función del mismo será la de trabajar el \textit{document plan} generando una especificación más refinada del texto final. El \emph{microplanner} será el responsable de transformar los elementos informativos incluidos en el \textit{document plan} en una especificación más concreta de una oración. En el capítulo~\ref{cap:microplanning} desarrollaremos más en profundidad el funcionamiento del \textit{microplanner}.
 
-Finalmente el \emph{surface realiser} tomará como entrada la especificación de texto generada por la etapa anterior y será el encargado de producir el texto final. Este módulo deberá llevar a cabo las tareas de realización lingüística y de superficie antes mencionadas.
+Finalmente el \emph{surface realizer} tomará como entrada la especificación de texto generada por la etapa anterior y será el encargado de producir el texto final. Este módulo deberá llevar a cabo las tareas de realización lingüística y de estructural antes mencionadas.
 
 \section{Resumen del capítulo}
-En este capítulo presentamos la metodología propuesta por Reiter y Dale, viendo las tareas básicas que un sistema de generación de lenguaje natural debe llevar a cabo. En el capítulo siguiente, daremos el primer paso necesario para la construcción de este sistema realizando un análisis detallado del corpus de descripciones a fin de obtener los requerimientos necesarios para nuestro trabajo. En los capítulos posteriores profundizaremos sobre el resto de las tareas introducidas en este capítulo: determinación de contenido, \textit{microplanning} y realización de superficie.
+En este capítulo presentamos la metodología propuesta por Reiter y Dale, viendo las tareas básicas que un sistema de generación de lenguaje natural debe llevar a cabo. En el capítulo siguiente, daremos el primer paso necesario para la construcción de este sistema realizando un análisis detallado del corpus de descripciones a fin de obtener los requerimientos necesarios para nuestro trabajo. En los capítulos posteriores profundizaremos sobre el resto de las etapas introducidas en este capítulo: \textit{document planning}, \textit{microplanning} y \textit{surface realization}.
