@@ -168,16 +168,16 @@ Será entonces nuestro sistema el encargado de agregar este artículo en el caso
 \begin{minted}[escapeinside=@@]{haskell}
 verb' (@$exp_1 \subset exp_2$@)
     | (gen == M && num == S) = verb(@$exp_1$@) + 
-                               "esta incluido en" + 
+                               "está incluido en" + 
                                verb(@$exp_2$@) 
     | (gen == M && num == P) = verb(@$exp_1$@) + 
-                               "estan incluidos en" + 
+                               "están incluidos en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == S) = verb(@$exp_1$@) + 
-                               "esta incluida en" + 
+                               "está incluida en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == P) = verb(@$exp_1$@) + 
-                               "estan incluidas en" + 
+                               "están incluidas en" + 
                                verb(@$exp_2$@) 
     where gen = genero(@$exp_1$@)
           num = numero(@$exp_1$@)
@@ -397,7 +397,7 @@ Por ejemplo, para la realización lingüística de la oración presentada en la 
 \end{figure}
 
 \noindent
-En este caso, la función \textsc{determinar\_verbo} deberá escoger la opción correspondiente en base a un análisis morfológico de su segundo argumento (retomaremos sobre este tema en el capítulo \ref{cap:implementacion}). De forma similar deberá comportarse la determinación de atributo en caso de ser de ser necesaria. 
+En este caso, la función \textsc{determinar\_verbo} deberá escoger la opción correspondiente en base a un análisis morfológico de su segundo argumento (retomaremos sobre este tema en el capítulo \ref{cap:implementacion}). De forma similar deberá comportarse la determinación de atributo en caso de ser necesaria. 
 
 \section{Resumen del capítulo}
 En este capítulo vimos cómo finalmente, a partir de una especificación del documento producida por el \textit{microplanner}, nuestro sistema, a través de las tareas de realización estructural y realización lingüística es capaz de producir el documento final formado por frases en lenguaje natural, símbolos de puntuación y anotaciones necesarias para el sistema de presentación. En el próximo capítulo nos concentraremos en estudiar los aspectos más relevantes de la implementación realizada para este trabajo.

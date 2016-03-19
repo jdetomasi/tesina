@@ -10,7 +10,7 @@ Según la definición de la RAE~\cite{dicrae}, un corpus es un \emph{``conjunto 
 %~\footnote{Una vez recolectada una colección inicial de textos de ejemplo, es posible que sea necesario aplicar algunas modificaciones sobre esta. Esto se puede deber a que algunos de los textos recolectados resulten técnicamente implosibles de generar y sea necesarios removerlos del corpus, que existan diferentes variantes correspondientes a la misma entrada de texto y requiramos resolver posibles conflictos, textos que puedan ser mejorados y puedan ser modificados, etc. Llamaremos corpus objetivo al resultado de aplicar al corpus inicial todas las modificaciones antes mencionadas (de ser necesarias).}
 Siguiendo la metodología propuesta por Reiter y Dale, para construir el corpus que utilizaremos a lo largo de todo el trabajo deberemos elaborar, en primera instancia, un \emph{corpus inicial} y luego, de ser necesario, deberemos trabajar el mismo a fin de confeccionar un \emph{corpus objetivo} que será con el que finalmente trabajaremos. Para construir un \emph{corpus inicial} deberemos recolectar un conjunto lo suficientemente amplio de ejemplos que debería ser representativo de la variedad de textos que deseamos generar. Luego una persona capacitada (en nuestro caso alguien capaz de leer esquemas Z y con un alto conocimiento del dominio de aplicación) deberá describir en lenguaje natural los ejemplos antes mencionados. Esta colección de ejemplos y descripciones de los mismos constituirá nuestro \emph{corpus inicial}. Es posible que esta recopilación requiera algunas modificaciones, por ejemplo: podría ocurrir que alguno de los textos resulten técnicamente imposibles de generar y sea necesarios removerlos del corpus, también podrían existir diferentes variantes correspondientes a la misma entrada de texto y deberíamos resolver los posibles conflictos, etc. Llamaremos, finalmente, \emph{corpus objetivo} al resultado de aplicar las modificaciones necesarias al \emph{corpus inicial}. Este \emph{corpus objetivo} es el que utilizaremos para sustentar muchas de las decisiones que deberemos tomar a lo largo de este trabajo. Además, podría ser de utilidad\footnote{Esto no está contemplado dentro del alcance de este trabajo, pero como veremos en el capítulo \ref{cap:conclusion}, podría ser tenido en cuenta en trabajos futuros.} para realizar una evaluación de nuestro sistema una vez desarrollado, comparando los textos generados por nuestra implementación con las descripciones del corpus realizadas por la persona especializada.
 
-En el apéndice~\ref{ape:corpus} podemos encontrar los textos incluidos en el corpus utilizado para este trabajo. Para elaborar el mismo, recolectamos una colección de clases de prueba generadas con \emph{Fastest} a partir de distintas especificaciones y luego escribimos manualmente cada una de las descripciones para las mismas. En este proceso, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto, tuvimos en cuenta incluir una gran variedad de clases de pruebas de modo que cubran todas las expresiones u operadores de Z contemplados dentro del alcance de este trabajo, considerando también las posibles combinaciones de estas expresiones. Trabajamos también con especificaciones sobre distintos dominios de aplicación a fin de lograr un corpus que nos sea de utilidad para dar con una solución independiente del dominio de aplicación. En total incluimos clases de prueba generadas con \emph{Fastest} para 5 especificaciones distintas; del total se escogieron las más significativas para describir describir en lenguaje natural y se ignoraron aquellas que contenían algún operador no considerado dentro del alcance de este trabajo.
+En el apéndice~\ref{ape:corpus} podemos encontrar los textos incluidos en el corpus utilizado para este trabajo. Para elaborar el mismo, recolectamos una colección de clases de prueba generadas con \emph{Fastest} a partir de distintas especificaciones y luego escribimos manualmente cada una de las descripciones para las mismas. En este proceso, intentamos abarcar todo el rango de textos que esperamos que nuestro sistema sea capaz de producir, para esto, tuvimos en cuenta incluir una gran variedad de clases de pruebas de modo que cubran todas las expresiones u operadores de Z contemplados dentro del alcance de este trabajo, considerando también las posibles combinaciones de estas expresiones. Trabajamos también con especificaciones sobre distintos dominios de aplicación a fin de lograr un corpus que nos sea de utilidad para dar con una solución independiente del dominio de aplicación. En total incluimos clases de prueba generadas con \emph{Fastest} para 5 especificaciones distintas; del total se escogieron las más significativas para describir en lenguaje natural y se ignoraron aquellas que contenían algún operador no considerado dentro del alcance de este trabajo.
 
 
 En la figura~\ref{fig:ej_corpus} podemos observar uno de los ejemplos incluidos en el corpus de descripciones utilizado para este trabajo. En este caso la clase de prueba \emph{LookUp\_SP\_1} (generada a partir de la especificación introducida previamente) y las designaciones correspondientes a la especificación en cuestión serán la entrada del sistema de NLG\footnote{Estrictamente hablando, todas las designaciones de la especificación deberían formar parte de la entrada del sistema de NLG. En este caso, incluimos sólo las designaciones relevantes a fin de simplificar el ejemplo.}, teniendo como salida la descripción en lenguaje natural presente en el ejemplo.
@@ -89,7 +89,7 @@ Como vemos, el texto \emph{``\textbf{pertenece a}''} aparece en ambas descripcio
 {
 \begin{figure}[H]
 \center
-$\texttt{verb'} (x \in y) = \texttt{verb'}(x) + \text{\emph{``pertenece a''}} + \texttt{verb'}(y)$
+$\texttt{verb'} (x \in y) = \texttt{verb}(x) + \text{\emph{``pertenece a''}} + \texttt{verb}(y)$
 \end{figure}
 }
 
@@ -157,26 +157,27 @@ $\texttt{designacion}(st~s?) \rightarrow \text{\emph{``información asociada a''
 \section{Reglas de verbalización}
 \label{sec:corpus_reglas}
 
-En esta sección retomaremos al análisis de la función \texttt{verb'} presentando una especificación para la misma, basada en un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición por casos de la misma de la misma. Luego, en lo que queda de este capítulo nos concentraremos en estudiar, como consecuencia de estas reglas, algunos aspectos gramaticales que deberemos contemplar.
+En esta sección retomaremos al análisis de la función \texttt{verb'} presentando una especificación para la misma, basada en un conjunto de reglas (similares a la introducida anteriormente para la verbalización del operador $\in$) para la definición por casos de la misma. Luego, en lo que queda de este capítulo nos concentraremos en estudiar, como consecuencia de estas reglas, algunos aspectos gramaticales que deberemos contemplar.
 
 Comenzaremos, a continuación, por completar la definición\footnote{La idea no es que ésta sea una definición final, sino sólo un bosquejo que nos permita analizar los requerimientos que deberán ser contemplados posteriormente, que atenderemos principalmente en las etapas de \textit{microplanning} y \textit{surface realization}.} de \texttt{verb'}, basándonos en los textos presentes en el corpus, incluyendo los casos para todos los operadores considerados dentro del alcance del trabajo, así como las combinaciones más relevantes de los mismos\footnote{Para algunos de estos casos necesitamos contemplar el género y número de las verbalizaciones recursivas que lo conforman. En estos casos, nos referiremos al género masculino mediante la letra \emph{M}, y utilizaremos \emph{F} para hacer referencia al genero femenino. Por otro lado cuando hagamos referencia al número, utilizaremos \emph{S} para indicar que el género de un constituyente es singular y \emph{P} en caso de que sea plural.}:
 %. Además entraremos más en detalle sobre las tarea de verificar si una expresión se encuentra designada y la generación de un descripción en lenguaje natural para una expresión ya designada.  %Cabe aclarar, que en este caso, tendremos que contemplar si la designación correspondiente es una designación parametrizada. De no ser el caso, el resultado sería exactamente el texto que forma parte de la designación, del contrario, habrá primero que verbalizar el parámetro de la designación, teniendo luego que construir la descripción final a partir del texto de la designación parametrizada y la verbalización del parámetro.
 %TODO~\footnote{TODO: aclarar que suponemos que el parámetro debe estar designado?}
 
+\newpage 
 \begin{mdframed}[style=codebox]
 \begin{minted}[escapeinside=@@]{haskell}
 
 verb' (@$\{exp_1\} = exp_2$@) = verb(@$exp_1$@) + 
-                       "es el unico elemento de" + 
+                       "es el único elemento de" + 
                        verb(@$exp_2$@)
 
-verb' (@$exp_1 = \{\}$@) = "no hay ningun elemento en" + 
+verb' (@$exp_1 = \{\}$@) = "no hay ningún elemento en" + 
                     verb(@$exp_1$@) 
 
 verb' (@$exp_1 \cap exp_2 = \{\}$@) = verb(@$exp_1$@)  +  
                          "y" +  
                          verb(@$exp_2$@)  +  
-                         "no tienen ningun elemento en comun"
+                         "no tienen ningún elemento en común"
 
 verb' (@$exp_1 \cap \{exp_2\} = \{\}$@) = verb(@$exp_2$@) +  
                            "no pertenece a" +  
@@ -193,7 +194,7 @@ verb' (@$exp_1 \neq \{\}$@) = "existe al menos un elemento en" +
 verb' (@$exp1 \cap exp2 \neq \{\}$@) = verb(@$exp_1$@)  +  
                          "y" +  
                          verb(@$exp_2$@) +  
-                         "tienen al menos un elemento en comun" 
+                         "tienen al menos un elemento en común" 
 
 verb' (@$exp_1 \neq exp_2$@)
     | (num == S) = verb(@$exp_1$@) + "no es igual a" + verb(@$exp_2$@) 
@@ -238,16 +239,16 @@ verb' (@$exp_1 \notin exp_2$@)  =
 
 verb' (@$exp_1 \subset exp_2$@)
     | (gen == M && num == S) = verb(@$exp_1$@) + 
-                               "esta incluido en" + 
+                               "está incluido en" + 
                                verb(@$exp_2$@) 
     | (gen == M && num == P) = verb(@$exp_1$@) + 
-                               "estan incluidos en" + 
+                               "están incluidos en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == S) = verb(@$exp_1$@) + 
-                               "esta incluida en" + 
+                               "está incluida en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == P) = verb(@$exp_1$@) + 
-                               "estan incluidas en" + 
+                               "están incluidas en" + 
                                verb(@$exp_2$@) 
     where gen = genero(verb(@$exp_1$@))
           num = numero(verb(@$exp_1$@))
@@ -260,22 +261,22 @@ verb' (@$\{exp_1, ... , exp_n\} \subset exp_m$@) = verb(@$exp_1$@) +
 
 verb' (@$exp_1 \not\subset exp_2$@)  = 
     | (gen == M && num == S) = verb(@$exp_1$@) + 
-                               "no esta incluido en" + 
+                               "no está incluido en" + 
                                verb(@$exp_2$@) 
     | (gen == M && num == P) = verb(@$exp_1$@) + 
-                               "no estan incluidos en" + 
+                               "no están incluidos en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == S) = verb(@$exp_1$@) + 
-                               "no esta incluida en" + 
+                               "no está incluida en" + 
                                verb(@$exp_2$@) 
     | (gen == F && num == P) = verb(@$exp_1$@) + 
-                               "no estan incluidas en" + 
+                               "no están incluidas en" + 
                                verb(@$exp_2$@) 
     where gen = genero(verb(@$exp_1$@))
         num = numero(verb(@$exp_1$@))
 
 verb' (@$exp_1 \subseteq exp_2$@) = verb(@$exp_1$@) +  
-                    "esta incluido o es igual a" +  
+                    "está incluido o es igual a" +  
                     verb(@$exp_2$@) 
 
 verb' (@$\{exp_1, ... , exp_n\} \subseteq exp_m$@) = verb(@$exp_1$@) +  
@@ -286,7 +287,7 @@ verb' (@$\{exp_1, ... , exp_n\} \subseteq exp_m$@) = verb(@$exp_1$@) +
 
 verb' (@$exp_1 \not\subseteq exp_2$@) = "existe al menos un elemento en" +  
                      verb(@$exp_1$@) +  
-                     "que no se esta en" +  
+                     "que no se está en" +  
                      verb(@$exp_2$@) 
 
 verb' (@$exp_1 \mapsto exp_2$@) = "el par ordenado formado por:" +  
@@ -294,7 +295,7 @@ verb' (@$exp_1 \mapsto exp_2$@) = "el par ordenado formado por:" +
                       "y" +  
                       verb(@$exp_2$@) 
 
-verb' (@$\{\}$@) = "el conjunto vacio" 
+verb' (@$\{\}$@) = "el conjunto vacío" 
 
 verb' (@$\{exp_1\}$@) = "el conjunto formado por"  +  
                  verb(@$exp_1$@) 
@@ -311,7 +312,7 @@ verb' (@$exp_1 \cup exp_2$@) = "elementos en" +
 
 verb' (@$exp_1 \cap exp_2$@) = "elementos en" +  
                     verb(@$exp_1$@) +  
-                    "que tambien se encuentren en" +  
+                    "que también se encuentren en" +  
                     verb(@$exp_2$@) 
 
 verb' (@$f~exp_1$@) = verb(@$f$@) +  
@@ -330,7 +331,7 @@ verb' (@$ran(exp_1)$@) = "rango de" +
 \section{Aspectos gramaticales}
 \label{sec:corpus_gramatica}
 
-Como era de esperarse, podemos notar que, a fin de lograr descripciones más naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se se encuentre vacío.
+Como era de esperarse, podemos notar que, a fin de lograr descripciones más naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que éste conjunto se encuentre vacío.
 
 Por otro lado, podemos observar que en algunos casos el texto generado por nuestra verbalización puede variar de acuerdo a aspectos gramaticales, en particular, las distintas variantes de nuestras oraciones dependerán del género y número de los constituyentes de las mismas. En estos casos, nos debemos asegurar que las palabras generadas por nuestro sistema concuerden con rasgos gramaticales de, por ejemplo, otra palabra introducida por medio de una designación. Para esto deberemos considerar algunas reglas de \emph{concordancia gramatical}, como, la concordancia de número entre el verbo y el núcleo del sujeto para el caso del operador $\in$:
 
@@ -350,13 +351,13 @@ Hay algunos casos de la definición anterior en los que el verbo que forma parte
 
 \bigskip
 \begin{minted}[escapeinside=@@,bgcolor=bg]{haskell}
-verb' (@$exp_1 = \{\}$@)       = "no hay ningun elemento en" + 
+verb' (@$exp_1 = \{\}$@)       = "no hay ningún elemento en" + 
                           verb(@$exp_1$@) 
                                  
 verb' (@$exp_1 \cap exp_2 = \{\}$@) = verb(@$exp_1$@)  +  
                          "y" +  
                          verb(@$exp_2$@)  +  
-                         "no tienen ningun elemento en comun"
+                         "no tienen ningún elemento en común"
 \end{minted} 
 
 \bigskip
