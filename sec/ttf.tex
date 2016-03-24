@@ -105,7 +105,7 @@ La propuesta de Stocks y Carrington~\cite{stocks} es utilizar la especificación
 Las alternativas funcionales antes mencionadas pueden expresarse como restricciones sobre las variables de entrada y de estado definidas para la especificación. Estas alternativas pueden ser especificadas mediante esquemas Z a los que llamaremos \emph{clases de prueba}. Por ejemplo:
 
 \begin{zed}
-   LookUp_{1}^{DNF} == [st: SYM \pfun VAL; s?: SYM  | s? \in \dom st] \\
+   LookUp\_DNF\_1 == [st: SYM \pfun VAL; s?: SYM  | s? \in \dom st] \\
 \end{zed}
 
 \noindent
@@ -113,18 +113,21 @@ define una clase de prueba para el esquema \emph{LookUp}, introducido anteriorme
 
 Por otro lado, necesitaremos buscar valores específicos, o constantes, para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implemente la especificación. Llamaremos \emph{caso de prueba} a la tupla conformada por los valores correspondientes a cada una de las variables involucradas en la clase de prueba que satisfagan la restricción de ésta. Nos bastará con escoger un único \emph{caso de prueba} para cada clase de prueba generada (observemos que en algunos casos, como por ejemplo para la clase de prueba antes presentada, podríamos encontrar infinitos valores posibles para las variables de la clase de prueba que cumplan con la restricción).
 
-Como mencionamos recientemente, los casos de prueba son tuplas conformadas por constantes correspondientes a cada una de las variables involucradas en las clases de prueba correspondientes. Para los tipos dados por el lenguaje, como por ejemplo $\mathbb Z$, las constantes ya se encuentran definidas en el lenguaje, pero esto no ocurre cuando trabajamos con tipos introducidos por el especificador, como $SYM$ y $VAL$ definidos en el ejemplo que venimos estudiando. En estas circunstancias, será necesario definir constantes para estos tipos de datos a fin de poder luego utilizarlas en nuestros casos de prueba. Continuando con el ejemplo, para $SYM$ y $VAL$ podemos definir:
+Como mencionamos recientemente, los casos de prueba son tuplas conformadas por constantes correspondientes a cada una de las variables involucradas en las clases de prueba correspondientes. Para los tipos dados por el lenguaje, como por ejemplo $\mathbb Z$, las constantes ya se encuentran definidas en el lenguaje, pero esto no ocurre cuando trabajamos con tipos introducidos por el especificador, como $SYM$ y $VAL$ definidos en el ejemplo. En estas circunstancias, será necesario definir constantes para estos tipos de datos a fin de poder luego utilizarlas en nuestros casos de prueba. Continuando con el ejemplo, para $SYM$ y $VAL$ podemos definir:
 
 \begin{axdef}
 sym_{1}: SYM \\
 val_{1}: VAL
 \end{axdef}
 
-Ahora que contamos con estas constantes, estamos en condiciones de definir un caso de prueba para la clase de prueba $LookUp_{1}^{DNF}$ de la siguiente manera:
+Ahora que contamos con estas constantes, estamos en condiciones de definir un caso de prueba para la clase de prueba $LookUp\_DNF\_1$ de la siguiente manera:
 
 \begin{figure}[H]
 \center
-$LookUp_{TC}^{1} == [LookUp_{1}^{DNF}  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]$
+\begin{multline*}
+LookUp\_DNF\_1\_TCASE == \\
+ [LookUp\_DNF\_1  | st = \{sym_{1} \mapsto val_{1} \} \land s? = sym_{1}]
+\end{multline*}
 \end{figure}
 
 Podemos observar en el caso de prueba presentado que hemos asignamos una constante a cada una de las variables del $VIS$ de forma tal que satisfaga la restricción de la clase de prueba en cuestión.
@@ -143,13 +146,13 @@ El primer paso del TTF será definir el espacio de entrada (\emph{IS}, por \emph
 En los casos en los que las operaciones son parciales, no tendrá sentido probar el sistema con casos de prueba para los cuales no está definida la operación, es por esto que, a partir del \emph{IS}, el TTF definirá luego el espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). Este será un subconjunto del anterior, formado por los elementos pertenecientes al \emph{IS} que cumplan con la precondición de la operación en cuestión, es decir:
 
 \begin{zed}
-  VIS_{Op} == [IS | pre~Op]
+  Op\_VIS == [IS | pre~Op]
 \end{zed}
 
 El \emph{VIS} será un subconjunto del \emph{IS} para los cuales tiene sentido testear el programa. Para el caso de \emph{LookUp} será:
 
 \begin{zed}
-  VIS_{LookUp} == IS
+  LookUp\_VIS == IS
 \end{zed}
 
 \noindent
@@ -157,7 +160,7 @@ ya que la operación es total. El \emph{IS} y el \emph{VIS} no coincidirían si 
 
 \begin{zed}
   IS == [st: SYM \pfun VAL; s?: SYM] \\
-  VIS_{LookUpOk} == [IS | s? \in \dom st]
+  LookUpOk\_VIS == [IS | s? \in \dom st]
 \end{zed}
 
 Luego de determinar el \emph{VIS}, el TTF propone dividir el mismo, de modo tal que cada una de estas particiones represente una alternativa funcional distinta de la operación a testear. Estas particiones serán las \emph{clases de prueba}, introducidas anteriormente. Para dividir el $VIS$ a fin de dar con éstas, será necesario aplicar alguna estrategia o \emph{táctica de testing} que establezca la forma en la cual puede ser particionado el $VIS$. Luego, será posible aplicar nuevas tácticas sobre estas particiones generadas a fin de dividir nuevamente las mismas, obteniendo como resultado nuevas clases de prueba; este proceso se podrá repetir hasta que el ingeniero de \textit{testing} considere que todas las alternativas funcionales importantes de la operación están representadas (cada una de estas alternativas corresponderá a una única clase de prueba). El último paso del proceso será la selección de al menos un \emph{caso de prueba} para cada clase de prueba, que, como vimos anteriormente, consistirá en buscar valores para las variables de la misma que reduzcan su restricción a verdadero. 
@@ -171,8 +174,8 @@ A continuación, mostraremos la aplicación de algunas tácticas de \textit{test
 Continuando con el ejemplo, \emph{LookUp} ya es una disyunción y cada uno de los esquemas que la forman se encuentra en DNF (del inglés \emph{Disjunctive Normal Form}). Por lo tanto, solo deberemos dividir el \emph{VIS} con la precondición de cada uno de ellos, de la siguiente forma:
 
 \begin{zed}
-  LookUp_{1}^{DNF} == [VIS_{LookUp} | s? \in \dom st] \\
-  LookUp_{2}^{DNF} == [VIS_{LookUp} | s? \notin \dom st]
+  LookUp\_DNF\_1 == [LookUp\_VIS | s? \in \dom st] \\
+  LookUp\_DNF\_2 == [LookUp\_VIS | s? \notin \dom st]
 \end{zed}
 
 De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple en todos los casos, podrían ``solaparse'' las particiones obtenidas, pero de cualquier forma lograríamos un cubrimiento funcional básico.}. Además, observemos que si tomamos un caso de prueba para cada una de las clases obtenidas estaríamos probando el sistema en las siguientes situaciones:
@@ -199,7 +202,7 @@ De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple
 
 Para aplicar esta táctica primero hay que seleccionar un operador de un predicado incluido en el esquema de la operación a testear.
 
-Siguiendo con el ejemplo anterior, aplicaremos la técnica de partición estándar a la clase de prueba $LookUp_{1}^{DNF}$. En primer lugar, deberemos seleccionar una aparición de un operador en el esquema de la operación \emph{LookUp}. 
+Siguiendo con el ejemplo anterior, aplicaremos la técnica de partición estándar a la clase de prueba $LookUp\_DNF\_1$. En primer lugar, deberemos seleccionar una aparición de un operador en el esquema de la operación \emph{LookUp}. 
 Nosotros elegiremos el operador $\in$ de la expresión ``$s? \in \dom st$''.
 
 
@@ -207,8 +210,8 @@ El siguiente paso será reemplazar los parámetros formales que aparecen en la d
 
 
 \begin{zed}
-  LookUp_{1}^{SP} == [LookUp_{1}^{DNF} | \dom st = \{s?\}] \\
-  LookUp_{2}^{SP} == [LookUp_{1}^{DNF} | \dom st \neq \{s?\} \land s? \in \dom st] \\
+  LookUp\_SP\_1 == [LookUp\_DNF\_1 | \dom st = \{s?\}] \\
+  LookUp\_SP\_2 == [LookUp\_DNF\_1 | \dom st \neq \{s?\} \land s? \in \dom st] \\
 \end{zed}
 
 Luego podríamos continuar aplicando nuevas tácticas y particionando aún más el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y consideramos que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
@@ -218,7 +221,7 @@ Luego podríamos continuar aplicando nuevas tácticas y particionando aún más 
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección.
+A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección\footnote{A diferencia de las clases de prueba introducidas en la sección \ref{sec:tacticas-testing}, las clases generadas por Fastest, entre ellas las incluídas en este ejemplo asi como las utilizadas en el resto de este trabajo, se encuentran con todos sus esquemas expandidos.}.
 
 
 \begin{figure}[H]
@@ -232,7 +235,7 @@ Specification loaded.
 Fastest> selop LookUp
 Fastest> genalltt 
 Generating test tree for 'LookUp' operation.
-Fastest> addtactic LookUp_DNF_1 SP \in s? \in \dom st
+Fastest> addtactic LookUp\_DNF\_1 SP \in s? \in \dom st
 Fastest> genalltt                                    
 Fastest> showsch -tcl -u 2
 
@@ -272,8 +275,6 @@ Fastest> showsch -tcl -u 2
 \end{figure}
 
 Como se podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
-
-Observemos que \emph{Fastest} utiliza una notación levemente diferente, pero equivalente, a la introducida en este capítulo para nombrar las clases y casos de prueba. En lo que queda de este trabajo, seguiremos estilo propuesto por \emph{Fastest} cuando hagamos referencia a clases y casos de prueba generados por medio de esta herramienta.
 
 En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en \textit{templates} para traducir los casos de prueba obtenidos \cite{cristia_pluss}. La situación propuesta en el trabajo recién mencionado fue una solución ad-hoc, dependiente del dominio de aplicación y de la cantidad de operaciones.
 
