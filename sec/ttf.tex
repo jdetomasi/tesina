@@ -1,7 +1,7 @@
 \chapter[\textit{Testing} Basado en Modelos]{Fundamentos del \textit{testing} basado en modelos}
 \label{cap:fundamentos}
 
-En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo como derivar clases y casos de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones en nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
+En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo cómo derivar clases y casos de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones en nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
 
 \section{\textit{Testing} basado en modelos}
 
@@ -137,13 +137,13 @@ Podemos observar en el caso de prueba presentado que hemos asignamos una constan
 
 En esta sección introduciremos brevemente, por medio de un ejemplo, el proceso del TTF. Continuaremos trabajando sobre el ejemplo introducido anteriormente e intentaremos generar algunos casos de prueba para testear la operación \emph{LookUp}. En particular nos concentraremos en la generación de clases de prueba, que resultarán de vital interés para nuestro trabajo de NLG.
 
-El primer paso del TTF será definir el espacio de entrada (\emph{IS}, por \emph{Input Space}) para la operación. Este será el conjunto definido por todos los posibles valores de entrada y estado de la misma. Por ejemplo, el \emph{IS} para la operación \emph{LookUp} será:
+El primer paso del TTF será definir el espacio de entrada (\emph{IS}, por \emph{Input Space}) para la operación. Éste será el conjunto definido por todos los posibles valores de entrada y estado de la misma. Por ejemplo, el \emph{IS} para la operación \emph{LookUp} será:
 
 \begin{zed}
   IS == [st: SYM \pfun VAL; s?: SYM]
 \end{zed}
 
-En los casos en los que las operaciones son parciales, no tendrá sentido probar el sistema con casos de prueba para los cuales no está definida la operación, es por esto que, a partir del \emph{IS}, el TTF definirá luego el espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). Este será un subconjunto del anterior, formado por los elementos pertenecientes al \emph{IS} que cumplan con la precondición de la operación en cuestión, es decir:
+En los casos en los que las operaciones son parciales, no tendrá sentido probar el sistema con casos de prueba para los cuales no está definida la operación, es por esto que, a partir del \emph{IS}, el TTF definirá luego el espacio válido de entrada (\emph{VIS}, por \emph{Valid Input Space}). Éste será un subconjunto del anterior, formado por los elementos pertenecientes al \emph{IS} que cumplan con la precondición de la operación en cuestión, es decir:
 
 \begin{zed}
   Op\_VIS == [IS | pre~Op]
@@ -169,7 +169,7 @@ A continuación, mostraremos la aplicación de algunas tácticas de \textit{test
 
 \bigskip
 \noindent
-\textbf{Forma Normal Disyuntiva.} Suele ser la primer táctica que se aplica. Esta expresará la operación como una disyunción de esquemas en los cuales únicamente habrá conjunciones de literales o de negaciones de literales y luego dividirá el \emph{VIS} con las pre-condiciones de cada esquema. 
+\textbf{Forma Normal Disyuntiva.} Suele ser la primer táctica que se aplica. Ésta expresará la operación como una disyunción de esquemas en los cuales únicamente habrá conjunciones de literales o de negaciones de literales y luego dividirá el \emph{VIS} con las pre-condiciones de cada esquema. 
 
 Continuando con el ejemplo, \emph{LookUp} ya es una disyunción y cada uno de los esquemas que la forman se encuentra en DNF (del inglés \emph{Disjunctive Normal Form}). Por lo tanto, solo deberemos dividir el \emph{VIS} con la precondición de cada uno de ellos, de la siguiente forma:
 
@@ -221,7 +221,7 @@ Luego podríamos continuar aplicando nuevas tácticas y particionando aún más 
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección\footnote{A diferencia de las clases de prueba introducidas en la sección \ref{sec:tacticas-testing}, las clases generadas por Fastest, entre ellas las incluídas en este ejemplo asi como las utilizadas en el resto de este trabajo, se encuentran con todos sus esquemas expandidos.}.
+A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección\footnote{A diferencia de las clases de prueba introducidas en la sección \ref{sec:tacticas-testing}, las clases generadas por Fastest, entre ellas las incluidas en este ejemplo así como las utilizadas en el resto de este trabajo, se encuentran con todos sus esquemas expandidos.}.
 
 
 \begin{figure}[H]
@@ -274,7 +274,7 @@ Fastest> showsch -tcl -u 2
 \label{ej:comandos_fastest}
 \end{figure}
 
-Como se podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
+Como podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
 
 En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en \textit{templates} para traducir los casos de prueba obtenidos \cite{cristia_pluss}. La situación propuesta en el trabajo recién mencionado fue una solución ad-hoc, dependiente del dominio de aplicación y de la cantidad de operaciones.
 
@@ -296,7 +296,7 @@ Para documentar las designaciones usaremos la sintaxis propuesta por Jackson~\ci
   \emph{texto informal} $\approx$ \textbf{término\_formal}
 \end{figure}
 
-El símbolo $\approx$ demarca la frontera entre el mundo real (a la izquierda) y el mundo formal o lógico (a la derecha). Del lado derecho estará el término formal a designar, este será un elemento de la especificación, mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
+El símbolo $\approx$ demarca la frontera entre el mundo real (a la izquierda) y el mundo formal o lógico (a la derecha). Del lado derecho estará el término formal a designar, éste será un elemento de la especificación, mientras que del otro lado tendremos texto informal en lenguaje natural que permitirá reconocer el fenómeno designado.
 
 Continuando con el ejemplo de la tabla de símbolos (sección ~\ref{sec:ej-symbolTable}), podríamos contar (entre otras) con las siguientes designaciones:
 
@@ -313,7 +313,7 @@ Continuando con el ejemplo de la tabla de símbolos (sección ~\ref{sec:ej-symbo
 Para Jackson, las designaciones sirven en primera instancia cuando se empieza a escribir la especificación para diferenciar un fenómeno en particular y darle un nombre. Luego, le será de utilidad al programador a la hora de leer la especificación. Jackson propone construir un \emph{``puente angosto''} entre la especificación y los elementos del dominio, escribiendo la menor cantidad de designaciones posibles y definiendo otros términos en base a las anteriores.
 
 
-La función que cumplirán las designaciones en éste trabajo difiere un poco de la propuesta por Jackson. Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
+La función que cumplirán las designaciones en este trabajo difiere un poco de la propuesta por Jackson. Para nosotros las designaciones resultarán la principal fuente de conocimiento para nuestro sistema de NLG. Y serán fundamentales para que éste pueda generar descripciones independientes del dominio de aplicación.
 
 Veamos, por ejemplo, las siguientes expresiones pertenecientes a dos clases de prueba de dos especificaciones distintas:
 
@@ -324,7 +324,7 @@ Veamos, por ejemplo, las siguientes expresiones pertenecientes a dos clases de p
 \end{enumerate}
 \end{figure}
 
-La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación perteneciente a la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarles una descripción en lenguaje natural (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para estas, las descripciones podrían ser las siguientes:
+La primera expresión pertenece a una clase de prueba generada para la operación \emph{LookUp}, la segunda es parte de una clase de prueba generada para una operación perteneciente a la especificación de un sistema bancario. Estas expresiones resultan equivalentes (de hecho, hasta podríamos haber usado los mismos nombres de variables para ambas especificaciones); será gracias a las designaciones que podremos otorgarles una descripción en lenguaje natural (acorde al dominio de aplicación de cada especificación) a cada una de estas expresiones. En particular, para éstas, las descripciones podrían ser las siguientes:
 
 \begin{figure}[H]
 \begin{enumerate}
