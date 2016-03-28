@@ -1,7 +1,7 @@
 \chapter[\textit{Testing} Basado en Modelos]{Fundamentos del \textit{testing} basado en modelos}
 \label{cap:fundamentos}
 
-En este capítulo introduciremos algunos conceptos básicos con los que trabajaremos a lo largo de esta tesina. Presentaremos el \textit{testing} basado en modelos y veremos mediante un ejemplo cómo derivar clases y casos de prueba a partir de una especificación Z. Además, presentaremos el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que basaremos todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones en nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
+En este capítulo se introducirán algunos conceptos básicos con los que se trabajará a lo largo de esta tesina. Se presentará el \textit{testing} basado en modelos y veremos mediante un ejemplo cómo derivar clases y casos de prueba a partir de una especificación Z. Además, se mostrará el funcionamiento de Fastest, la herramienta utilizada para generar clases y casos de prueba de manera automática, en la que se basará todo el desarrollo a realizar como parte de este trabajo. Finalmente estudiaremos el importante rol que cumplirán las designaciones en nuestro sistema de NLG, fundamental para la generación de textos independientes del dominio de aplicación.
 
 \section{\textit{Testing} basado en modelos}
 
@@ -18,7 +18,7 @@ La hipótesis fundamental detrás del \textit{testing} basado en modelos (MBT) e
 
 El \textit{Test Template Framework} (TTF) descrito por Stocks y Carrington~\cite{stocks} es un método de MBT que permite efectuar un \textit{testing} muy completo de un sistema del cual se posee una especificación Z~\cite{spivey}, utilizando la misma como entrada y estableciendo cómo generar casos de prueba para testear las distintas operaciones incluidas en el modelo.
 
-A continuación introduciremos brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z\footnote{Introducción a la notación Z: \url{http://www.fceia.unr.edu.ar/asist/z-a.pdf}}.
+A continuación introducirá brevemente el TTF mediante un ejemplo, asumiendo que el lector se encuentra familiarizado con la notación Z\footnote{Introducción a la notación Z: \url{http://www.fceia.unr.edu.ar/asist/z-a.pdf}}.
 
 \subsection{Ejemplo: \emph{Symbol Table}}
 \label{sec:ej-symbolTable}
@@ -29,7 +29,7 @@ En general, en una tabla de símbolos se realizan dos operaciones: inserción y 
 
 \bigskip
 \noindent
-\textbf{Tipos elementales.} Es irrelevante para nuestro modelo especificar en detalle la estructura con la cual representaremos el conjunto de símbolos aceptados por el compilador/interprete, así como la información relativa a los mismos. Para esto, podemos abstraer los conjuntos antes mencionados utilizando los siguientes tipos básicos: 
+\textbf{Tipos elementales.} Es irrelevante para nuestro modelo especificar en detalle la estructura con la cual se representará el conjunto de símbolos aceptados por el compilador/interprete, así como la información relativa a los mismos. Para esto, podemos abstraer los conjuntos antes mencionados utilizando los siguientes tipos básicos: 
 
 \begin{zed}
 [SYM, VAL] \also
@@ -40,7 +40,7 @@ El tipo básico \emph{SYM} representará el conjunto de todos los símbolos acep
  
 \bigskip
 \noindent
-\textbf{Estado de la tabla.} Es natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos. Por otro lado, el estado de nuestra tabla está formado únicamente por los símbolos cargados y la información de cada uno. Por lo tanto, podemos modelar el conjuntos de estados de la tabla mediante una única función parcial\footnote{Utilizamos una función parcial ya que no todos los símbolos aceptados por el compilador estarán presentes en la tabla.} de la siguiente manera:
+\textbf{Estado de la tabla.} Es natural pensar que la tabla de símbolos establece una relación funcional entre los símbolos aceptados y la información asociada a cada uno de ellos. Por otro lado, el estado de nuestra tabla está formado únicamente por los símbolos cargados y la información de cada uno. Por lo tanto, podemos modelar el conjuntos de estados de la tabla mediante una única función parcial\footnote{Se utilizó una función parcial ya que no todos los símbolos aceptados por el compilador estarán presentes en la tabla.} de la siguiente manera:
 
 \begin{schema}{ST}
 st: SYM \pfun VAL
@@ -48,12 +48,12 @@ st: SYM \pfun VAL
 
 \bigskip
 \noindent
-\textbf{Operaciones.} Como mencionamos anteriormente, dos operaciones se realizarán sobre la tabla de símbolos: inserción y búsqueda.
+\textbf{Operaciones.} Como se mencionó anteriormente, dos operaciones se realizarán sobre la tabla de símbolos: inserción y búsqueda.
 
 \bigskip
 Comenzaremos por modelar la operación de inserción o actualización. Esta operación modificará el estado de la tabla de símbolos; para esto, será necesario brindarle a la operación el símbolo y la información correspondiente al mismo.
 
-Para actualizar la información de un símbolo en la tabla, simplemente actualizaremos la relación funcional con un par ordenado construido a partir del símbolo y la información dada. 
+Para actualizar la información de un símbolo en la tabla, simplemente se actualizará la relación funcional con un par ordenado construido a partir del símbolo y la información dada. 
 
 \begin{schema}{Update}
   \Delta ST \\
@@ -65,7 +65,7 @@ Para actualizar la información de un símbolo en la tabla, simplemente actualiz
   rep! = ok
 \end{schema}
 
-Por último, deberemos especificar la operación encargada de recuperar la información vinculada a un símbolo. Se trata de una operación relativamente simple que no modifica el estado de la tabla de símbolos. Ésta requerirá de un símbolo a buscar y retornará la información vinculada al mismo. A continuación especificaremos el caso exitoso para esta operación:
+Por último, deberemos especificar la operación encargada de recuperar la información vinculada a un símbolo. Se trata de una operación relativamente simple que no modifica el estado de la tabla de símbolos. Ésta requerirá de un símbolo a buscar y retornará la información vinculada al mismo. A continuación se especifica el caso exitoso para esta operación:
 
 \begin{schema}{LookUpOk}
 \Xi ST \\
@@ -78,7 +78,7 @@ v! = st~s? \\
 rep! = ok
 \end{schema} 
 
-Utilizamos la variable de salida \emph{rep!} para comunicar el éxito o fracaso de la operación, y la variable \emph{v!} para retornar la información solicitada. 
+Se utiliza la variable de salida \emph{rep!} para comunicar el éxito o fracaso de la operación, y la variable \emph{v!} para retornar la información solicitada. 
 
 El esquema \emph{LookUpOk} modela solamente el caso en el que el símbolo a buscar se encuentre cargado en la tabla, pero deberemos contemplar también el caso en que se intente buscar un símbolo que no haya sido cargado en la misma. Modelaremos esta situación con el esquema de error \emph{LookUpE}, presentado a continuación:
 
@@ -113,7 +113,7 @@ define una clase de prueba para el esquema \emph{LookUp}, introducido anteriorme
 
 Por otro lado, necesitaremos buscar valores específicos, o constantes, para las variables de una \emph{clase de prueba} (que reduzcan su restricción a verdadero) a fin de luego refinarla y poder ejecutar el caso de prueba en el programa que implemente la especificación. Llamaremos \emph{caso de prueba} a la tupla conformada por los valores correspondientes a cada una de las variables involucradas en la clase de prueba que satisfagan la restricción de ésta. Nos bastará con escoger un único \emph{caso de prueba} para cada clase de prueba generada (observemos que en algunos casos, como por ejemplo para la clase de prueba antes presentada, podríamos encontrar infinitos valores posibles para las variables de la clase de prueba que cumplan con la restricción).
 
-Como mencionamos recientemente, los casos de prueba son tuplas conformadas por constantes correspondientes a cada una de las variables involucradas en las clases de prueba correspondientes. Para los tipos dados por el lenguaje, como por ejemplo $\mathbb Z$, las constantes ya se encuentran definidas en el lenguaje, pero esto no ocurre cuando trabajamos con tipos introducidos por el especificador, como $SYM$ y $VAL$ definidos en el ejemplo. En estas circunstancias, será necesario definir constantes para estos tipos de datos a fin de poder luego utilizarlas en nuestros casos de prueba. Continuando con el ejemplo, para $SYM$ y $VAL$ podemos definir:
+Como se mencionó recientemente, los casos de prueba son tuplas conformadas por constantes correspondientes a cada una de las variables involucradas en las clases de prueba correspondientes. Para los tipos dados por el lenguaje, como por ejemplo $\mathbb Z$, las constantes ya se encuentran definidas en el lenguaje, pero esto no ocurre cuando trabajamos con tipos introducidos por el especificador, como $SYM$ y $VAL$ definidos en el ejemplo. En estas circunstancias, será necesario definir constantes para estos tipos de datos a fin de poder luego utilizarlas en nuestros casos de prueba. Continuando con el ejemplo, para $SYM$ y $VAL$ podemos definir:
 
 \begin{axdef}
 sym_{1}: SYM \\
@@ -130,12 +130,12 @@ LookUp\_DNF\_1\_TCASE == \\
 \end{multline*}
 \end{figure}
 
-Podemos observar en el caso de prueba presentado que hemos asignamos una constante a cada una de las variables del $VIS$ de forma tal que satisfaga la restricción de la clase de prueba en cuestión.
+Podemos observar en el caso de prueba presentado, que se ha asignado una constante a cada una de las variables del $VIS$ de forma tal que satisfaga la restricción de la clase de prueba en cuestión.
 
 \subsection{Generación de clases de prueba}
 \label{sec:tacticas-testing}
 
-En esta sección introduciremos brevemente, por medio de un ejemplo, el proceso del TTF. Continuaremos trabajando sobre el ejemplo introducido anteriormente e intentaremos generar algunos casos de prueba para testear la operación \emph{LookUp}. En particular nos concentraremos en la generación de clases de prueba, que resultarán de vital interés para nuestro trabajo de NLG.
+En esta sección se introducirá brevemente, por medio de un ejemplo, el proceso del TTF. Continuaremos trabajando sobre el ejemplo introducido anteriormente e intentaremos generar algunos casos de prueba para testear la operación \emph{LookUp}. En particular nos concentraremos en la generación de clases de prueba, que resultarán de vital interés para nuestro trabajo de NLG.
 
 El primer paso del TTF será definir el espacio de entrada (\emph{IS}, por \emph{Input Space}) para la operación. Éste será el conjunto definido por todos los posibles valores de entrada y estado de la misma. Por ejemplo, el \emph{IS} para la operación \emph{LookUp} será:
 
@@ -165,7 +165,7 @@ ya que la operación es total. El \emph{IS} y el \emph{VIS} no coincidirían si 
 
 Luego de determinar el \emph{VIS}, el TTF propone dividir el mismo, de modo tal que cada una de estas particiones represente una alternativa funcional distinta de la operación a testear. Estas particiones serán las \emph{clases de prueba}, introducidas anteriormente. Para dividir el $VIS$ a fin de dar con éstas, será necesario aplicar alguna estrategia o \emph{táctica de testing} que establezca la forma en la cual puede ser particionado el $VIS$. Luego, será posible aplicar nuevas tácticas sobre estas particiones generadas a fin de dividir nuevamente las mismas, obteniendo como resultado nuevas clases de prueba; este proceso se podrá repetir hasta que el ingeniero de \textit{testing} considere que todas las alternativas funcionales importantes de la operación están representadas (cada una de estas alternativas corresponderá a una única clase de prueba). El último paso del proceso será la selección de al menos un \emph{caso de prueba} para cada clase de prueba, que, como vimos anteriormente, consistirá en buscar valores para las variables de la misma que reduzcan su restricción a verdadero. 
 
-A continuación, mostraremos la aplicación de algunas tácticas de \textit{testing} sobre la operación \emph{LookUp}. En primer lugar aplicaremos Forma Normal Disyuntiva (DNF del inglés \emph{``Disjunctive Normal Form''}) y luego aplicaremos la táctica de Partición Estándar (SP del inglés \emph{``Standard Partition''}) a la expresión: ``$s? \in \dom st$''.
+A continuación, se mostrará la aplicación de algunas tácticas de \textit{testing} sobre la operación \emph{LookUp}. En primer lugar aplicaremos Forma Normal Disyuntiva (DNF del inglés \emph{``Disjunctive Normal Form''}) y luego aplicaremos la táctica de Partición Estándar (SP del inglés \emph{``Standard Partition''}) a la expresión: ``$s? \in \dom st$''.
 
 \bigskip
 \noindent
@@ -178,7 +178,7 @@ Continuando con el ejemplo, \emph{LookUp} ya es una disyunción y cada uno de lo
   LookUp\_DNF\_2 == [LookUp\_VIS | s? \notin \dom st]
 \end{zed}
 
-De esta forma obtenemos una partición del \emph{VIS}\footnote{Esto no se cumple en todos los casos, podrían ``solaparse'' las particiones obtenidas, pero de cualquier forma lograríamos un cubrimiento funcional básico.}. Además, observemos que si tomamos un caso de prueba para cada una de las clases obtenidas estaríamos probando el sistema en las siguientes situaciones:
+De esta forma se obtiene una partición del \emph{VIS}\footnote{Esto no se cumple en todos los casos, podrían ``solaparse'' las particiones obtenidas, pero de cualquier forma se lograría un cubrimiento funcional básico.}. Además, observemos que si tomamos un caso de prueba para cada una de las clases obtenidas estaríamos probando el sistema en las siguientes situaciones:
 
 \begin{enumerate}
 \item Intentar buscar un símbolo cargado en la tabla de símbolos.
@@ -214,14 +214,14 @@ El siguiente paso será reemplazar los parámetros formales que aparecen en la d
   LookUp\_SP\_2 == [LookUp\_DNF\_1 | \dom st \neq \{s?\} \land s? \in \dom st] \\
 \end{zed}
 
-Luego podríamos continuar aplicando nuevas tácticas y particionando aún más el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y consideramos que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
+Luego podríamos continuar aplicando nuevas tácticas y particionando aún más el \emph{VIS}. En este caso se trata de una operación relativamente sencilla y se considera, para este ejemplo, que todas las alternativas funcionales importantes se encuentran representadas mediante las clases de prueba obtenidas.
 
 \subsection{Fastest}
 \label{sec:fastest}
 
 \emph{Fastest}\footnote{\url{http://www.fceia.unr.edu.ar/~mcristia/fastest-1.6.tar.gz}} es una herramienta que implementa la teoría del TTF desarrollada en primer instancia por Maximiliano Cristiá y Pablo Rodriguez Monetti~\cite{fastest1}. El desarrollo de la misma fue impulsado para intentar automatizar, lo máximo posible, el proceso de \textit{testing} funcional basado en especificaciones Z. \emph{Fastest} se encuentra implementado mayormente en lenguaje Java y hace uso de las librerías del \textit{framework} CZT\footnote{\url{http://czt.sourceforge.net/}} (\emph{Community Z Tools}) para contar con utilidades relacionadas al lenguaje de especificación Z. 
 
-A continuación, en la figura \ref{ej:comandos_fastest}, ilustraremos el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección\footnote{A diferencia de las clases de prueba introducidas en la sección \ref{sec:tacticas-testing}, las clases generadas por Fastest, entre ellas las incluidas en este ejemplo así como las utilizadas en el resto de este trabajo, se encuentran con todos sus esquemas expandidos.}.
+A continuación, en la figura \ref{ej:comandos_fastest}, se ilustrará el funcionamiento de \emph{Fastest} mostrando los comandos necesarios para generar las clases de prueba introducidas anteriormente en esta sección\footnote{A diferencia de las clases de prueba introducidas en la sección \ref{sec:tacticas-testing}, las clases generadas por Fastest, entre ellas las incluidas en este ejemplo así como las utilizadas en el resto de este trabajo, se encuentran con todos sus esquemas expandidos.}.
 
 
 \begin{figure}[H]
@@ -274,22 +274,22 @@ Fastest> showsch -tcl -u 2
 \label{ej:comandos_fastest}
 \end{figure}
 
-Como podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia cargamos la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior seleccionamos sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, mostramos por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo queremos imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que queremos expandir las definiciones de las mismas).
+Como podemos observar en la figura \ref{ej:comandos_fastest}, en primera instancia se cargó la especificación en \emph{Fastest} mediante el comando \texttt{loadspec}. \emph{Fastest} realiza algunas verificaciones sintácticas y de tipado sobre la especificación, para luego informar por pantalla en caso de encontrar algún error en la misma. El comando \texttt{selop} selecciona un esquema con el cual trabajar (para el ejemplo anterior se ha seleccionado sólo uno, pero es posible seleccionar más esquemas). Luego, \texttt{genaltt} es utilizado, en este caso, para aplicar la táctica de DNF (\emph{Disjunctive Normal Form}); esta táctica es aplicada por defecto la primera vez que es ejecutado el comando. El comando \texttt{addtactic} añadirá una nueva táctica de partición, pero no ejecutará la misma. Será necesario volver a ejecutar \texttt{genaltt} para realizar la partición en base a la táctica ingresada. Finalmente, se muestra por pantalla todas las clases de prueba generadas por \emph{Fastest} utilizando el comando \texttt{showsch} (el parámetro \texttt{-tcl} fue utilizado para indicar que sólo se quiere imprimir clases de prueba, mientras que \texttt{-u} fue utilizado para indicarle a \emph{Fastest} que se quieren expandir las definiciones de las mismas).
 
 En lo que respecta a la generación de lenguaje natural, \emph{Fastest} fue utilizado en el pasado para testear el software a bordo de un satélite~\cite{satelite} y posteriormente se utilizaron técnicas de generación de lenguaje natural basada en \textit{templates} para traducir los casos de prueba obtenidos \cite{cristia_pluss}. La situación propuesta en el trabajo recién mencionado fue una solución ad-hoc, dependiente del dominio de aplicación y de la cantidad de operaciones.
 
 
-Como mencionamos anteriormente, uno de los objetivos de este trabajo será el de extender la implementación de \emph{Fastest} para permitir al usuario generar descripciones, independientes del dominio de aplicación y de la cantidad de operaciones de las clases de prueba generadas con la herramienta.
+Como se mencionó anteriormente, uno de los objetivos de este trabajo será el de extender la implementación de \emph{Fastest} para permitir al usuario generar descripciones, independientes del dominio de aplicación y de la cantidad de operaciones de las clases de prueba generadas con la herramienta.
 El sistema de NLG a desarrollar en este trabajo será íntegramente implementado en Java e integrado como una extensión de \emph{Fastest} (trabajando para esto con la versión 1.6 de la herramienta). En el capítulo \ref{cap:implementacion} veremos algunos de los detalles más relevantes de esta implementación.
 
 \section{Designaciones}
 \label{cap:designaciones}
 
 Un modelo formal, como una especificación Z en este caso, es una abstracción de la realidad. Sin embargo, se realiza una especificación para escribir un programa que finalmente es usado en el mundo real. En consecuencia, existe una relación entre el modelo y la realidad.
-Normalmente en estos casos, cuando especificamos un sistema formalmente, es una práctica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
+Normalmente en estos casos, cuando se especifica un sistema formalmente, es una práctica común incluir asociaciones entre elementos de la especificación (operaciones, esquemas de estado, variables, constantes, etc.) y elementos que refieran al dominio de aplicación. Estas asociaciones son llamadas \emph{designaciones}~\cite{jackson}.
 Sin esta documentación el modelo sería nada más que una teoría axiomática más sin conexión con la realidad. 
 
-Para documentar las designaciones usaremos la sintaxis propuesta por Jackson~\cite{jackson}:
+Para documentar las designaciones se utilizará la sintaxis propuesta por Jackson~\cite{jackson}:
 
 \begin{figure}[H]
   \centering
@@ -337,8 +337,8 @@ Los sistemas de generación de lenguaje natural generalmente utilizan un diccion
 
 Por otro lado, en algunas situaciones, contar con una mayor cantidad de designaciones nos permitirá generar mejores descripciones. Designaciones que podrían resultar redundantes para una persona que lea la especificación podrían, por ejemplo, permitirle a nuestro sistema de NLG generar textos más naturales. En el apéndice \ref{ape:designaciones} podemos encontrar una pequeña guía sobre qué designar a fin de proveerle la información necesaria a nuestro sistema de NLG para que pueda producir textos más fluidos y naturales.
 
-Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y marcaremos esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En la sección~\ref{sec:verbalizacion_designaciones} desarrollaremos más en detalle esta particularidad. 
+Por último, cabe mencionar, que es posible que aparezcan parámetros (pertenecientes al término formal) también del lado izquierdo de la designación, como es el caso de la segunda designación presente en la figura~\ref{fig:ej_designacion}. Llamaremos \emph{designaciones parametrizadas} a este tipo de designaciones, y se marca esta diferencia ya que deberemos darle un tratamiento especial a fin de utilizar el texto de estas designaciones en nuestro sistema de NLG. En la sección~\ref{sec:verbalizacion_designaciones} se desarrollará más en detalle esta particularidad. 
 
 
 \section{Resumen del capítulo}
-En este capítulo introdujimos conceptos fundamentales para el desarrollo de este trabajo. Presentamos el \textit{test template framework}, definimos las nociones de clase y caso de prueba con las que trabajaremos a lo largo de todo el trabajo. Finalmente profundizamos sobre el rol que cumplirán las designaciones en este trabajo, resultando fundamentales para la generación de descripciones independientes del dominio de aplicación. En el próximo capítulo introduciremos las tareas que deberán ser llevadas a cabo por nuestro sistema de NLG para generar descripciones para las clases de prueba generadas por Fastest.
+En este capítulo se introdujeron conceptos fundamentales para el desarrollo de este trabajo. Se presentó el \textit{test template framework}, se definieron las nociones de clase y caso de prueba con las que se trabajará a lo largo de todo el trabajo. Finalmente se profundizó sobre el rol que cumplirán las designaciones en este trabajo, resultando fundamentales para la generación de descripciones independientes del dominio de aplicación. En el próximo capítulo se introducirán las tareas que deberán ser llevadas a cabo por nuestro sistema de NLG para generar descripciones para las clases de prueba generadas por Fastest.
