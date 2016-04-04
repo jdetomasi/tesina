@@ -80,9 +80,9 @@ Podemos notar dos aspectos fundamentales sobre la \emph{verbalización} de expre
 \bigskip
 \begin{enumerate}
 	\item $s? \in \dom st$ $\rightarrow$ \emph{``El símbolo a buscar \textbf{pertenece a}  a los símbolos cargados en la tabla.''}
-	\item $s? \in \dom st$ $\rightarrow$ \emph{``El número de cuenta del nuevo cliente \textbf{pertenece a} a los números de cuenta cargados en el banco.''}
+	\item $num? \in \dom cajas$ $\rightarrow$ \emph{``El número de cuenta del nuevo cliente \textbf{pertenece a} los números de cuenta cargados en el banco.''}
 \end{enumerate}
-
+el símbolo a buscar 
 \bigskip
 Como vemos, el texto \emph{``\textbf{pertenece a}''} aparece en ambas descripciones como resultado de verbalizar el operador $\in$, diferenciándose ambas descripciones en el texto que antecede y sucede al mismo. Por otro lado, estos últimos, bien podrían ser las verbalizaciones de las expresiones que se encuentran a la derecha e izquierda del operador $\in$, respectivamente, por lo que podríamos pensar en una verbalización recursiva sobre la estructura de las expresiones Z. Es posible encontrar estos tipos de patrones en todas las descripciones presentes en el corpus. Esto resulta un buen punto de partida para intentar especificar nuestra tarea de verbalización. En un primer intento, entonces, se definirá la tarea de verbalización en base a los operadores que la componen. Especificaremos esta tarea mediante una función que tomará como entrada una expresión Z y devolverá una descripción en lenguaje natural para la misma. Ésta será recursiva sobre la estructura de las expresiones Z y tendrá tantos casos en su definición como operadores contemplados dentro del alcance de este trabajo (además de las posibles combinaciones de los mismos que puedan resultar de interés y requieran un tratamiento particular). En base al ejemplo anterior, podríamos proponer la siguiente definición para verbalizar el operador $\in$\footnote{Supondremos que el operador $+$ se encargará de realizar una concatenación de \textit{strings} agregando un espacio entre las mismas.}$^{,}$\footnote{El nombre de la función se encuentra primado intencionalmente. Más adelante se presentará la definición final para la función de verbalización que hará uso de \texttt{verb'} como función auxiliar.} :
 
@@ -327,13 +327,12 @@ verb' (@$ran(exp_1)$@) = "rango de" +
 \end{minted}
 \end{mdframed}
 
+Como era de esperarse, podemos notar que, a fin de lograr descripciones más naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que este conjunto se encuentre vacío.
 
 \section{Aspectos gramaticales}
 \label{sec:corpus_gramatica}
 
-Como era de esperarse, podemos notar que, a fin de lograr descripciones más naturales, deberemos contemplar algunas combinaciones entre los distintos términos posibles. Por ejemplo, podemos ver que en el caso de la igualdad entre conjuntos, se propone una descripción para el caso en que uno de los conjuntos esté formado por un único elemento y otra verbalización distinta en el caso de que este conjunto se encuentre vacío.
-
-Por otro lado, podemos observar que en algunos casos el texto generado por nuestra verbalización puede variar de acuerdo a aspectos gramaticales, en particular, las distintas variantes de nuestras oraciones dependerán del género y número de los constituyentes de las mismas. En estos casos, nos debemos asegurar que las palabras generadas por nuestro sistema concuerden con rasgos gramaticales de, por ejemplo, otra palabra introducida por medio de una designación. Para esto deberemos considerar algunas reglas de \emph{concordancia gramatical}, como la concordancia de número entre el verbo y el núcleo del sujeto para el caso del operador $\in$:
+Podemos observar que en algunos casos el texto generado por nuestra verbalización puede variar de acuerdo a aspectos gramaticales, en particular, las distintas variantes de nuestras oraciones dependerán del género y número de los constituyentes de las mismas. En estos casos, nos debemos asegurar que las palabras generadas por nuestro sistema concuerden con rasgos gramaticales de, por ejemplo, otra palabra introducida por medio de una designación. Para esto deberemos considerar algunas reglas de \emph{concordancia gramatical}, como la concordancia de número entre el verbo y el núcleo del sujeto para el caso del operador $\in$:
 
 
 \bigskip
