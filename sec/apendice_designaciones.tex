@@ -1,10 +1,10 @@
 \chapter{Guía de estilo para designaciones}
 \label{ape:designaciones}
 
-Las designaciones son la principal fuente de conocimiento del dominio. Éstas son fundamentales para que nuestro sistema de NLG pueda generar descripciones independientes del dominio de aplicación. A continuación, enumeraremos una serie de pautas que el ingeniero realizando la especificación debe tener en cuenta para que nuestro sistema produzca textos lo más fluidos y naturales posibles.
+Las designaciones son la principal fuente de conocimiento del dominio. Éstas son fundamentales para que el sistema de NLG pueda generar descripciones independientes del dominio de aplicación. A continuación, se enumera una serie de pautas que el ingeniero realizando la especificación debe tener en cuenta para que el sistema produzca textos lo más fluidos y naturales posibles.
 
 \bigskip
-A fin de un correcto funcionamiento de nuestro sistema, resulta indispensable designar los siguientes elementos de una especificación:
+A fin de un correcto funcionamiento de el sistema, resulta indispensable designar los siguientes elementos de una especificación:
 
 \bigskip
 \begin{enumerate}
@@ -27,4 +27,11 @@ Cuando el objeto a designar sea una función es recomendable designar:
 \end{enumerate}
 
 \bigskip
-Esto se debe a que es muy común que aparezcan en las clases de prueba generadas por el TTF el dominio como la aplicación de función y observamos que es posible obtener mejores resultados si se encuentran designadas las tres expresiones enumeradas anteriormente. De lo contrario nuestro sistema describirá los casos anteriores utilizando la terminología de funciones (dominio, aplicación, etc.) y puede hacer la interpretación del texto en término del dominio más compleja.
+Como mencionamos en la sección \ref{cap:designaciones}, la función que cumplen las designaciones en este trabajo difiere un poco de la propuesta por Jackson~\cite{jackson}. Jackson propone escribir la menor cantidad de designaciones posibles y definir otros términos en base a las éstas. Para nosotros, las designaciones resultan la principal fuente de conocimiento para el sistema de NLG y en algunos casos (como los enumerados anteriormente para designar una función) designar los ítems propuestos le permitirá a nuestro sistema la generación de descripciones de mayor calidad. De no hacerlo, si por ejemplo escribiéramos sólo la designación para $f$, nuestro sistema se vería obligado a verbalizar $\dom f$ de la siguiente manera:
+
+\begin{figure}[H]
+\center
+$\texttt{verb'}(\dom f) \rightarrow \text{\emph{``el dominio''}} + \texttt{verb}(f)$
+\end{figure}
+
+Algo similar ocurriría para los casos en los que se quiera verbalizar $\ran f$ y $f~x$. Esto introduciría términos como ``dominio'' o ``rango'' y ``aplicación'', que refieren a elementos del modelo y no a elementos del dominio de aplicación del sistema a testear, generando de esta forma descripciones poco naturales.

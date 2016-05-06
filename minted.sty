@@ -27,7 +27,7 @@
 %% and the derived file minted.sty.
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{minted}
-    [2015/09/09 v2.1 Yet another Pygments shim for LaTeX]
+    [2015/12/21 v2.2dev Yet another Pygments shim for LaTeX]
 \RequirePackage{keyval}
 \RequirePackage{kvoptions}
 \RequirePackage{fancyvrb}
@@ -67,10 +67,14 @@
 \DeclareComplementaryOption{final}{draft}
 \ProcessKeyvalOptions*
 \ifthenelse{\boolean{minted@newfloat}}{\RequirePackage{newfloat}}{}
-\ifcsname tikzexternalrealjob\endcsname
-  \minted@drafttrue
-  \minted@cachefalse
+\ifcsname tikzifexternalizing\endcsname
+  \tikzifexternalizing{\minted@drafttrue\minted@cachefalse}{}
 \else
+  \ifcsname tikzexternalrealjob\endcsname
+    \minted@drafttrue
+    \minted@cachefalse
+  \else
+  \fi
 \fi
 \ifthenelse{\boolean{minted@cache}}{%
   \AtEndOfPackage{\ProvideDirectory{\minted@outputdir\minted@cachedir}}}{}
@@ -935,7 +939,8 @@
       \ifthenelse{\boolean{FV@BreakAutoIndent}}%
        {\hspace*{-\wd\FV@LineIndentBox}}%
        {}%
-      \strut#1\nobreak\strut
+      \strut\FancyVerbFormatText{%
+        \FancyVerbBreakStart#1\FancyVerbBreakStop}\nobreak\strut
       \end{internallinenumbers*}
     }%
     \ifdefempty{\FancyVerbBreakSymbolRight}{}%
@@ -944,6 +949,10 @@
 }
 \def\FancyVerbFormatText#1{#1}
 \def\FV@ListProcessLine@Break#1{%
+  \ifx\FV@ObeyTabsInit\relax\else
+    \PackageError{minted}%
+     {the options obeytabs and breaklines are not compatible}{}%
+  \fi
   \hbox to \hsize{%
   \kern\leftmargin
   \hbox to \linewidth{%
@@ -958,12 +967,10 @@
   \sbox{\FV@LineBox}{\FancyVerbFormatLine{\FancyVerbFormatText{#1}}}%
   \ifdim\wd\FV@LineBox>\linewidth
     \setcounter{FancyVerbLineBreakLast}{0}%
-    \FV@SaveLineBox{\FancyVerbFormatText{%
-      \FancyVerbBreakStart#1\FancyVerbBreakStop}}%
+    \FV@SaveLineBox{#1}%
     \ifdefempty{\FancyVerbBreakSymbolRight}{}{%
       \let\FV@SetLineBreakLast\relax
-      \FV@SaveLineBox{\FancyVerbFormatText{%
-        \FancyVerbBreakStart#1\FancyVerbBreakStop}}}%
+      \FV@SaveLineBox{#1}}%
     \FV@LeftListNumber
     \FV@LeftListFrame
     \FancyVerbFormatLine{\usebox{\FV@LineBox}}%
@@ -1482,7 +1489,7 @@
 }
 \AtEndPreamble{%
   \ifthenelse{\boolean{minted@draft}}{}{%
-    \TestAppExists{pygmentize}%
+    \TestAppExists{\MintedPygmentize}%
     \ifAppExists\else
       \PackageError{minted}%
        {You must have `pygmentize' installed
@@ -1504,4 +1511,3 @@
 \endinput
 %%
 %% End of file `minted.sty'.
- 
